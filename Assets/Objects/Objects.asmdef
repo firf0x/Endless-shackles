@@ -1,0 +1,18 @@
+{
+    "name": "Objects",
+    "rootNamespace": "Objects",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        ""
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DEBUG"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

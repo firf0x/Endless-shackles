@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="Objects.BaseCards.csproj" />
+  <Project Path="Objects.Deck.csproj" />
+</Solution>
