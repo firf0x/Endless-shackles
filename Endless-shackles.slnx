@@ -1,4 +1,5 @@
 ﻿<Solution>
   <Project Path="Objects.BaseCards.csproj" />
+  <Project Path="Assembly-CSharp-firstpass.csproj" />
   <Project Path="Objects.Deck.csproj" />
 </Solution>
