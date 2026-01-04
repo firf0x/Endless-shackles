@@ -38,9 +38,9 @@ namespace Object.Deck
         {
             switch (type)
             {
-                case CardTypeEnum.Attack: return cardsAttack[Random.Range(0, cardsAttack.Count + 1)];
-                case CardTypeEnum.Defence: return cardsDefence[Random.Range(0, cardsDefence.Count + 1)];
-                case CardTypeEnum.Monster: return cardsMonster[Random.Range(0, cardsMonster.Count + 1)];
+                case CardTypeEnum.Attack: return cardsAttack[Random.Range(0, cardsAttack.Count)];
+                case CardTypeEnum.Defence: return cardsDefence[Random.Range(0, cardsDefence.Count)];
+                case CardTypeEnum.Monster: return cardsMonster[Random.Range(0, cardsMonster.Count)];
                 default:
                     Debug.LogError("Такого типа карты не существует.");
                     return null;
