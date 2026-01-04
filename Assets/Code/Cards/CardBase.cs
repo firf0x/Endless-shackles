@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Cards
 {
-    public abstract class CardBase : ScriptableObject
+    public abstract class CardBase
     {
         [Header("Base Card Info")]
         [SerializeField] private CardTypeEnum type;

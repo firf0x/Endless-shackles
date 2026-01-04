@@ -1,10 +1,11 @@
+using System;
 using Lib;
 using UnityEngine;
 using VContainer;
 
 namespace Game.Cards
 {
-    [CreateAssetMenu(fileName = "Card Monster", menuName = "Game/Cards/Card Monster", order = 0)]
+    [Serializable]
     public class CardMonster : CardBase
     {
         [SerializeField] private int Damage;
