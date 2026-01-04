@@ -9,15 +9,14 @@ namespace Game.Cards
     [CreateAssetMenu(fileName = "Card Attack", menuName = "Game/Cards/Card Attack", order = 0)]
     public class CardAttack : CardBase
     {
-        public Health Damage;
-
         public override void Init()
         {
+            
         }
 
-        public override void Use(GameObject target, GameObject caster)
+        public override void Use(GameObject target)
         {
-            target.GetComponent<IDamageble>().TakeDamage(Damage.Value);
+            target.GetComponent<CardData>().cardBase.System.TakeDamage(this.System.Value);
         }
     }
 }

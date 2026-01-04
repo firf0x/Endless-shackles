@@ -1,0 +1,2031 @@
+fileFormatVersion: 2
+guid: c80dfd28afd035345971e8bdecd7892f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2515083631556325034
+    second: passiv_card_1-60_0
+  - first:
+      213: -4064375374947256037
+    second: passiv_card_1-60_1
+  - first:
+      213: 6083470807930198168
+    second: passiv_card_1-60_2
+  - first:
+      213: 1899628643584593138
+    second: passiv_card_1-60_3
+  - first:
+      213: -538780340615514690
+    second: passiv_card_1-60_4
+  - first:
+      213: -5624560999793395427
+    second: passiv_card_1-60_5
+  - first:
+      213: 6930578057860681327
+    second: passiv_card_1-60_6
+  - first:
+      213: 317258639821252104
+    second: passiv_card_1-60_7
+  - first:
+      213: 5407499400784487184
+    second: passiv_card_1-60_8
+  - first:
+      213: 4990998494108432572
+    second: passiv_card_1-60_9
+  - first:
+      213: 2930191190304245167
+    second: passiv_card_1-60_10
+  - first:
+      213: 4851835802052124712
+    second: passiv_card_1-60_11
+  - first:
+      213: 7388094237046310737
+    second: passiv_card_1-60_12
+  - first:
+      213: 2508662771202500526
+    second: passiv_card_1-60_13
+  - first:
+      213: -1083988191227398308
+    second: passiv_card_1-60_14
+  - first:
+      213: -5908485588088963440
+    second: passiv_card_1-60_15
+  - first:
+      213: -6585872781931866997
+    second: passiv_card_1-60_16
+  - first:
+      213: 8514770465938411198
+    second: passiv_card_1-60_17
+  - first:
+      213: -1029501281933916544
+    second: passiv_card_1-60_18
+  - first:
+      213: 3936938103427430561
+    second: passiv_card_1-60_19
+  - first:
+      213: 7568877329651316160
+    second: passiv_card_1-60_20
+  - first:
+      213: 2958378968383169353
+    second: passiv_card_1-60_21
+  - first:
+      213: -3989634738409259495
+    second: passiv_card_1-60_22
+  - first:
+      213: 3719121252130251607
+    second: passiv_card_1-60_23
+  - first:
+      213: 6413897886520168125
+    second: passiv_card_1-60_24
+  - first:
+      213: -1875628028519953916
+    second: passiv_card_1-60_25
+  - first:
+      213: 2330112226981869081
+    second: passiv_card_1-60_26
+  - first:
+      213: 953453553154238808
+    second: passiv_card_1-60_27
+  - first:
+      213: 3080591826048044717
+    second: passiv_card_1-60_28
+  - first:
+      213: 8942093632843192723
+    second: passiv_card_1-60_29
+  - first:
+      213: 903930847375823053
+    second: passiv_card_1-60_30
+  - first:
+      213: -2326571181595508437
+    second: passiv_card_1-60_31
+  - first:
+      213: -6194559967096499016
+    second: passiv_card_1-60_32
+  - first:
+      213: -5785369014969506530
+    second: passiv_card_1-60_33
+  - first:
+      213: -6393858633870972803
+    second: passiv_card_1-60_34
+  - first:
+      213: -9124038180601775421
+    second: passiv_card_1-60_35
+  - first:
+      213: -7250194966232698323
+    second: passiv_card_1-60_36
+  - first:
+      213: -351032823865578224
+    second: passiv_card_1-60_37
+  - first:
+      213: -187940622143393373
+    second: passiv_card_1-60_38
+  - first:
+      213: 1772465710095993465
+    second: passiv_card_1-60_39
+  - first:
+      213: -5825643261169333524
+    second: passiv_card_1-60_40
+  - first:
+      213: 9044170936515119296
+    second: passiv_card_1-60_41
+  - first:
+      213: 5380155749974384310
+    second: passiv_card_1-60_42
+  - first:
+      213: 347533479670399068
+    second: passiv_card_1-60_43
+  - first:
+      213: -8423838710462742400
+    second: passiv_card_1-60_44
+  - first:
+      213: 4264210667645482931
+    second: passiv_card_1-60_45
+  - first:
+      213: -7762430780392949749
+    second: passiv_card_1-60_46
+  - first:
+      213: 6893269208694765488
+    second: passiv_card_1-60_47
+  - first:
+      213: 6320701630320209456
+    second: passiv_card_1-60_48
+  - first:
+      213: 8889886442839365467
+    second: passiv_card_1-60_49
+  - first:
+      213: -6810250111254386182
+    second: passiv_card_1-60_50
+  - first:
+      213: -7585350216263142896
+    second: passiv_card_1-60_51
+  - first:
+      213: 4899075924838764230
+    second: passiv_card_1-60_52
+  - first:
+      213: 2864752360841522441
+    second: passiv_card_1-60_53
+  - first:
+      213: 1059171178707335717
+    second: passiv_card_1-60_54
+  - first:
+      213: -9314656213375679
+    second: passiv_card_1-60_55
+  - first:
+      213: 1895444749683253849
+    second: passiv_card_1-60_56
+  - first:
+      213: -4852465722293767402
+    second: passiv_card_1-60_57
+  - first:
+      213: 9122494892558958644
+    second: passiv_card_1-60_58
+  - first:
+      213: -954948975147411991
+    second: passiv_card_1-60_59
+  - first:
+      213: -121118992919955455
+    second: passiv_card_1-60_60
+  - first:
+      213: 3314941673331191917
+    second: passiv_card_1-60_61
+  - first:
+      213: -6332365346802353847
+    second: passiv_card_1-60_62
+  - first:
+      213: 6170971403387173734
+    second: passiv_card_1-60_63
+  - first:
+      213: 7803572267360149393
+    second: passiv_card_1-60_64
+  - first:
+      213: -847069946810803542
+    second: passiv_card_1-60_65
+  - first:
+      213: -8355987131886119182
+    second: passiv_card_1-60_66
+  - first:
+      213: 4821597624959072451
+    second: passiv_card_1-60_67
+  - first:
+      213: -8256345336745894165
+    second: passiv_card_1-60_68
+  - first:
+      213: -889774612673144182
+    second: passiv_card_1-60_69
+  - first:
+      213: 6842147049900956638
+    second: passiv_card_1-60_70
+  - first:
+      213: 4785983129969470858
+    second: passiv_card_1-60_71
+  - first:
+      213: -7984301597462408300
+    second: passiv_card_1-60_72
+  - first:
+      213: -781590547274349029
+    second: passiv_card_1-60_73
+  - first:
+      213: -2885934036607641386
+    second: passiv_card_1-60_74
+  - first:
+      213: 244377604991740923
+    second: passiv_card_1-60_75
+  - first:
+      213: -2751960360176244679
+    second: passiv_card_1-60_76
+  - first:
+      213: 2339548718703773225
+    second: passiv_card_1-60_77
+  - first:
+      213: 4905332972697928843
+    second: passiv_card_1-60_78
+  - first:
+      213: -7543535944127831446
+    second: passiv_card_1-60_79
+  - first:
+      213: 4335596697045975022
+    second: passiv_card_1-60_80
+  - first:
+      213: 6336037054710353470
+    second: passiv_card_1-60_81
+  - first:
+      213: -1212640012527130305
+    second: passiv_card_1-60_82
+  - first:
+      213: -9194835576898113668
+    second: passiv_card_1-60_83
+  - first:
+      213: -8812040514557435247
+    second: passiv_card_1-60_84
+  - first:
+      213: 5731031229527432517
+    second: passiv_card_1-60_85
+  - first:
+      213: -5761720446105219415
+    second: passiv_card_1-60_86
+  - first:
+      213: -4912093287451415919
+    second: passiv_card_1-60_87
+  - first:
+      213: -8701429048690263432
+    second: passiv_card_1-60_88
+  - first:
+      213: -4299443221626197931
+    second: passiv_card_1-60_89
+  - first:
+      213: -1953053537171114119
+    second: passiv_card_1-60_90
+  - first:
+      213: 2144574408990672183
+    second: passiv_card_1-60_91
+  - first:
+      213: -2022337606404839228
+    second: passiv_card_1-60_92
+  - first:
+      213: 6293076966317306395
+    second: passiv_card_1-60_93
+  - first:
+      213: 8550676290647754815
+    second: passiv_card_1-60_94
+  - first:
+      213: 331005561105637077
+    second: passiv_card_1-60_95
+  - first:
+      213: 7071414555960345850
+    second: passiv_card_1-60_96
+  - first:
+      213: -613548394341606256
+    second: passiv_card_1-60_97
+  - first:
+      213: -3268199093981230232
+    second: passiv_card_1-60_98
+  - first:
+      213: -9102977726046713830
+    second: passiv_card_1-60_99
+  - first:
+      213: 8613213230083805814
+    second: passiv_card_1-60_100
+  - first:
+      213: 5469323626751541070
+    second: passiv_card_1-60_101
+  - first:
+      213: 8111287348115654107
+    second: passiv_card_1-60_102
+  - first:
+      213: 8467039991926384080
+    second: passiv_card_1-60_103
+  - first:
+      213: -7500945655288017269
+    second: passiv_card_1-60_104
+  - first:
+      213: -6208910645771579306
+    second: passiv_card_1-60_105
+  - first:
+      213: 3630007019429227830
+    second: passiv_card_1-60_106
+  - first:
+      213: -1165003661935001935
+    second: passiv_card_1-60_107
+  - first:
+      213: 1725963868423476010
+    second: passiv_card_1-60_108
+  - first:
+      213: 7456131904439403986
+    second: passiv_card_1-60_109
+  - first:
+      213: 5873688051752867725
+    second: passiv_card_1-60_110
+  - first:
+      213: 6050809596574013846
+    second: passiv_card_1-60_111
+  - first:
+      213: -3279458071739644155
+    second: passiv_card_1-60_112
+  - first:
+      213: -5674888338324807783
+    second: passiv_card_1-60_113
+  - first:
+      213: -8729095494183290510
+    second: passiv_card_1-60_114
+  - first:
+      213: -3144790546209147640
+    second: passiv_card_1-60_115
+  - first:
+      213: -535704065468186121
+    second: passiv_card_1-60_116
+  - first:
+      213: -3991874708452669745
+    second: passiv_card_1-60_117
+  - first:
+      213: -7529065698161057786
+    second: passiv_card_1-60_118
+  - first:
+      213: 6240677587282088768
+    second: passiv_card_1-60_119
+  - first:
+      213: -8477394554106536845
+    second: passiv_card_1-60_120
+  - first:
+      213: 2777714585026914316
+    second: passiv_card_1-60_121
+  - first:
+      213: 6160257002292483066
+    second: passiv_card_1-60_122
+  - first:
+      213: 7167426564497851073
+    second: passiv_card_1-60_123
+  - first:
+      213: 1319099920874487068
+    second: passiv_card_1-60_124
+  - first:
+      213: -3646101617282625183
+    second: passiv_card_1-60_125
+  - first:
+      213: 8903360428623508679
+    second: passiv_card_1-60_126
+  - first:
+      213: -204977425086831953
+    second: passiv_card_1-60_127
+  - first:
+      213: 4733985624598381996
+    second: passiv_card_1-60_128
+  - first:
+      213: -3701067402921564828
+    second: passiv_card_1-60_129
+  - first:
+      213: 807701209253424474
+    second: passiv_card_1-60_130
+  - first:
+      213: -6696658617747804234
+    second: passiv_card_1-60_131
+  - first:
+      213: 3625133723595575577
+    second: passiv_card_1-60_132
+  - first:
+      213: -6452747646084939993
+    second: passiv_card_1-60_133
+  - first:
+      213: 8303888636034894013
+    second: passiv_card_1-60_134
+  - first:
+      213: -1101821977544326246
+    second: passiv_card_1-60_135
+  - first:
+      213: 7260652513291697842
+    second: passiv_card_1-60_136
+  - first:
+      213: -608535155510051907
+    second: passiv_card_1-60_137
+  - first:
+      213: 9195912657258332882
+    second: passiv_card_1-60_138
+  - first:
+      213: -4333156940683851272
+    second: passiv_card_1-60_139
+  - first:
+      213: 4167322574989993227
+    second: passiv_card_1-60_140
+  - first:
+      213: 260058035178205947
+    second: passiv_card_1-60_141
+  - first:
+      213: -4588455853157547045
+    second: passiv_card_1-60_142
+  - first:
+      213: -252873374705629218
+    second: passiv_card_1-60_143
+  - first:
+      213: 6469019820463766133
+    second: passiv_card_1-60_144
+  - first:
+      213: -5795158527984123283
+    second: passiv_card_1-60_145
+  - first:
+      213: 6307169575144118673
+    second: passiv_card_1-60_146
+  - first:
+      213: 7724518323086131397
+    second: passiv_card_1-60_147
+  - first:
+      213: 2557356805093287932
+    second: passiv_card_1-60_148
+  - first:
+      213: -1581217613432780642
+    second: passiv_card_1-60_149
+  - first:
+      213: 7744882574946582747
+    second: passiv_card_1-60_150
+  - first:
+      213: 914934336109478954
+    second: passiv_card_1-60_151
+  - first:
+      213: 6334097404125095845
+    second: passiv_card_1-60_152
+  - first:
+      213: 7096610305041203801
+    second: passiv_card_1-60_153
+  - first:
+      213: 956139061437883433
+    second: passiv_card_1-60_154
+  - first:
+      213: 4904854465641003013
+    second: passiv_card_1-60_155
+  - first:
+      213: 6554272338462760323
+    second: passiv_card_1-60_156
+  - first:
+      213: 2514690568094092850
+    second: passiv_card_1-60_157
+  - first:
+      213: -3573349512644766587
+    second: passiv_card_1-60_158
+  - first:
+      213: -4146494662310572929
+    second: passiv_card_1-60_159
+  - first:
+      213: -4615158499586635397
+    second: passiv_card_1-60_160
+  - first:
+      213: 6768785389977137734
+    second: passiv_card_1-60_161
+  - first:
+      213: 106305920855085237
+    second: passiv_card_1-60_162
+  - first:
+      213: 1602850527089387446
+    second: passiv_card_1-60_163
+  - first:
+      213: -847917851367185820
+    second: passiv_card_1-60_164
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 10
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: passiv_card_1-60_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6519fa833c0a81dd0800000000000000
+      internalID: -2515083631556325034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_1
+      rect:
+        serializedVersion: 2
+        x: 190
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b197c6661207897c0800000000000000
+      internalID: -4064375374947256037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_2
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 898532cd774dc6450800000000000000
+      internalID: 6083470807930198168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_3
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fc440acf26dc5a10800000000000000
+      internalID: 1899628643584593138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_4
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb5f5a1822ed588f0800000000000000
+      internalID: -538780340615514690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_5
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d197cc5229b81f1b0800000000000000
+      internalID: -5624560999793395427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_6
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e07ea160c5e2060800000000000000
+      internalID: 6930578057860681327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_7
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80628705d01276400800000000000000
+      internalID: 317258639821252104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_8
+      rect:
+        serializedVersion: 2
+        x: 1520
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 013a5ea0e0c4b0b40800000000000000
+      internalID: 5407499400784487184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_9
+      rect:
+        serializedVersion: 2
+        x: 1710
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb8b7dbdfa6934540800000000000000
+      internalID: 4990998494108432572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_10
+      rect:
+        serializedVersion: 2
+        x: 1900
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5401edc512aa820800000000000000
+      internalID: 2930191190304245167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_11
+      rect:
+        serializedVersion: 2
+        x: 2090
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 820e6d1b4fe255340800000000000000
+      internalID: 4851835802052124712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_12
+      rect:
+        serializedVersion: 2
+        x: 2280
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15781469098c78660800000000000000
+      internalID: 7388094237046310737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_13
+      rect:
+        serializedVersion: 2
+        x: 2470
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7a5cabf7f80d220800000000000000
+      internalID: 2508662771202500526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_14
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c573c29bb76e4f0f0800000000000000
+      internalID: -1083988191227398308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_15
+      rect:
+        serializedVersion: 2
+        x: 2850
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09e317189a7d00ea0800000000000000
+      internalID: -5908485588088963440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_16
+      rect:
+        serializedVersion: 2
+        x: 3040
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b84990929974a94a0800000000000000
+      internalID: -6585872781931866997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_17
+      rect:
+        serializedVersion: 2
+        x: 3230
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebe0f3620aa8a2670800000000000000
+      internalID: 8514770465938411198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_18
+      rect:
+        serializedVersion: 2
+        x: 3420
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0860582e90a76b1f0800000000000000
+      internalID: -1029501281933916544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_19
+      rect:
+        serializedVersion: 2
+        x: 3610
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a8fd75a850d2a630800000000000000
+      internalID: 3936938103427430561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_20
+      rect:
+        serializedVersion: 2
+        x: 3800
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c5bf5664dd0a0960800000000000000
+      internalID: 7568877329651316160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_21
+      rect:
+        serializedVersion: 2
+        x: 3990
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94327716ff54e0920800000000000000
+      internalID: 2958378968383169353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_22
+      rect:
+        serializedVersion: 2
+        x: 4180
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91ebe89e758f1a8c0800000000000000
+      internalID: -3989634738409259495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_23
+      rect:
+        serializedVersion: 2
+        x: 4370
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75364d5f219fc9330800000000000000
+      internalID: 3719121252130251607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_24
+      rect:
+        serializedVersion: 2
+        x: 4560
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbec9af352eb20950800000000000000
+      internalID: 6413897886520168125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_25
+      rect:
+        serializedVersion: 2
+        x: 4750
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40a4d4dde3e68f5e0800000000000000
+      internalID: -1875628028519953916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_26
+      rect:
+        serializedVersion: 2
+        x: 4940
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9167c0899b8365020800000000000000
+      internalID: 2330112226981869081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_27
+      rect:
+        serializedVersion: 2
+        x: 5130
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 859a79974f85b3d00800000000000000
+      internalID: 953453553154238808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_28
+      rect:
+        serializedVersion: 2
+        x: 5320
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daec091b1f570ca20800000000000000
+      internalID: 3080591826048044717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_29
+      rect:
+        serializedVersion: 2
+        x: 5510
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39996e528c2b81c70800000000000000
+      internalID: 8942093632843192723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_30
+      rect:
+        serializedVersion: 2
+        x: 5700
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc09a5301586b8c00800000000000000
+      internalID: 903930847375823053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_31
+      rect:
+        serializedVersion: 2
+        x: 5890
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b21c65846db56bfd0800000000000000
+      internalID: -2326571181595508437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_32
+      rect:
+        serializedVersion: 2
+        x: 6080
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b49b55b780880aa0800000000000000
+      internalID: -6194559967096499016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_33
+      rect:
+        serializedVersion: 2
+        x: 6270
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e15e038788d36bfa0800000000000000
+      internalID: -5785369014969506530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_34
+      rect:
+        serializedVersion: 2
+        x: 6460
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d786e08d2737447a0800000000000000
+      internalID: -6393858633870972803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_35
+      rect:
+        serializedVersion: 2
+        x: 6650
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ca3120bd97e06180800000000000000
+      internalID: -9124038180601775421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_36
+      rect:
+        serializedVersion: 2
+        x: 6840
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d22ff556712226b90800000000000000
+      internalID: -7250194966232698323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_37
+      rect:
+        serializedVersion: 2
+        x: 7030
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d6dfca181e02bf0800000000000000
+      internalID: -351032823865578224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_38
+      rect:
+        serializedVersion: 2
+        x: 7220
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a1f64afffc446df0800000000000000
+      internalID: -187940622143393373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_39
+      rect:
+        serializedVersion: 2
+        x: 7410
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a05d22c20199810800000000000000
+      internalID: 1772465710095993465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_40
+      rect:
+        serializedVersion: 2
+        x: 7600
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cea8addc158272fa0800000000000000
+      internalID: -5825643261169333524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_41
+      rect:
+        serializedVersion: 2
+        x: 7790
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c845e67c89538d70800000000000000
+      internalID: 9044170936515119296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_42
+      rect:
+        serializedVersion: 2
+        x: 7980
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6be9f7936272aaa40800000000000000
+      internalID: 5380155749974384310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_43
+      rect:
+        serializedVersion: 2
+        x: 8170
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c504f43cbdfa2d400800000000000000
+      internalID: 347533479670399068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_44
+      rect:
+        serializedVersion: 2
+        x: 8360
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0800fa10353881b80800000000000000
+      internalID: -8423838710462742400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_45
+      rect:
+        serializedVersion: 2
+        x: 8550
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b7b07c62058d2b30800000000000000
+      internalID: 4264210667645482931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_46
+      rect:
+        serializedVersion: 2
+        x: 8740
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b08be15155e464490800000000000000
+      internalID: -7762430780392949749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_47
+      rect:
+        serializedVersion: 2
+        x: 8930
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b7b36db2dfc9af50800000000000000
+      internalID: 6893269208694765488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_48
+      rect:
+        serializedVersion: 2
+        x: 9120
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ee77ee4a4a7b750800000000000000
+      internalID: 6320701630320209456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_49
+      rect:
+        serializedVersion: 2
+        x: 9310
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b57500f7e983f5b70800000000000000
+      internalID: 8889886442839365467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_50
+      rect:
+        serializedVersion: 2
+        x: 9500
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af92e172b912d71a0800000000000000
+      internalID: -6810250111254386182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_51
+      rect:
+        serializedVersion: 2
+        x: 9690
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 012f3beca2c6bb690800000000000000
+      internalID: -7585350216263142896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_52
+      rect:
+        serializedVersion: 2
+        x: 9880
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cecea3e8930df340800000000000000
+      internalID: 4899075924838764230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_53
+      rect:
+        serializedVersion: 2
+        x: 10070
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90dab651815a1c720800000000000000
+      internalID: 2864752360841522441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_54
+      rect:
+        serializedVersion: 2
+        x: 10260
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52abe27439ee2be00800000000000000
+      internalID: 1059171178707335717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_55
+      rect:
+        serializedVersion: 2
+        x: 10450
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14562399e58eedff0800000000000000
+      internalID: -9314656213375679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_56
+      rect:
+        serializedVersion: 2
+        x: 10640
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 952ef3415f8fd4a10800000000000000
+      internalID: 1895444749683253849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_57
+      rect:
+        serializedVersion: 2
+        x: 10830
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 613bbe1922498acb0800000000000000
+      internalID: -4852465722293767402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_58
+      rect:
+        serializedVersion: 2
+        x: 11020
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 430ca4095cc999e70800000000000000
+      internalID: 9122494892558958644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passiv_card_1-60_59
+      rect:
+        serializedVersion: 2
+        x: 11210
+        y: 0
+        width: 190
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e517b577f65fb2f0800000000000000
+      internalID: -954948975147411991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ddd7887f9d641a141ae0829c6fc2a60f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      passiv_card_1-60_0: -2515083631556325034
+      passiv_card_1-60_1: -4064375374947256037
+      passiv_card_1-60_10: 2930191190304245167
+      passiv_card_1-60_11: 4851835802052124712
+      passiv_card_1-60_12: 7388094237046310737
+      passiv_card_1-60_13: 2508662771202500526
+      passiv_card_1-60_14: -1083988191227398308
+      passiv_card_1-60_15: -5908485588088963440
+      passiv_card_1-60_16: -6585872781931866997
+      passiv_card_1-60_17: 8514770465938411198
+      passiv_card_1-60_18: -1029501281933916544
+      passiv_card_1-60_19: 3936938103427430561
+      passiv_card_1-60_2: 6083470807930198168
+      passiv_card_1-60_20: 7568877329651316160
+      passiv_card_1-60_21: 2958378968383169353
+      passiv_card_1-60_22: -3989634738409259495
+      passiv_card_1-60_23: 3719121252130251607
+      passiv_card_1-60_24: 6413897886520168125
+      passiv_card_1-60_25: -1875628028519953916
+      passiv_card_1-60_26: 2330112226981869081
+      passiv_card_1-60_27: 953453553154238808
+      passiv_card_1-60_28: 3080591826048044717
+      passiv_card_1-60_29: 8942093632843192723
+      passiv_card_1-60_3: 1899628643584593138
+      passiv_card_1-60_30: 903930847375823053
+      passiv_card_1-60_31: -2326571181595508437
+      passiv_card_1-60_32: -6194559967096499016
+      passiv_card_1-60_33: -5785369014969506530
+      passiv_card_1-60_34: -6393858633870972803
+      passiv_card_1-60_35: -9124038180601775421
+      passiv_card_1-60_36: -7250194966232698323
+      passiv_card_1-60_37: -351032823865578224
+      passiv_card_1-60_38: -187940622143393373
+      passiv_card_1-60_39: 1772465710095993465
+      passiv_card_1-60_4: -538780340615514690
+      passiv_card_1-60_40: -5825643261169333524
+      passiv_card_1-60_41: 9044170936515119296
+      passiv_card_1-60_42: 5380155749974384310
+      passiv_card_1-60_43: 347533479670399068
+      passiv_card_1-60_44: -8423838710462742400
+      passiv_card_1-60_45: 4264210667645482931
+      passiv_card_1-60_46: -7762430780392949749
+      passiv_card_1-60_47: 6893269208694765488
+      passiv_card_1-60_48: 6320701630320209456
+      passiv_card_1-60_49: 8889886442839365467
+      passiv_card_1-60_5: -5624560999793395427
+      passiv_card_1-60_50: -6810250111254386182
+      passiv_card_1-60_51: -7585350216263142896
+      passiv_card_1-60_52: 4899075924838764230
+      passiv_card_1-60_53: 2864752360841522441
+      passiv_card_1-60_54: 1059171178707335717
+      passiv_card_1-60_55: -9314656213375679
+      passiv_card_1-60_56: 1895444749683253849
+      passiv_card_1-60_57: -4852465722293767402
+      passiv_card_1-60_58: 9122494892558958644
+      passiv_card_1-60_59: -954948975147411991
+      passiv_card_1-60_6: 6930578057860681327
+      passiv_card_1-60_7: 317258639821252104
+      passiv_card_1-60_8: 5407499400784487184
+      passiv_card_1-60_9: 4990998494108432572
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

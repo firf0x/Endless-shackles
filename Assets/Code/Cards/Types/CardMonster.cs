@@ -10,16 +10,14 @@ namespace Game.Cards
         [SerializeField] private int Damage;
         [SerializeField] private int HP;
 
-        private Health health;
-
         public override void Init()
         {
-            throw new System.NotImplementedException();
+            
         }
 
-        public override void Use(GameObject target, GameObject caster)
+        public override void Use( GameObject target )
         {
-            target.GetComponent<IDamageble>().TakeDamage(Damage);
+            target.GetComponent<CardData>();
         }
     }
 }

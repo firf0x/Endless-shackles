@@ -17,4 +17,4 @@ MonoBehaviour:
   description: 
   icon: {fileID: 0}
   Defence:
-    value: 0
+    value: 5

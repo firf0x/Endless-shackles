@@ -1,0 +1,21 @@
+{
+    "name": "Game.Player",
+    "rootNamespace": "Game.Player",
+    "references": [
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:c76fb6da50f2e70499f1d9f831484e0f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "DOTween.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DEBUG"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
