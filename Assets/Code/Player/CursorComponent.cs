@@ -1,5 +1,6 @@
 using DG.Tweening; // Не забудьте добавить эту директиву
 using Game.Cards;
+using Object.Deck;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -97,6 +98,11 @@ public class CursorComponent : MonoBehaviour
                 UpdateCardPosition();
             }
         }
+
+        if(hit.collider != null && hit.collider.TryGetComponent<DeckComponent>(out var deck))
+        {
+            GetCard(deck);
+        }
     }
 
     private void StopDragging()
@@ -142,5 +148,10 @@ public class CursorComponent : MonoBehaviour
     {
         draggedCard = currentCard;
         return isDragging;
+    }
+
+    public void GetCard(DeckComponent deck)
+    {
+        deck.CreateNewCard();
     }
 }

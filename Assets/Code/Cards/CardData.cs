@@ -5,7 +5,8 @@ namespace Game.Cards
 {
     public class CardData : MonoBehaviour
     {
-        [SerializeField] public CardBase cardBase;
+        [SerializeField] public SpriteRenderer ObjectRenderer;
+        public CardBase cardBase;
     
         public void Execute( GameObject target )
         {

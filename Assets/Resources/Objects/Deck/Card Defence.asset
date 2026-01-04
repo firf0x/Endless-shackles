@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Card Defence
   m_EditorClassIdentifier: 
   type: 1
-  cardName: 
-  description: 
-  icon: {fileID: 0}
-  Defence:
-    value: 5
+  cardName: Def
+  description: Def
+  icon: {fileID: 6413897886520168125, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
+  system:
+    value: 0

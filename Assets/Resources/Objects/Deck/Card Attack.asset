@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Card Attack
   m_EditorClassIdentifier: 
   type: 0
-  cardName: 
-  description: 
-  icon: {fileID: 0}
-  Damage:
+  cardName: Title
+  description: "Description\t"
+  icon: {fileID: 21300000, guid: cad4f90e962ce0a4ba77212f299225bb, type: 2}
+  system:
     value: 0

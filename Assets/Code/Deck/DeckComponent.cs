@@ -1,3 +1,4 @@
+using Game.Cards;
 using UnityEngine;
 
 namespace Object.Deck
@@ -6,6 +7,40 @@ namespace Object.Deck
     {
         [SerializeField] private DeckCards cards;
 
-        
+        public void CreateNewCard()
+        {
+            CardTypeEnum typeEnum = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster);
+
+            CardBase card = null;
+            GameObject cardPrefab = null;
+
+            switch (typeEnum)
+            {
+                case CardTypeEnum.Attack:
+                    card = cards.GetRandomCard(typeEnum);
+                    
+                    cardPrefab = Instantiate(cards.prefabCardAttack);
+                    break;
+                
+                case CardTypeEnum.Defence:
+                    card = cards.GetRandomCard(typeEnum);
+                    
+                    cardPrefab = Instantiate(cards.prefabCardDefence);
+                    break;
+                
+                case CardTypeEnum.Monster:
+                    card = cards.GetRandomCard(typeEnum);
+                    
+                    cardPrefab = Instantiate(cards.prefabCardMonster);
+                    break;
+
+                default:
+                    Debug.LogError("Такого типа карты не существует.");
+                    break;
+            }
+
+            cardPrefab.GetComponent<CardData>().cardBase = card;
+            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+        }
     }
 }
