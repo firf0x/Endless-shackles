@@ -1,5 +1,6 @@
 using DG.Tweening; // Не забудьте добавить эту директиву
 using Game.Cards;
+using Game.Deck;
 using Object.Deck;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,7 @@ public class CursorComponent : MonoBehaviour
     private InputAction interactAction;
     private InputAction positionAction;
 
+    private IDeck deck;
     private CardData currentCard;
     private Vector3 cardStartPosition;
     private Vector3 dragOffset;

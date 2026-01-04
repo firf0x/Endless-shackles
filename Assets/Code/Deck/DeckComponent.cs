@@ -7,9 +7,10 @@ namespace Object.Deck
     {
         [SerializeField] private DeckCards cards;
 
+
         public void CreateNewCard()
         {
-            CardTypeEnum typeEnum = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster);
+            CardTypeEnum typeEnum = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster + 1);
 
             CardBase card = null;
             GameObject cardPrefab = null;
