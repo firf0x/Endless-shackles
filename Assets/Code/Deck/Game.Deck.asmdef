@@ -1,7 +1,9 @@
 {
-    "name": "Game.Lib",
-    "rootNamespace": "Game.Lib",
-    "references": [],
+    "name": "Game.Deck",
+    "rootNamespace": "Game.Deck",
+    "references": [
+        "GUID:c76fb6da50f2e70499f1d9f831484e0f"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

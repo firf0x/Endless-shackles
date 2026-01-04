@@ -1,4 +1,0 @@
-namespace Object.Cards
-{
-    
-}

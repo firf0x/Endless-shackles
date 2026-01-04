@@ -1,9 +1,0 @@
-using VContainer;
-
-namespace Object.Cards
-{
-    public class CardAttack
-    {
-        
-    }
-}

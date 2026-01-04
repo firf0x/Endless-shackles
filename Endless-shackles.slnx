@@ -1,5 +1,6 @@
 ﻿<Solution>
-  <Project Path="Objects.BaseCards.csproj" />
+  <Project Path="Game.Cards.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
-  <Project Path="Objects.Deck.csproj" />
+  <Project Path="Game.Lib.csproj" />
+  <Project Path="Game.Deck.csproj" />
 </Solution>
