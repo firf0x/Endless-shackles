@@ -1,4 +1,5 @@
 using Game.Cards;
+using Game.Deck;
 using UnityEngine;
 
 namespace Object.Deck
@@ -6,7 +7,8 @@ namespace Object.Deck
     public class DeckComponent : MonoBehaviour
     {
         [SerializeField] private DeckCards cards;
-
+        [SerializeField] private HandDeck handDeck;
+        private IDeck deck => handDeck;
 
         public void CreateNewCard()
         {
@@ -42,6 +44,8 @@ namespace Object.Deck
 
             cardPrefab.GetComponent<CardData>().cardBase = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+
+            deck.AddCard(cardPrefab.GetComponent<CardData>());
         }
     }
 }

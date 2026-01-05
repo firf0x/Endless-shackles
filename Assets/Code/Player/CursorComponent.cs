@@ -111,6 +111,22 @@ public class CursorComponent : MonoBehaviour
     {
         if (!isDragging) return;
 
+        Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, raycastDistance, interactableLayer);
+
+        Debug.Log(hits.Length);
+        foreach (RaycastHit2D hit in hits)
+        {
+            Debug.Log(hit.collider != null);
+            if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
+            {
+                currentCard.Execute(hit.collider.gameObject);
+                break;
+            }
+        }
+
         isDragging = false;
         currentCard = null;
         

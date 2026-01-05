@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Lib;
 using UnityEngine;
 using VContainer;
@@ -15,7 +16,13 @@ namespace Game.Cards
 
         public override void Use(GameObject target)
         {
-            target.GetComponent<CardData>().cardBase.System.TakeDamage(this.System.Value);
+            List<EffectDamage> effectsDamage = GetEffects<EffectDamage>();
+
+            foreach (var EDamage in effectsDamage)
+            {
+                EDamage.Apply(target);
+            }
+
         }
     }
 }

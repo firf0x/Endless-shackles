@@ -8,9 +8,6 @@ namespace Game.Cards
     [Serializable]
     public class CardMonster : CardBase
     {
-        [SerializeField] private int Damage;
-        [SerializeField] private int HP;
-
         public override void Init()
         {
             

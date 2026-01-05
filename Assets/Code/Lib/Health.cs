@@ -6,11 +6,12 @@ namespace Lib
     [Serializable]
     public class Health : IDamageble
     {
+        [SerializeField] private int defaultValue;
+        private int value;
         public int Value => value;
         public bool isDie { get; private set; }
         public event Action OnDead;
-
-        [SerializeField] private int value;
+        
 
         public void TakeDamage(int amount)
         {
@@ -25,6 +26,11 @@ namespace Lib
                 isDie = true;
                 OnDead?.Invoke();
             }
+        }
+    
+        public void Restart()
+        {
+            value = defaultValue;
         }
     }
 

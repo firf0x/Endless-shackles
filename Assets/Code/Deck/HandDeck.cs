@@ -9,12 +9,15 @@ public class HandDeck : MonoBehaviour, IDeck
     [SerializeField] private DeckBoard board;
 
     public CardData[] cardDatas { get; private set; }
+    [SerializeField] private CardData[] cardData;
     private Transform[] cardPoint;
 
     private void Awake()
     {
         cardDatas = new CardData[sizeDeck];
         cardPoint = new Transform[sizeDeck];
+
+        cardData = cardDatas;
     }
 
     private void OnValidate()
@@ -120,11 +123,11 @@ public class HandDeck : MonoBehaviour, IDeck
             {
                 if (cardDatas[D] == null) continue;
                 
-                // Получаем приоритеты типов карт
+                // Получаем приоритеты
                 int priorityA = (int)cardDatas[A].cardBase.Type;
                 int priorityD = (int)cardDatas[D].cardBase.Type;
                 
-                // Если приоритет текущей карты больше, чем следующей - меняем местами
+                // По приоритетам понимаем последовательность карт
                 if (priorityA > priorityD)
                 {
                     CardData temp = cardDatas[A];
