@@ -266,6 +266,7 @@ MonoBehaviour:
     Down: 1
     Left: 5
     Right: 5
+  cardData: []
 --- !u!4 &1484304926
 Transform:
   m_ObjectHideFlags: 0
@@ -309,7 +310,7 @@ Transform:
   m_GameObject: {fileID: 1632894971}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.48, z: 0}
+  m_LocalPosition: {x: 6.91, y: -1.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -329,6 +330,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cards: {fileID: 11400000, guid: 4518d958bbeeb6846863e2e144a703b9, type: 2}
   handDeck: {fileID: 1484304925}
+  defenceDeck: {fileID: 0}
+  monsterDeck: {fileID: 0}
 --- !u!61 &1632894974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -430,6 +433,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2013459638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2013459639}
+  m_Layer: 0
+  m_Name: DefendDeck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2013459639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013459638}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2030320489
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,3 +559,4 @@ SceneRoots:
   - {fileID: 1632894972}
   - {fileID: 1484304926}
   - {fileID: 2030320491}
+  - {fileID: 2013459639}

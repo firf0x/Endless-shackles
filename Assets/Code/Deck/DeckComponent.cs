@@ -6,8 +6,10 @@ namespace Object.Deck
 {
     public class DeckComponent : MonoBehaviour
     {
-        [SerializeField] private DeckCards cards;
+        [SerializeField] private DeckCardsConfig cards;
         [SerializeField] private HandDeck handDeck;
+        [SerializeField] private HandDeck defenceDeck;
+        [SerializeField] private HandDeck monsterDeck;
         private IDeck deck => handDeck;
 
         public void CreateNewCard()

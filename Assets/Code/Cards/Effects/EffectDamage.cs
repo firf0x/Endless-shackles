@@ -18,10 +18,7 @@ namespace Game.Cards
 
             foreach (EffectHealth healthEffect in healthEffects)
             {
-                healthEffect.ToString();
-                healthEffect.HealthSystem.TakeDamage(Damage);
                 ToString();
-                healthEffect.ToString();
             }        
             return true;
         }

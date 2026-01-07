@@ -7,9 +7,9 @@ public class HandDeck : MonoBehaviour, IDeck
 {
     [SerializeField] private int sizeDeck;
     [SerializeField] private DeckBoard board;
+    [SerializeField] private CardData[] cardData;
 
     public CardData[] cardDatas { get; private set; }
-    [SerializeField] private CardData[] cardData;
     private Transform[] cardPoint;
 
     private void Awake()

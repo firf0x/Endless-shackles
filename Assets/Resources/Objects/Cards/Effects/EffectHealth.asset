@@ -15,4 +15,4 @@ MonoBehaviour:
   effectName: 
   effectDiscription: 
   health:
-    value: 100
+    defaultValue: 100

@@ -37,5 +37,13 @@ namespace Game.Cards
             
             return result;
         }
+
+        public void RestartEffects()
+        {
+            foreach (var effect in Effects)
+            {
+                effect?.Restart();
+            }
+        }
     }
 }

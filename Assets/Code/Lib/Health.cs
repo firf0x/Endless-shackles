@@ -4,10 +4,10 @@ using UnityEngine;
 namespace Lib
 {
     [Serializable]
-    public class Health : IDamageble
+    public class Health : IDamageble, IEffectHandler
     {
         [SerializeField] private int defaultValue;
-        private int value;
+        private int value { get; set; }
         public int Value => value;
         public bool isDie { get; private set; }
         public event Action OnDead;
@@ -17,9 +17,9 @@ namespace Lib
         {
             if( amount <= 0 ) return;
 
-            amount = Mathf.Max( 0, amount );
-
             value -= amount;
+
+            amount = Mathf.Max( 0, amount );
             
             if( value <= 0 )
             {
@@ -27,10 +27,16 @@ namespace Lib
                 OnDead?.Invoke();
             }
         }
+
+        public bool Apply(GameObject target)
+        {
+            return true;
+        }
     
         public void Restart()
         {
             value = defaultValue;
+            isDie = false;
         }
     }
 

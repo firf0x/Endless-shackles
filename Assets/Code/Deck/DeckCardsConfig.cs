@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Object.Deck
 {
-    [CreateAssetMenu(fileName = "DeckCard", menuName = "Game/DeckCard", order = 0)]
-    public class DeckCards : ScriptableObject
+    [CreateAssetMenu(fileName = "Deck Cards Config", menuName = "Game/Deck Cards Config", order = 0)]
+    public class DeckCardsConfig : ScriptableObject
     {
         [SerializeField] private List<CardAttack> cardsAttack = new List<CardAttack>();
         [SerializeField] private List<CardDefence> cardsDefence = new List<CardDefence>();

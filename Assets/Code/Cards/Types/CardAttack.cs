@@ -9,6 +9,7 @@ namespace Game.Cards
     [Serializable]
     public class CardAttack : CardBase
     {
+        [SerializeField] public float a;
         public override void Init()
         {
             

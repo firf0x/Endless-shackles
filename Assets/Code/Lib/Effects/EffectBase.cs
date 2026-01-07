@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Lib
 {    
-    public abstract class EffectBase : ScriptableObject
+    public abstract class EffectBase : ScriptableObject, IEffectHandler
     {
         [SerializeField] private string effectName;
         [SerializeField] private string effectDiscription;
@@ -11,5 +11,7 @@ namespace Lib
         public string Discription => effectDiscription;
 
         public abstract bool Apply(GameObject target);
+
+        public virtual void Reset() {}
     }
 }
