@@ -124,8 +124,8 @@ public class HandDeck : MonoBehaviour, IDeck
                 if (cardDatas[D] == null) continue;
                 
                 // Получаем приоритеты
-                int priorityA = (int)cardDatas[A].cardBase.Type;
-                int priorityD = (int)cardDatas[D].cardBase.Type;
+                int priorityA = (int)cardDatas[A].decorateCard.Type;
+                int priorityD = (int)cardDatas[D].decorateCard.Type;
                 
                 // По приоритетам понимаем последовательность карт
                 if (priorityA > priorityD)

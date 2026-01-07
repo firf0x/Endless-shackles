@@ -5,6 +5,5 @@ namespace Lib
     public interface IEffectHandler
     {
         bool Apply(GameObject target);
-        void Restart() { }
     }
 }

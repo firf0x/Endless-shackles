@@ -10,13 +10,14 @@ namespace Object.Deck
         [SerializeField] private HandDeck handDeck;
         [SerializeField] private HandDeck defenceDeck;
         [SerializeField] private HandDeck monsterDeck;
+
         private IDeck deck => handDeck;
 
         public void CreateNewCard()
         {
             CardTypeEnum typeEnum = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster + 1);
 
-            CardBase card = null;
+            ICard card = null;
             GameObject cardPrefab = null;
 
             switch (typeEnum)
@@ -44,7 +45,7 @@ namespace Object.Deck
                     break;
             }
 
-            cardPrefab.GetComponent<CardData>().cardBase = card;
+            cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             deck.AddCard(cardPrefab.GetComponent<CardData>());

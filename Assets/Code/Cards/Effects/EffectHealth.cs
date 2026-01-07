@@ -10,10 +10,5 @@ namespace Game.Cards
         // public IDamageble HealthSystem => health;
 
         public override bool Apply(GameObject target) => true;
-
-        public override void Reset()
-        {
-            
-        }
     }
 }

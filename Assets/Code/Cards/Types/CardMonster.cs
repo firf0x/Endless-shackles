@@ -6,16 +6,11 @@ using VContainer;
 namespace Game.Cards
 {
     [Serializable]
-    public class CardMonster : CardBase
+    public class CardMonster : CardParametrs
     {
-        public override void Init()
-        {
-            
-        }
-
-        public override void Use( GameObject target )
-        {
-            target.GetComponent<CardData>();
-        }
+        //? Этот класс является исключительно зоной с данными.
+        [SerializeField, InspectorName("Damage")] public int DamageValue;
+        [SerializeField, InspectorName("Health")] public int HealthValue;
+        [SerializeField, InspectorName("Step")] public int StepValue;
     }
 }

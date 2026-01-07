@@ -2,7 +2,8 @@
     "name": "Game.Deck",
     "rootNamespace": "Game.Deck",
     "references": [
-        "GUID:c76fb6da50f2e70499f1d9f831484e0f"
+        "GUID:c76fb6da50f2e70499f1d9f831484e0f",
+        "GUID:4a355620b85e83e4885cbb191a59f462"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

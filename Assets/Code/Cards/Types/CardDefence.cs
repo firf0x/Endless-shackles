@@ -6,11 +6,8 @@ using VContainer;
 namespace Game.Cards
 {
     [Serializable]
-    public class CardDefence : CardBase
+    public class CardDefence : CardParametrs
     {
-        public override void Init()
-        {
-            
-        }
+        [SerializeField, InspectorName("Health")] public int HealthValue;
     }
 }

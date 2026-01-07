@@ -12,14 +12,14 @@ namespace Game.Cards
         {
             CardData cardData = target.GetComponent<CardData>();
 
-            List<EffectHealth> healthEffects = cardData.cardBase.GetEffects<EffectHealth>();
+            List<EffectHealth> healthEffects = cardData.decorateCard.GetEffects<EffectHealth>();
             
             if(healthEffects.Count == 0) return false;
 
             foreach (EffectHealth healthEffect in healthEffects)
             {
                 ToString();
-            }        
+            }
             return true;
         }
 

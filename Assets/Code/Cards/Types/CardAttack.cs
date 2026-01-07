@@ -7,23 +7,8 @@ using VContainer;
 namespace Game.Cards
 {
     [Serializable]
-    public class CardAttack : CardBase
+    public class CardAttack : CardParametrs
     {
-        [SerializeField] public float a;
-        public override void Init()
-        {
-            
-        }
-
-        public override void Use(GameObject target)
-        {
-            List<EffectDamage> effectsDamage = GetEffects<EffectDamage>();
-
-            foreach (var EDamage in effectsDamage)
-            {
-                EDamage.Apply(target);
-            }
-
-        }
+        [SerializeField, InspectorName("Damage")] public int DamageValue;
     }
 }

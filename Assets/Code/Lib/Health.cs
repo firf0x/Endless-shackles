@@ -4,14 +4,17 @@ using UnityEngine;
 namespace Lib
 {
     [Serializable]
-    public class Health : IDamageble, IEffectHandler
+    public class Health : IDamageble
     {
-        [SerializeField] private int defaultValue;
         private int value { get; set; }
         public int Value => value;
         public bool isDie { get; private set; }
         public event Action OnDead;
-        
+
+        public Health(int healthValue)
+        {
+            this.value = healthValue;
+        }        
 
         public void TakeDamage(int amount)
         {
@@ -19,7 +22,7 @@ namespace Lib
 
             value -= amount;
 
-            amount = Mathf.Max( 0, amount );
+            amount = Mathf.Max( amount, 0 );
             
             if( value <= 0 )
             {
@@ -28,14 +31,8 @@ namespace Lib
             }
         }
 
-        public bool Apply(GameObject target)
-        {
-            return true;
-        }
-    
         public void Restart()
         {
-            value = defaultValue;
             isDie = false;
         }
     }

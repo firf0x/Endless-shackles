@@ -11,7 +11,5 @@ namespace Lib
         public string Discription => effectDiscription;
 
         public abstract bool Apply(GameObject target);
-
-        public virtual void Reset() {}
     }
 }
