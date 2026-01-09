@@ -1,4 +1,4 @@
-namespace Lib
+namespace Game.Lib
 {
     public interface IAttack
     {

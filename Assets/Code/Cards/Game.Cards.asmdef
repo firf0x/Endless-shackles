@@ -2,18 +2,15 @@
     "name": "Game.Cards",
     "rootNamespace": "Game.Cards",
     "references": [
-        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
-        "GUID:4a355620b85e83e4885cbb191a59f462"
+        "GUID:f94c6af0bc09637469cdc5ba0c829a34"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
-    "defineConstraints": [
-        "DEBUG"
-    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

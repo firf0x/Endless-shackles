@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
-using Lib;
+using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards
 {
     [Serializable]
-    public abstract class CardDecorator : ICard
+    public abstract class CardDecorator : ICard<CardTypeEnum>
     {
-        protected ICard decoratedCard;
+        protected ICard<CardTypeEnum> decoratedCard;
 
-        public CardDecorator(ICard card) => decoratedCard = card;
+        public CardDecorator(ICard<CardTypeEnum> card) => decoratedCard = card;
 
         public virtual CardTypeEnum Type => decoratedCard.Type;
+        public virtual CardTypeEnum IgnoreLayers => decoratedCard.IgnoreLayers;
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
         public virtual Sprite Icon => decoratedCard.Icon;

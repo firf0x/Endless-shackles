@@ -1,4 +1,4 @@
-using Lib;
+using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards
@@ -6,7 +6,7 @@ namespace Game.Cards
     public class CardData : MonoBehaviour
     {
         [SerializeField] public SpriteRenderer ObjectRenderer;
-        public ICard decorateCard;
+        public ICard<CardTypeEnum> decorateCard;
 
         public void Execute(GameObject target)
         {

@@ -1,4 +1,4 @@
-using Lib;
+using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards

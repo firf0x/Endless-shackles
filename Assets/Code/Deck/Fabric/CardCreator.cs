@@ -1,44 +1,52 @@
 using Game.Cards;
-using Lib;
+using Game.Lib;
 using UnityEngine;
 
-namespace Game.Deck
+namespace Game.Deck.Fabric
 {
-    public class CardCreator : Creator<ICard>
+    public class CardCreator : Creator<ICard<CardTypeEnum>>
     {
         private readonly DeckCardsConfig config;
 
         public CardCreator(DeckCardsConfig config) => this.config = config;
 
-        public override ICard Create()
+        public override ICard<CardTypeEnum> Create()
         {
-            CardTypeEnum cardType = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster + 1);
+            int p = Random.Range(0, 3);
+            CardTypeEnum cardType = (CardTypeEnum)(1 << p);
+            Debug.Log(cardType);
 
             return CreateRandomCard(cardType);
         }
 
-        private ICard CreateRandomCard(CardTypeEnum typeEnum)
+        private ICard<CardTypeEnum> CreateRandomCard(CardTypeEnum typeEnum)
         {
+            ICard<CardTypeEnum> card = null;
+
             switch (typeEnum)
             {
-                case CardTypeEnum.Attack: return CreateAttackCard(Random.Range(0, config.CardsAttacks.Count));
-                case CardTypeEnum.Defence: return CreateDefenceCard(Random.Range(0, config.CardsDefence.Count));
-                case CardTypeEnum.Monster: return CreateMonsterCard(Random.Range(0, config.CardsMonster.Count));
+                case CardTypeEnum.Attack: card = CreateAttackCard(Random.Range(0, config.CardsAttacks.Count)); break;
+                case CardTypeEnum.Defence: card = CreateDefenceCard(Random.Range(0, config.CardsDefence.Count)); break;
+                case CardTypeEnum.Monster: card = CreateMonsterCard(Random.Range(0, config.CardsMonster.Count)); break;
 
-                default: return null;
+                default: card = null; break;
+
             }
+
+            return card;
         }
 
 
-        private ICard CreateAttackCard(int index)
+        private ICard<CardTypeEnum> CreateAttackCard(int index)
         {
             var cardsAttack = config.CardsAttacks;
 
             var cardData = cardsAttack[index];
 
-            ICard baseCard = new DefaultCard()
+            ICard<CardTypeEnum> baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
+                IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
@@ -48,15 +56,16 @@ namespace Game.Deck
             return new AttackDecorator(cardData.DamageValue, baseCard);
         }
 
-        private ICard CreateDefenceCard(int index)
+        private ICard<CardTypeEnum> CreateDefenceCard(int index)
         {
             var cardsDefence = config.CardsDefence;
 
             var cardData = cardsDefence[index];
 
-            ICard baseCard = new DefaultCard()
+            ICard<CardTypeEnum> baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
+                IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
@@ -66,22 +75,23 @@ namespace Game.Deck
             return new HealthDecorator(cardData.HealthValue, baseCard);
         }
 
-        private ICard CreateMonsterCard(int index)
+        private ICard<CardTypeEnum> CreateMonsterCard(int index)
         {
             var cardsMonster = config.CardsMonster;
 
             var cardData = cardsMonster[index];
 
-            ICard baseCard = new DefaultCard()
+            ICard<CardTypeEnum> baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
+                IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
                 Effects = cardData.Effects
             };
 
-            ICard cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
+            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
 
             return new HealthDecorator(cardData.HealthValue, cardWithAttack);
         }

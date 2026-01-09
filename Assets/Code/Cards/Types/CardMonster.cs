@@ -1,7 +1,5 @@
 using System;
-using Lib;
 using UnityEngine;
-using VContainer;
 
 namespace Game.Cards
 {

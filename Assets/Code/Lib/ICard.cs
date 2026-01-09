@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Lib;
+using System;
 
-namespace Game.Cards
+namespace Game.Lib
 {
-    public interface ICard
+    public interface ICard<T> where T : Enum
     {
-        CardTypeEnum Type { get; }
+        T Type { get; }
+        T IgnoreLayers { get; }
+        // poolCard
         string CardName { get; }
         string Description { get; }
         Sprite Icon { get; }

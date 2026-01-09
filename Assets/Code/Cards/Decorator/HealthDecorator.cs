@@ -1,5 +1,5 @@
 using UnityEngine;
-using Lib;
+using Game.Lib;
 
 namespace Game.Cards
 {
@@ -7,7 +7,7 @@ namespace Game.Cards
     {
         private Health healthSystem;
 
-        public HealthDecorator(int hp, ICard card) : base(card)
+        public HealthDecorator(int hp, ICard<CardTypeEnum> card) : base(card)
         {
             this.healthSystem = new Health(hp);
         }
@@ -15,6 +15,13 @@ namespace Game.Cards
         public void TakeDamage(int amount)
         {
             healthSystem.TakeDamage(amount);
+        }
+
+        public override void OnReleaseToPool()
+        {
+            base.OnReleaseToPool();
+
+            healthSystem.Restart();
         }
 
         public override string ToString()

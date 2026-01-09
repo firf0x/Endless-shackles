@@ -1,4 +1,4 @@
-using DG.Tweening; // Не забудьте добавить эту директиву
+using DG.Tweening;
 using Game.Cards;
 using Game.Deck;
 using UnityEngine;

@@ -13,21 +13,24 @@ MonoBehaviour:
   m_Name: DeckCard
   m_EditorClassIdentifier: 
   cardsAttack:
-  - type: 0
+  - type: 1
+    ignoreLayers: 3
     cardName: 
     description: 
     icon: {fileID: 21300000, guid: c191fc67bfd7ff24598b1fd026de8220, type: 2}
     effects: []
     DamageValue: 5
   cardsDefence:
-  - type: 1
+  - type: 2
+    ignoreLayers: -1
     cardName: 
     description: 
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
     effects: []
     HealthValue: 0
   cardsMonster:
-  - type: 2
+  - type: 4
+    ignoreLayers: 1
     cardName: 
     description: 
     icon: {fileID: 21300000, guid: 1c75912d695c46e40933ad11c9598af8, type: 3}

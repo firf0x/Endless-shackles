@@ -1,5 +1,5 @@
+using Game.Lib;
 using UnityEngine;
-using Lib;
 
 namespace Game.Cards
 {
@@ -8,7 +8,7 @@ namespace Game.Cards
         private int defaultDamageValue;
         private int currentDamageValue;
 
-        public AttackDecorator(int damageValue, ICard card) : base(card)
+        public AttackDecorator(int damageValue, ICard<CardTypeEnum> card) : base(card)
         {
             this.defaultDamageValue = damageValue;
         }
@@ -17,15 +17,20 @@ namespace Game.Cards
         {
             base.Use(target);
             
+            CardData data = target.GetComponent<CardData>();
+
             currentDamageValue = defaultDamageValue;
 
-            if(target.GetComponent<CardData>().TryGetCardFeature<IDamageble>(out var feature))
+
+            if(data.TryGetCardFeature<IDamageble>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers))
             {
                 ToString();
                 feature.ToString();
                 feature.TakeDamage(currentDamageValue);
                 feature.ToString();
             }
+
+            if(Type == CardTypeEnum.Attack) ;
         }
 
         public override string ToString()

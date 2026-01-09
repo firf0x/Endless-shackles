@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Lib
+namespace Game.Lib
 {
     public interface IPool<T>
     {
-        T Get();
+        T Get(Transform transform);
         void Release(T @object);
     }
 }

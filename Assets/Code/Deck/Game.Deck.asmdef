@@ -2,8 +2,8 @@
     "name": "Game.Deck",
     "rootNamespace": "Game.Deck",
     "references": [
-        "GUID:c76fb6da50f2e70499f1d9f831484e0f",
-        "GUID:4a355620b85e83e4885cbb191a59f462"
+        "GUID:f94c6af0bc09637469cdc5ba0c829a34",
+        "GUID:c76fb6da50f2e70499f1d9f831484e0f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -11,9 +11,7 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [
-        "DEBUG"
-    ],
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

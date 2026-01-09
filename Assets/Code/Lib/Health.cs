@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Lib
+namespace Game.Lib
 {
     [Serializable]
     public class Health : IDamageble

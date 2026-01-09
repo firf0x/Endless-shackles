@@ -1,4 +1,5 @@
 using Game.Cards;
+using Game.Lib;
 using UnityEngine;
 
 namespace Game.Deck
@@ -10,21 +11,17 @@ namespace Game.Deck
         [SerializeField] private HandDeck defenceDeck;
         [SerializeField] private HandDeck monsterDeck;
 
-        private PoolCard pool;
-
-        private CardCreator fabric;
-
+        private IPool<ICard<CardTypeEnum>> pool;
         private IDeck deck => handDeck;
 
         private void Awake()
         {
-            fabric = new CardCreator(config);
-            pool = new PoolCard(() => fabric.Create());
+            // pool = new PoolCard(config);
         }
 
         public void CreateNewCard()
         {
-            ICard card = pool.Get(transform);
+            ICard<CardTypeEnum> card = pool.Get(transform);
             
             GameObject cardPrefab = null;
 
@@ -55,7 +52,7 @@ namespace Game.Deck
 
         private void OnDestroy()
         {
-            pool.Dispose();
+            // pool.Dispose();
         }
     }
 }

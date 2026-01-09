@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Lib
+namespace Game.Lib
 {
     public interface IEffectHandler
     {
