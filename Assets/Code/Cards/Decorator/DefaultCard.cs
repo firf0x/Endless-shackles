@@ -25,6 +25,11 @@ namespace Game.Cards
             
             return result;
         }
+
+        public void OnReleaseToPool()
+        {
+        }
+
         public void Use(GameObject target) { }
     }
 }

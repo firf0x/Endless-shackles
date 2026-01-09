@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca2fa0040a6e8641b8efe4d8e531ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cards: {fileID: 11400000, guid: 4518d958bbeeb6846863e2e144a703b9, type: 2}
+  config: {fileID: 11400000, guid: 4518d958bbeeb6846863e2e144a703b9, type: 2}
   handDeck: {fileID: 1484304925}
   defenceDeck: {fileID: 0}
   monsterDeck: {fileID: 0}

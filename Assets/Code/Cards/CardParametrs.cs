@@ -21,28 +21,5 @@ namespace Game.Cards
         public string Description => description;
         public Sprite Icon => icon;
         public List<EffectBase> Effects => effects;
-
-        // public virtual void Use(GameObject target)
-        // {
-        //     foreach (IEffectHandler effect in Effects)
-        //     {
-        //         effect.Apply(target);
-        //     }
-        // }
-
-        // public List<T> GetEffects<T>() where T : EffectBase
-        // {
-        //     List<T> result = new List<T>();
-            
-        //     foreach (var effect in Effects)
-        //     {
-        //         if (effect is T typedEffect)
-        //         {
-        //             result.Add(typedEffect);
-        //         }
-        //     }
-            
-        //     return result;
-        // }
     }
 }

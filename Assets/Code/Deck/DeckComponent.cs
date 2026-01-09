@@ -1,54 +1,61 @@
 using Game.Cards;
-using Game.Deck;
 using UnityEngine;
 
-namespace Object.Deck
+namespace Game.Deck
 {
     public class DeckComponent : MonoBehaviour
     {
-        [SerializeField] private DeckCardsConfig cards;
+        [SerializeField] private DeckCardsConfig config;
         [SerializeField] private HandDeck handDeck;
         [SerializeField] private HandDeck defenceDeck;
         [SerializeField] private HandDeck monsterDeck;
 
+        private PoolCard pool;
+
+        private CardCreator fabric;
+
         private IDeck deck => handDeck;
+
+        private void Awake()
+        {
+            fabric = new CardCreator(config);
+            pool = new PoolCard(() => fabric.Create());
+        }
 
         public void CreateNewCard()
         {
-            CardTypeEnum typeEnum = (CardTypeEnum)Random.Range(0, (int)CardTypeEnum.Monster + 1);
-
-            ICard card = null;
+            ICard card = pool.Get(transform);
+            
             GameObject cardPrefab = null;
 
-            switch (typeEnum)
+            switch (card.Type)
             {
                 case CardTypeEnum.Attack:
-                    card = cards.GetRandomCard(typeEnum);
-                    
-                    cardPrefab = Instantiate(cards.prefabCardAttack);
+                    cardPrefab = Instantiate(config.prefabCardAttack);
                     break;
                 
                 case CardTypeEnum.Defence:
-                    card = cards.GetRandomCard(typeEnum);
-                    
-                    cardPrefab = Instantiate(cards.prefabCardDefence);
+                    cardPrefab = Instantiate(config.prefabCardDefence);
                     break;
                 
                 case CardTypeEnum.Monster:
-                    card = cards.GetRandomCard(typeEnum);
-                    
-                    cardPrefab = Instantiate(cards.prefabCardMonster);
+                    cardPrefab = Instantiate(config.prefabCardMonster);
                     break;
 
                 default:
                     Debug.LogError("Такого типа карты не существует.");
                     break;
-            }
+            }            
 
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             deck.AddCard(cardPrefab.GetComponent<CardData>());
+        }
+
+        private void OnDestroy()
+        {
+            pool.Dispose();
         }
     }
 }

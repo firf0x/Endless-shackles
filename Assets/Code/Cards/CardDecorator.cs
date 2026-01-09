@@ -19,6 +19,9 @@ namespace Game.Cards
         public virtual List<EffectBase> Effects => decoratedCard.Effects;
 
         public virtual List<T> GetEffects<T>() where T : EffectBase => decoratedCard.GetEffects<T>();
+
+        public virtual void OnReleaseToPool() => decoratedCard.OnReleaseToPool();
+
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
     }
 }

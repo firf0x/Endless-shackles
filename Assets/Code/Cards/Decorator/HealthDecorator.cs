@@ -5,9 +5,7 @@ namespace Game.Cards
 {
     public class HealthDecorator : CardDecorator, IDamageble
     {
-
         private Health healthSystem;
-        // private int currentHPValue;
 
         public HealthDecorator(int hp, ICard card) : base(card)
         {

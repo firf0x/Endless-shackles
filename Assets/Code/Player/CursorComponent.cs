@@ -1,7 +1,6 @@
 using DG.Tweening; // Не забудьте добавить эту директиву
 using Game.Cards;
 using Game.Deck;
-using Object.Deck;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

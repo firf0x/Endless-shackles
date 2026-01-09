@@ -14,5 +14,7 @@ namespace Game.Cards
         
         void Use(GameObject target);
         List<T> GetEffects<T>() where T : EffectBase;
+
+        void OnReleaseToPool();
     }
 }
