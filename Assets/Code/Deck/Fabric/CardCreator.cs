@@ -14,7 +14,6 @@ namespace Game.Deck.Fabric
         {
             int p = Random.Range(0, 3);
             CardTypeEnum cardType = (CardTypeEnum)(1 << p);
-            Debug.Log(cardType);
 
             return CreateRandomCard(cardType);
         }

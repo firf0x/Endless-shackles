@@ -18,7 +18,7 @@ public class CursorComponent : MonoBehaviour
     private InputAction interactAction;
     private InputAction positionAction;
 
-    private IDeck deck;
+    private IDeck<CardData> deck;
     private CardData currentCard;
     private Vector3 cardStartPosition;
     private Vector3 dragOffset;

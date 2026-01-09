@@ -3,7 +3,7 @@ using System;
 using Game.Cards;
 using Game.Deck;
 
-public class HandDeck : MonoBehaviour, IDeck
+public class HandDeck : MonoBehaviour, IDeck<CardData>
 {
     [SerializeField] private int sizeDeck;
     [SerializeField] private DeckBoard board;

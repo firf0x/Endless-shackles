@@ -2,11 +2,11 @@ using Game.Cards;
 
 namespace Game.Deck
 {
-    public interface IDeck
+    public interface IDeck<TDataType>
     {
-        CardData[] cardDatas { get; }
+        TDataType[] cardDatas { get; }
         
-        void AddCard(CardData newCard);
-        void RemoveCard(CardData deletedCard);
+        void AddCard(TDataType newCard);
+        void RemoveCard(TDataType deletedCard);
     }
 }

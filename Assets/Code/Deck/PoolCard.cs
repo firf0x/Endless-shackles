@@ -6,9 +6,9 @@ using Game.Deck.Fabric;
 using Game.Lib;
 using UnityEngine;
 
-namespace Game.Pool
+namespace Game.Deck.Pool
 {
-    public class PoolCard : IDisposable, IPool<ICard<CardTypeEnum>>
+    public class PoolCard : IPool<ICard<CardTypeEnum>>
     {
         private Queue<ICard<CardTypeEnum>> availableObjects;
         private List<ICard<CardTypeEnum>> occupiedObjects;
@@ -27,6 +27,8 @@ namespace Game.Pool
             
             if (availableObjects.Count > 0) card = availableObjects.Dequeue();
             else card = fabric.Create();
+
+            card.Pool = this;
 
             occupiedObjects.Add(card);
 

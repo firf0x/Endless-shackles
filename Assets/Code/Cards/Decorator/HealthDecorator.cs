@@ -20,7 +20,7 @@ namespace Game.Cards
         public override void OnReleaseToPool()
         {
             base.OnReleaseToPool();
-
+            
             healthSystem.Restart();
         }
 

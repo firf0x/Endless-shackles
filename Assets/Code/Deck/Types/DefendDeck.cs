@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Deck
 {
-    public sealed class DefendDeck : MonoBehaviour, IDeck
+    public sealed class DefendDeck : MonoBehaviour, IDeck<CardData>
     {
         public CardData[] cardDatas { get; private set;}
 

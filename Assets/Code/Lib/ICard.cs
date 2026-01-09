@@ -4,16 +4,17 @@ using System;
 
 namespace Game.Lib
 {
-    public interface ICard<T> where T : Enum
+    public interface ICard<TEnum> where TEnum : Enum
     {
-        T Type { get; }
-        T IgnoreLayers { get; }
-        // poolCard
+        TEnum Type { get; }
+        TEnum IgnoreLayers { get; }
+        IPool<ICard<TEnum>> Pool { get; set; }
         string CardName { get; }
         string Description { get; }
         Sprite Icon { get; }
         List<EffectBase> Effects { get; }
-        
+        GameObject Parent { get; set; }
+
         void Use(GameObject target);
         List<T> GetEffects<T>() where T : EffectBase;
 

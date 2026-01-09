@@ -30,7 +30,12 @@ namespace Game.Cards
                 feature.ToString();
             }
 
-            if(Type == CardTypeEnum.Attack) ;
+            if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) Pool.Release(decoratedCard);
+        }
+
+        public override void OnReleaseToPool()
+        {
+            base.OnReleaseToPool();
         }
 
         public override string ToString()

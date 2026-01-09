@@ -1,4 +1,5 @@
 using Game.Cards;
+using Game.Deck.Pool;
 using Game.Lib;
 using UnityEngine;
 
@@ -12,11 +13,11 @@ namespace Game.Deck
         [SerializeField] private HandDeck monsterDeck;
 
         private IPool<ICard<CardTypeEnum>> pool;
-        private IDeck deck => handDeck;
+        private IDeck<CardData> deck => handDeck;
 
         private void Awake()
         {
-            // pool = new PoolCard(config);
+            pool = new PoolCard(config);
         }
 
         public void CreateNewCard()
@@ -46,13 +47,15 @@ namespace Game.Deck
 
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+            card.Parent = cardPrefab.GetComponent<CardData>().gameObject;
+
 
             deck.AddCard(cardPrefab.GetComponent<CardData>());
         }
 
         private void OnDestroy()
         {
-            // pool.Dispose();
+            pool.Dispose();
         }
     }
 }
