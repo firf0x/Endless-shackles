@@ -7,12 +7,12 @@ namespace Game.Cards
     [CreateAssetMenu(fileName = "EffectMultiplyDamage", menuName = "Game/CardEffect/EffectMultiplyDamage", order = 0)]
     public class EffectMultiplyDamage : EffectBase<ICard<CardTypeEnum>>
     {
-        [SerializeField] private int Damage;
+        [SerializeField] private int DamageMultiply;
         public override bool Apply(ICard<CardTypeEnum> card)
         {
             if(card is AttackDecorator decorator)
             {
-                decorator.ChangeDamage(decorator.defaultDamageValue);
+                decorator.ChangeDamage(decorator.defaultDamageValue * (DamageMultiply - 1));
             }
 
             return true;
@@ -20,7 +20,7 @@ namespace Game.Cards
 
         public override string ToString()
         {
-            string message = $"Attack: было нанесено {Damage} урона.";
+            string message = $"Attack: было умножено {DamageMultiply} урона.";
             Debug.Log(message);
             return message;
         }
