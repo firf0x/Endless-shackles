@@ -14,25 +14,19 @@ namespace Game.Cards
 
         public virtual CardTypeEnum Type => decoratedCard.Type;
         public virtual CardTypeEnum IgnoreLayers => decoratedCard.IgnoreLayers;
-        public virtual IPool<ICard<CardTypeEnum>> Pool 
-        { 
-            get => decoratedCard.Pool;
-            set => decoratedCard.Pool = value;
-        }
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
         public virtual Sprite Icon => decoratedCard.Icon;
-        public virtual List<EffectBase> Effects => decoratedCard.Effects;
+        public virtual List<EffectBase<ICard<CardTypeEnum>>> Effects => decoratedCard.Effects;
         public virtual GameObject Parent 
         { 
             get => decoratedCard.Parent;
             set => decoratedCard.Parent = value;
         }
 
-        public virtual List<T> GetEffects<T>() where T : EffectBase => decoratedCard.GetEffects<T>();
-
-        public virtual void OnReleaseToPool() => decoratedCard.OnReleaseToPool();
-
+        public virtual List<T> GetEffects<T>() where T : EffectBase<ICard<CardTypeEnum>> => decoratedCard.GetEffects<T>();
+        public virtual T GetEffect<T>() where T : EffectBase<ICard<CardTypeEnum>> => decoratedCard.GetEffect<T>();
+        public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
     }
 }

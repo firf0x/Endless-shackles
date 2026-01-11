@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 using Game.Cards;
-using Game.Deck;
+using Game.Lib;
 
 public class HandDeck : MonoBehaviour, IDeck<CardData>
 {

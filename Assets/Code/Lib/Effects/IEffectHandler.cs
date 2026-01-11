@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Game.Lib
 {
-    public interface IEffectHandler
+    public interface IEffectHandler<T>
     {
-        bool Apply(GameObject target);
+        bool Apply(T data);
     }
 }

@@ -1,6 +1,4 @@
-using Game.Cards;
-
-namespace Game.Deck
+namespace Game.Lib
 {
     public interface IDeck<TDataType>
     {

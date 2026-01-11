@@ -1,5 +1,5 @@
 using Game.Cards;
-using Game.Deck.Pool;
+using Game.Deck.Fabric;
 using Game.Lib;
 using UnityEngine;
 
@@ -12,32 +12,32 @@ namespace Game.Deck
         [SerializeField] private HandDeck defenceDeck;
         [SerializeField] private HandDeck monsterDeck;
 
-        private IPool<ICard<CardTypeEnum>> pool;
+        private Creator<ICard<CardTypeEnum>> creator;
         private IDeck<CardData> deck => handDeck;
 
         private void Awake()
         {
-            pool = new PoolCard(config);
+            creator = new CardCreator(config);
         }
 
         public void CreateNewCard()
         {
-            ICard<CardTypeEnum> card = pool.Get(transform);
+            ICard<CardTypeEnum> card = creator.Create();
             
             GameObject cardPrefab = null;
 
             switch (card.Type)
             {
                 case CardTypeEnum.Attack:
-                    cardPrefab = Instantiate(config.prefabCardAttack);
+                    cardPrefab = Instantiate(config.prefabCardAttack, transform);
                     break;
                 
                 case CardTypeEnum.Defence:
-                    cardPrefab = Instantiate(config.prefabCardDefence);
+                    cardPrefab = Instantiate(config.prefabCardDefence, transform);
                     break;
                 
                 case CardTypeEnum.Monster:
-                    cardPrefab = Instantiate(config.prefabCardMonster);
+                    cardPrefab = Instantiate(config.prefabCardMonster, transform);
                     break;
 
                 default:
@@ -45,17 +45,12 @@ namespace Game.Deck
                     break;
             }            
 
+            card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
-            card.Parent = cardPrefab.GetComponent<CardData>().gameObject;
 
 
             deck.AddCard(cardPrefab.GetComponent<CardData>());
-        }
-
-        private void OnDestroy()
-        {
-            pool.Dispose();
         }
     }
 }

@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 
 namespace Game.Lib
 {    
-    public abstract class EffectBase : ScriptableObject, IEffectHandler
+    public abstract class EffectBase<T> : ScriptableObject, IEffectHandler<T>
     {
         [SerializeField] private string effectName;
         [SerializeField] private string effectDiscription;
@@ -10,6 +11,6 @@ namespace Game.Lib
         public string Name => effectName;
         public string Discription => effectDiscription;
 
-        public abstract bool Apply(GameObject target);
+        public abstract bool Apply(T card);
     }
 }

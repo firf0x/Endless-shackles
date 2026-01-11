@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4d77f517226320849b7d9ff0cf8d7a81, type: 3}
-  m_Name: EffectDamage
+  m_Name: EffectMultiplyDamage
   m_EditorClassIdentifier: 
   effectName: 
   effectDiscription: 
-  Damage: 5
+  Damage: 10

@@ -14,7 +14,7 @@ namespace Game.Cards
         [SerializeField] private string cardName;
         [SerializeField, TextArea] private string description;
         [SerializeField] private Sprite icon;
-        [SerializeField] private List<EffectBase> effects;
+        [SerializeField] private List<EffectBase<ICard<CardTypeEnum>>> effects;
 
 
         public CardTypeEnum Type => type;
@@ -22,6 +22,6 @@ namespace Game.Cards
         public string CardName => cardName;
         public string Description => description;
         public Sprite Icon => icon;
-        public List<EffectBase> Effects => effects;
+        public List<EffectBase<ICard<CardTypeEnum>>> Effects => effects;
     }
 }

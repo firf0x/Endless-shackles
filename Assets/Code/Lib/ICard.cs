@@ -8,16 +8,14 @@ namespace Game.Lib
     {
         TEnum Type { get; }
         TEnum IgnoreLayers { get; }
-        IPool<ICard<TEnum>> Pool { get; set; }
         string CardName { get; }
         string Description { get; }
         Sprite Icon { get; }
-        List<EffectBase> Effects { get; }
+        List<EffectBase<ICard<TEnum>>> Effects { get; }
         GameObject Parent { get; set; }
 
         void Use(GameObject target);
-        List<T> GetEffects<T>() where T : EffectBase;
-
-        void OnReleaseToPool();
+        List<T> GetEffects<T>() where T : EffectBase<ICard<TEnum>>;
+        T GetEffect<T>() where T : EffectBase<ICard<TEnum>>;
     }
 }

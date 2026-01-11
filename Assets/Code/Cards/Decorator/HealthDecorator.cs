@@ -17,13 +17,6 @@ namespace Game.Cards
             healthSystem.TakeDamage(amount);
         }
 
-        public override void OnReleaseToPool()
-        {
-            base.OnReleaseToPool();
-            
-            healthSystem.Restart();
-        }
-
         public override string ToString()
         {
             string message = $"Health: текущее количество {healthSystem.Value} здоровья.";

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Lib;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ namespace Game.Cards
 {
     public class AttackDecorator : CardDecorator
     {
-        private int defaultDamageValue;
+        public readonly int defaultDamageValue;
         private int currentDamageValue;
 
         public AttackDecorator(int damageValue, ICard<CardTypeEnum> card) : base(card)
@@ -19,23 +20,29 @@ namespace Game.Cards
             
             CardData data = target.GetComponent<CardData>();
 
-            currentDamageValue = defaultDamageValue;
-
 
             if(data.TryGetCardFeature<IDamageble>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers))
             {
+                foreach (var effect in Effects)
+                {
+                    effect.Apply(this);
+                }
+
                 ToString();
                 feature.ToString();
                 feature.TakeDamage(currentDamageValue);
                 feature.ToString();
             }
 
-            if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) Pool.Release(decoratedCard);
+            if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+            {
+                Parent.GetComponent<CardData>().CardDestroy();
+            }
         }
 
-        public override void OnReleaseToPool()
+        public void ChangeDamage(int value)
         {
-            base.OnReleaseToPool();
+            currentDamageValue = defaultDamageValue + value;
         }
 
         public override string ToString()

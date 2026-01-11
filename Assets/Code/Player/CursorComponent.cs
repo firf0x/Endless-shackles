@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Game.Cards;
 using Game.Deck;
+using Game.Lib;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,7 +19,6 @@ public class CursorComponent : MonoBehaviour
     private InputAction interactAction;
     private InputAction positionAction;
 
-    private IDeck<CardData> deck;
     private CardData currentCard;
     private Vector3 cardStartPosition;
     private Vector3 dragOffset;
@@ -115,10 +115,8 @@ public class CursorComponent : MonoBehaviour
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, raycastDistance, interactableLayer);
 
-        Debug.Log(hits.Length);
         foreach (RaycastHit2D hit in hits)
         {
-            Debug.Log(hit.collider != null);
             if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
             {
                 currentCard.Execute(hit.collider.gameObject);
