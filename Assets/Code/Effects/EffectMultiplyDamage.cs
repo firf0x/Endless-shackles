@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Game.Cards;
 using Game.Lib;
 using UnityEngine;
 
-namespace Game.Cards
+namespace Game.Effects
 {
     [CreateAssetMenu(fileName = "EffectMultiplyDamage", menuName = "Game/CardEffect/EffectMultiplyDamage", order = 0)]
     public class EffectMultiplyDamage : EffectBase<ICard<CardTypeEnum>>

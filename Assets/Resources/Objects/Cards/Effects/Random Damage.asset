@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d77f517226320849b7d9ff0cf8d7a81, type: 3}
-  m_Name: EffectMultiplyDamage
+  m_Script: {fileID: 11500000, guid: 55ce4135e1d24274fb3daca3d5d6c03d, type: 3}
+  m_Name: Random Damage
   m_EditorClassIdentifier: 
   effectName: 
   effectDiscription: 
-  DamageMultiply: 5
+  StartDamage: 0
+  EndDamage: 0
