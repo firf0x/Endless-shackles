@@ -42,5 +42,10 @@ namespace Game.Cards
             return null;
         }
         public void Use(GameObject target) { }
+
+        public void Dispose()
+        {
+            Effects.Clear();
+        }
     }
 }

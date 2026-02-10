@@ -7,7 +7,7 @@ namespace Game.Cards
     public class StepCombatDecorator : CardDecorator, IStepTick
     {
         public int currentStep { get; private set; }
-        private int maxStep;
+        private readonly int maxStep;
 
         public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {

@@ -12,6 +12,7 @@ namespace Game.Cards
         public AttackDecorator(int damageValue, ICard<CardTypeEnum> card) : base(card)
         {
             this.defaultDamageValue = damageValue;
+            ChangeDamage(0);
         }
 
         public override void Use(GameObject target)
@@ -28,16 +29,16 @@ namespace Game.Cards
                     effect.Apply(this);
                 }
 
+                //! Удаление карты атаки при нанесении урона по карте монстра
+                if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+                {
+                    Parent.GetComponent<CardData>().CardDestroy();
+                }
+
                 ToString();
                 feature.ToString();
                 feature.TakeDamage(currentDamageValue);
-                feature.ToString();
-            }
-
-            //! Удаление карты атаки при нанесении урона по карте монстра
-            if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
-            {
-                Parent.GetComponent<CardData>().CardDestroy();
+                
             }
         }
 

@@ -29,5 +29,14 @@ namespace Game.Cards
             Debug.Log(message);
             return message;
         }
+
+        public override void Dispose()
+        {
+            if (healthSystem != null)
+            {
+                healthSystem.OnDead -= OnDead;
+                healthSystem = null;
+            }
+        }
     }
 }

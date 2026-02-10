@@ -28,5 +28,12 @@ namespace Game.Cards
         public virtual T GetEffect<T>() where T : EffectBase<ICard<CardTypeEnum>> => decoratedCard.GetEffect<T>();
         public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
+
+        public virtual void Dispose()
+        {
+            
+            decoratedCard?.Dispose();
+            decoratedCard = null;
+        }
     }
 }

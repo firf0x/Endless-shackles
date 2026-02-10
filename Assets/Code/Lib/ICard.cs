@@ -4,7 +4,7 @@ using System;
 
 namespace Game.Lib
 {
-    public interface ICard<TEnum> where TEnum : Enum
+    public interface ICard<TEnum> : IDisposable where TEnum : Enum
     {
         TEnum Type { get; }
         TEnum IgnoreLayers { get; }

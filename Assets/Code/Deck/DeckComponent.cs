@@ -13,7 +13,7 @@ namespace Game.Deck
         [SerializeField] private MonsterDeck monsterDeck;
 
         private Creator<ICard<CardTypeEnum>> creator;
-        // private IDeck<CardData> deck => handDeck;
+        // private StepCombatSystem;
 
         private void Awake()
         {

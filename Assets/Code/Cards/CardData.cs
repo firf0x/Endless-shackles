@@ -31,18 +31,25 @@ namespace Game.Cards
             decorateCard = null;
         }
 
+        // TODO: Нужно подумать о пуле объектов, так как я полностью очищаю декораторы и их связи. Что поззволит мне задавать информацию полностью с нуля.
+
         private void BreakDecoratorChain(ICard<CardTypeEnum> card)
         {
-            while (card != null)
+            var currentCard = card;
+            
+            while (currentCard != null)
             {
-                card.Parent = null;
-                
-                if (card is CardDecorator decorator)
+                if (currentCard is CardDecorator decorator)
                 {
-                    card = decorator.GetInnerCard();
+                    var nextCard = decorator.GetInnerCard();
+                    
+                    currentCard.Dispose();
+                    currentCard = nextCard;
                 }
                 else
                 {
+                    currentCard.Dispose();
+                    currentCard = null;
                     break;
                 }
             }
