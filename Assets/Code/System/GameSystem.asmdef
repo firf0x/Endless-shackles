@@ -1,0 +1,16 @@
+{
+    "name": "GameSystem",
+    "rootNamespace": "GameSystem",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DEBUG"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -10,11 +10,17 @@ namespace Game.Cards
         public HealthDecorator(int hp, ICard<CardTypeEnum> card) : base(card)
         {
             this.healthSystem = new Health(hp);
+            this.healthSystem.OnDead += OnDead;
         }
 
         public void TakeDamage(int amount)
         {
             healthSystem.TakeDamage(amount);
+        }
+
+        public void OnDead()
+        {
+            Parent.GetComponent<CardData>().CardDestroy();
         }
 
         public override string ToString()

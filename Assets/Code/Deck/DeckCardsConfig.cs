@@ -9,7 +9,6 @@ namespace Game.Deck
     public class DeckCardsConfig : ScriptableObject
     {
         // * Здесь информация о игроке
-
         [field: SerializeField] public CardPlayer playerData { get; private set; }
 
         // * Здесь задаются данные о картах.

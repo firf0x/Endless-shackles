@@ -29,12 +29,14 @@ namespace Game.Lib
 
             value -= amount;
 
-            amount = Mathf.Max( amount, 0 );
+            value = Mathf.Max( value, 0 );
             
             if( value <= 0 )
             {
                 isDie = true;
                 OnDead?.Invoke();
+                
+                OnDead = null;
             }
         }
 

@@ -17,7 +17,7 @@ namespace Game.Cards
         public override void Use(GameObject target)
         {
             base.Use(target);
-            
+
             CardData data = target.GetComponent<CardData>();
 
 
@@ -34,6 +34,7 @@ namespace Game.Cards
                 feature.ToString();
             }
 
+            //! Удаление карты атаки при нанесении урона по карте монстра
             if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
             {
                 Parent.GetComponent<CardData>().CardDestroy();
@@ -43,6 +44,7 @@ namespace Game.Cards
         public void ChangeDamage(int value)
         {
             currentDamageValue = defaultDamageValue + value;
+            currentDamageValue = Mathf.Abs(currentDamageValue);
         }
 
         public override string ToString()
