@@ -2,7 +2,8 @@
     "name": "Game.Cards",
     "rootNamespace": "Game.Cards",
     "references": [
-        "GUID:f94c6af0bc09637469cdc5ba0c829a34"
+        "GUID:f94c6af0bc09637469cdc5ba0c829a34",
+        "GUID:a8f64673e4bedee438674e3c2a4ca2fe"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

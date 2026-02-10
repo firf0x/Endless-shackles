@@ -16,6 +16,7 @@ namespace Game.Cards
         public void TakeDamage(int amount)
         {
             healthSystem.TakeDamage(amount);
+            ToString();
         }
 
         public override string ToString()

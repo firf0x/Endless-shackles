@@ -7,7 +7,7 @@ namespace Game.Cards
     public class AttackDecorator : CardDecorator
     {
         public readonly int defaultDamageValue;
-        private int currentDamageValue;
+        public int currentDamageValue { get; private set; }
 
         public AttackDecorator(int damageValue, ICard<CardTypeEnum> card) : base(card)
         {
@@ -21,8 +21,7 @@ namespace Game.Cards
 
             CardData data = target.GetComponent<CardData>();
 
-
-            if(data.TryGetCardFeature<IDamageble>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers))
+            if(data.TryGetCardFeature<HealthDecorator>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers))
             {
                 foreach (var effect in Effects)
                 {
@@ -38,7 +37,27 @@ namespace Game.Cards
                 ToString();
                 feature.ToString();
                 feature.TakeDamage(currentDamageValue);
+            }
+            else
+            {
+                // Add null checks before accessing feature
+                if (feature != null)
+                {
+                    Debug.Log(feature.GetType().Name);
+                }
+                else
+                {
+                    Debug.Log("Feature is null");
+                }
                 
+                if (data != null && data.decorateCard != null)
+                {
+                    Debug.Log(!data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers));
+                }
+                else
+                {
+                    Debug.Log("Data or decorateCard is null");
+                }
             }
         }
 

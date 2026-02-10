@@ -19,10 +19,24 @@ namespace Game.Cards
             return decorateCard as T;
         }
         
-        public bool TryGetCardFeature<T>(out T feature) where T : class
+        public bool TryGetCardFeature<T>(out T decorator) where T : CardDecorator
         {
-            feature = decorateCard as T;
-            return feature != null;
+            decorator = null;
+            var current = decorateCard;
+
+            while (current != null)
+            {
+                if (current is T foundDecorator)
+                {
+                    decorator = foundDecorator;
+                    return true;
+                }
+                
+                if (current is CardDecorator cardDecorator) current = cardDecorator.GetInnerCard();
+                else current = null;
+            }
+            
+            return false;
         }
 
         private void OnDestroy()
@@ -43,11 +57,14 @@ namespace Game.Cards
                 {
                     var nextCard = decorator.GetInnerCard();
                     
+                    // Debug.Log($"Удаление: {currentCard.GetType().Name}");
+
                     currentCard.Dispose();
                     currentCard = nextCard;
                 }
                 else
                 {
+                    // Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
                     currentCard.Dispose();
                     currentCard = null;
                     break;

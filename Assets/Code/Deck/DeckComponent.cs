@@ -1,5 +1,6 @@
 using Game.Cards;
 using Game.Deck.Fabric;
+using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
 
@@ -8,16 +9,15 @@ namespace Game.Deck
     public class DeckComponent : MonoBehaviour
     {
         [SerializeField] private DeckCardsConfig config;
-        [SerializeField] private HandDeck handDeck;
-        [SerializeField] private DefendDeck defenceDeck;
-        [SerializeField] private MonsterDeck monsterDeck;
+        [field:SerializeField] public HandDeck handDeck { get; private set; }
+        [field:SerializeField] public DefendDeck defenceDeck { get; private set; }
+        [field:SerializeField] public MonsterDeck monsterDeck { get; private set; }
 
         private Creator<ICard<CardTypeEnum>> creator;
-        // private StepCombatSystem;
 
         private void Awake()
         {
-            var localCreator = new CardCreator(config);
+            var localCreator = new CardCreator(config, this);
             creator = localCreator;
 
             defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
@@ -28,6 +28,8 @@ namespace Game.Deck
             ICard<CardTypeEnum> card = creator.Create();
             
             GameObject cardPrefab = null;
+
+            StepCombatSystem.Instance.StepUpdate();
 
             switch (card.Type)
             {
@@ -54,11 +56,6 @@ namespace Game.Deck
             card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
-
-
-
-
-            // deck.AddCard(cardPrefab.GetComponent<CardData>());
         }
     }
 }

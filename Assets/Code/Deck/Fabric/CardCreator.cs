@@ -8,10 +8,11 @@ namespace Game.Deck.Fabric
     public class CardCreator : Creator<ICard<CardTypeEnum>>
     {
         private readonly DeckCardsConfig config;
-
-        public CardCreator(DeckCardsConfig config)
+        private readonly DeckComponent deckDatas;
+        public CardCreator(DeckCardsConfig config, DeckComponent deckDatas)
         {
             this.config = config;
+            this.deckDatas = deckDatas;
         }
 
         public override ICard<CardTypeEnum> Create()
@@ -95,8 +96,9 @@ namespace Game.Deck.Fabric
             };
 
             ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
+            ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
 
-            return new HealthDecorator(cardData.HealthValue, cardWithAttack);
+            return new StepCombatDecorator(cardData.StepValue, deckDatas.defenceDeck, deckDatas.defenceDeck.player.GetComponent<CardData>().GetCardFeature<PlayerDecorator>(), cardWithHealth);
         }
 
         public ICard<CardTypeEnum> CreatePlayerCard()
