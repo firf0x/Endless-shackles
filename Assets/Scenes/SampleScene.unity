@@ -119,6 +119,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &299611028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 299611030}
+  - component: {fileID: 299611029}
+  m_Layer: 0
+  m_Name: MonserDeck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &299611029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299611028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e9da76580c905245b9e493e5738ea4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeDeck: 7
+  <cardDatas>k__BackingField: []
+  _defendDeck: {fileID: 2013459640}
+--- !u!4 &299611030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299611028}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -231,6 +278,72 @@ MonoBehaviour:
   inputAction: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   moveDuration: 0.3
   moveEase: 12
+--- !u!1001 &947424033
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3287999758095561040, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159407358427220356, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_Name
+      value: Card Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159407358427220356, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+--- !u!1 &947424034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5159407358427220356, guid: d593e6ffedf92e746a2bdbcd9cf701c9, type: 3}
+  m_PrefabInstance: {fileID: 947424033}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1484304924
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +379,7 @@ MonoBehaviour:
     Down: 1
     Left: 5
     Right: 5
-  cardData: []
+  <cardDatas>k__BackingField: []
 --- !u!4 &1484304926
 Transform:
   m_ObjectHideFlags: 0
@@ -330,8 +443,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 4518d958bbeeb6846863e2e144a703b9, type: 2}
   handDeck: {fileID: 1484304925}
-  defenceDeck: {fileID: 0}
-  monsterDeck: {fileID: 0}
+  defenceDeck: {fileID: 2013459640}
+  monsterDeck: {fileID: 299611029}
 --- !u!61 &1632894974
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -442,6 +555,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2013459639}
+  - component: {fileID: 2013459640}
   m_Layer: 0
   m_Name: DefendDeck
   m_TagString: Untagged
@@ -464,6 +578,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2013459640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013459638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3f861aeee055d84aa3e7f2de6e70c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sizeDeck: 5
+  <cardDatas>k__BackingField: []
+  <player>k__BackingField: {fileID: 947424034}
 --- !u!1 &2030320489
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,5 +687,7 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1632894972}
   - {fileID: 2013459639}
+  - {fileID: 299611030}
   - {fileID: 1484304926}
   - {fileID: 2030320491}
+  - {fileID: 947424033}

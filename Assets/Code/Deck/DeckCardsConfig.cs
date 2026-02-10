@@ -8,15 +8,20 @@ namespace Game.Deck
     [CreateAssetMenu(fileName = "Deck Cards Config", menuName = "Game/Deck Cards Config", order = 0)]
     public class DeckCardsConfig : ScriptableObject
     {
+        // * Здесь информация о игроке
+
+        [field: SerializeField] public CardPlayer playerData { get; private set; }
+
         // * Здесь задаются данные о картах.
         [SerializeField] private List<CardAttack> cardsAttack = new List<CardAttack>();
         [SerializeField] private List<CardDefence> cardsDefence = new List<CardDefence>();
         [SerializeField] private List<CardMonster> cardsMonster = new List<CardMonster>();
 
         // * Какие карты должны использоваться для создания карт. 
-        [SerializeField] public GameObject prefabCardAttack;
-        [SerializeField] public GameObject prefabCardDefence;
-        [SerializeField] public GameObject prefabCardMonster;
+        [field: SerializeField] public GameObject prefabCardAttack { get; private set; }
+        [field: SerializeField] public GameObject prefabCardDefence { get; private set; }
+        [field: SerializeField] public GameObject prefabCardMonster { get; private set; }
+        [field: SerializeField] public GameObject prefabCardPlayer { get; private set; }
 
         public int CountCards => cardsAttack.Count + cardsDefence.Count + cardsMonster.Count;
 

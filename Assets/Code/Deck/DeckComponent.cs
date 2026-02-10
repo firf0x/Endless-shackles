@@ -9,15 +9,18 @@ namespace Game.Deck
     {
         [SerializeField] private DeckCardsConfig config;
         [SerializeField] private HandDeck handDeck;
-        [SerializeField] private HandDeck defenceDeck;
-        [SerializeField] private HandDeck monsterDeck;
+        [SerializeField] private DefendDeck defenceDeck;
+        [SerializeField] private MonsterDeck monsterDeck;
 
         private Creator<ICard<CardTypeEnum>> creator;
-        private IDeck<CardData> deck => handDeck;
+        // private IDeck<CardData> deck => handDeck;
 
         private void Awake()
         {
-            creator = new CardCreator(config);
+            var localCreator = new CardCreator(config);
+            creator = localCreator;
+
+            defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
         }
 
         public void CreateNewCard()
@@ -30,27 +33,32 @@ namespace Game.Deck
             {
                 case CardTypeEnum.Attack:
                     cardPrefab = Instantiate(config.prefabCardAttack, transform);
+                    handDeck.AddCard(cardPrefab.GetComponent<CardData>());
                     break;
                 
                 case CardTypeEnum.Defence:
                     cardPrefab = Instantiate(config.prefabCardDefence, transform);
+                    handDeck.AddCard(cardPrefab.GetComponent<CardData>());
                     break;
                 
                 case CardTypeEnum.Monster:
                     cardPrefab = Instantiate(config.prefabCardMonster, transform);
+                    monsterDeck.AddCard(cardPrefab.GetComponent<CardData>());
                     break;
 
                 default:
                     Debug.LogError("Такого типа карты не существует.");
                     break;
-            }            
+            }
 
             card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
 
-            deck.AddCard(cardPrefab.GetComponent<CardData>());
+
+
+            // deck.AddCard(cardPrefab.GetComponent<CardData>());
         }
     }
 }

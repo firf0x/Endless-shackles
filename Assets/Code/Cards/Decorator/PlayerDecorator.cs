@@ -1,5 +1,6 @@
 using UnityEngine;
 using Game.Lib;
+using System;
 
 namespace Game.Cards
 {
@@ -7,9 +8,9 @@ namespace Game.Cards
     {
         private Health healthSystem;
 
-        public PlayerDecorator(ICard<CardTypeEnum> card) : base(card)
+        public PlayerDecorator(Action subscribes, ICard<CardTypeEnum> card) : base(card)
         {
-            this.healthSystem = new Health(1);
+            this.healthSystem = new Health(1, subscribes);
         }
 
         public void TakeDamage(int amount)
@@ -19,7 +20,7 @@ namespace Game.Cards
 
         public override string ToString()
         {
-            string message = $"Health: текущее количество {healthSystem.Value} здоровья.";
+            string message = $"Игрок умер.";
             Debug.Log(message);
             return message;
         }

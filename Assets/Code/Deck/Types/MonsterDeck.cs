@@ -5,16 +5,17 @@ using UnityEngine;
 
 namespace Game.Deck
 {
-    public sealed class DefendDeck : MonoBehaviour, IDeck<CardData>
+    public sealed class MonsterDeck : MonoBehaviour, IDeck<CardData>
     {
         [SerializeField] private int sizeDeck;
-        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
-        [field:SerializeField] public GameObject player { get; private set; }
+        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты монстров
+
+        [SerializeField] private DefendDeck _defendDeck;
+        private IDeck<CardData> defendDeck => _defendDeck;
 
         private void Awake()
         {
             cardDatas = new CardData[sizeDeck];
-            
         }
 
         private void OnValidate()

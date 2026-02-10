@@ -1,3 +1,4 @@
+using System;
 using Game.Cards;
 using Game.Lib;
 using UnityEngine;
@@ -8,11 +9,14 @@ namespace Game.Deck.Fabric
     {
         private readonly DeckCardsConfig config;
 
-        public CardCreator(DeckCardsConfig config) => this.config = config;
+        public CardCreator(DeckCardsConfig config)
+        {
+            this.config = config;
+        }
 
         public override ICard<CardTypeEnum> Create()
         {
-            int p = Random.Range(0, 3);
+            int p = UnityEngine.Random.Range(0, 3);
             CardTypeEnum cardType = (CardTypeEnum)(1 << p);
 
             return CreateRandomCard(cardType);
@@ -24,9 +28,9 @@ namespace Game.Deck.Fabric
 
             switch (typeEnum)
             {
-                case CardTypeEnum.Attack: card = CreateAttackCard(Random.Range(0, config.CardsAttacks.Count)); break;
-                case CardTypeEnum.Defence: card = CreateDefenceCard(Random.Range(0, config.CardsDefence.Count)); break;
-                case CardTypeEnum.Monster: card = CreateMonsterCard(Random.Range(0, config.CardsMonster.Count)); break;
+                case CardTypeEnum.Attack: card = CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count)); break;
+                case CardTypeEnum.Defence: card = CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count)); break;
+                case CardTypeEnum.Monster: card = CreateMonsterCard(UnityEngine.Random.Range(0, config.CardsMonster.Count)); break;
 
                 default: card = null; break;
 
@@ -93,6 +97,25 @@ namespace Game.Deck.Fabric
             ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
 
             return new HealthDecorator(cardData.HealthValue, cardWithAttack);
+        }
+
+        public ICard<CardTypeEnum> CreatePlayerCard()
+        {
+            var cardData = config.playerData;
+
+            ICard<CardTypeEnum> baseCard = new DefaultCard()
+            {
+                Type = cardData.Type,
+                IgnoreLayers = cardData.IgnoreLayers,
+                CardName = cardData.CardName,
+                Description = cardData.Description,
+                Icon = cardData.Icon,
+                Effects = cardData.Effects
+            };
+
+            Action subscribes = () => cardData.Event?.Invoke();
+
+            return new PlayerDecorator(subscribes, baseCard);;
         }
     }
 }
