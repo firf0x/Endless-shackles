@@ -38,11 +38,11 @@ namespace Game.Cards
                     {
                         Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var attackData);
                         attackData.Use(item.gameObject);
+                        break;
                     }
-                    else isDefence++;
                 }
 
-                if(enemyDeck.cardDatas.Length == isDefence)
+                if(enemyDeck.GetCardCount() <= 0)
                 {
                     player.TakeDamage(100);
                 }

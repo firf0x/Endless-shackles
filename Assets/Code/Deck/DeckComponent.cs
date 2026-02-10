@@ -9,6 +9,8 @@ namespace Game.Deck
     public class DeckComponent : MonoBehaviour
     {
         [SerializeField] private DeckCardsConfig config;
+        [field:SerializeField] public GameObject GameOverWindow { get; private set; } //! ГОВНО КОД
+
         [field:SerializeField] public HandDeck handDeck { get; private set; }
         [field:SerializeField] public DefendDeck defenceDeck { get; private set; }
         [field:SerializeField] public MonsterDeck monsterDeck { get; private set; }
@@ -56,6 +58,13 @@ namespace Game.Deck
             card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+        }
+
+        public void ResetDatas()
+        {
+            handDeck.ClearCards();
+            defenceDeck.ClearCards();
+            monsterDeck.ClearCards();
         }
     }
 }

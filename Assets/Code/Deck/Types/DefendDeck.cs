@@ -41,5 +41,33 @@ namespace Game.Deck
         {
             
         }
+
+        /// <summary>
+        /// Получить общее количество карт в руке
+        /// </summary>
+        public int GetCardCount()
+        {
+            int count = 0;
+            if (cardDatas != null)
+            {
+                for (int i = 0; i < cardDatas.Length; i++)
+                {
+                    if (cardDatas[i] != null)
+                        count++;
+                }
+            }
+            return count;
+        }
+
+        public void ClearCards()
+        {
+            if(GetCardCount() <= 0) return;
+
+            foreach (var card in cardDatas)
+            {
+                if(card != null) card.CardDestroy();
+                player.GetComponent<CardData>();
+            }
+        }
     }
 }

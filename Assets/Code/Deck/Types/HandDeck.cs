@@ -4,197 +4,210 @@ using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
 
-public class HandDeck : MonoBehaviour, IDeck<CardData>
+namespace Game.Deck
 {
-    [SerializeField] private int sizeDeck;
-    [SerializeField] private DeckBoard board;
-    [SerializeField] private IDeck<CardData> defendDeck;
-    
-    [Tooltip("Если true, карты распределяются горизонтально. Если false - вертикально")]
-    [SerializeField] private bool horizontalDistribution = true;
-    
-    [Tooltip("Отступ между картами при распределении")]
-    [SerializeField] private float cardSpacing = 0.1f;
-
-    [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты этой колоды
-    private Transform[] cardPoint;
-
-    private void Awake()
+    public class HandDeck : MonoBehaviour, IDeck<CardData>
     {
-        cardDatas = new CardData[sizeDeck];
-        cardPoint = new Transform[sizeDeck];
-    }
-
-    private void OnValidate()
-    {
-        sizeDeck = Mathf.Max(sizeDeck, 0);
-        cardSpacing = Mathf.Max(cardSpacing, 0);
+        [SerializeField] private int sizeDeck;
+        [SerializeField] private DeckBoard board;
+        [SerializeField] private IDeck<CardData> defendDeck;
         
-        board.Left = Mathf.Max(board.Left, 0);
-        board.Right = Mathf.Max(board.Right, 0);
-        board.Up = Mathf.Max(board.Up, 0);
-        board.Down = Mathf.Max(board.Down, 0);
-    }
+        [Tooltip("Если true, карты распределяются горизонтально. Если false - вертикально")]
+        [SerializeField] private bool horizontalDistribution = true;
+        
+        [Tooltip("Отступ между картами при распределении")]
+        [SerializeField] private float cardSpacing = 0.1f;
 
-    /// <summary>
-    /// Получить позицию для карты по индексу
-    /// </summary>
-    public Vector3 GetCardPosition(int index)
-    {
-        int filledSlots = 0;
+        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты этой колоды
+        private Transform[] cardPoint;
 
-        for (int i = 0; i < cardDatas.Length; i++)
+        private void Awake()
         {
-            if (cardDatas[i] != null)
-                filledSlots++;
+            cardDatas = new CardData[sizeDeck];
+            cardPoint = new Transform[sizeDeck];
         }
-        
-        if (filledSlots <= 0)
-            return transform.position;
-        
-        Vector3 basePosition = transform.position;
-        
-        float totalWidth = board.Left + board.Right;
-        float spacing = 1f; // Отступ между картами
-        
-        if (filledSlots > 1)
-        {
-            spacing = totalWidth / (filledSlots - 1);
-        }
-        
-        // Начинаем с левого края
-        float startX = basePosition.x - board.Left;
-        float xPos = startX + (index * spacing);
-        
-        // Вертикальная позиция (центр по вертикали)
-        float yPos = basePosition.y + ((board.Up - board.Down) * 0.5f);
-        
-        return new Vector3(xPos, yPos, basePosition.z);
-    }
 
-    /// <summary>
-    /// Обновить позиции всех карт
-    /// </summary>
-    public void UpdateCardPositions()
-    {
-        if (cardDatas == null || cardPoint == null)
-            return;
+        private void OnValidate()
+        {
+            sizeDeck = Mathf.Max(sizeDeck, 0);
+            cardSpacing = Mathf.Max(cardSpacing, 0);
             
-        int currentIndex = 0;
-        for (int i = 0; i < cardDatas.Length; i++)
-        {
-            if (cardDatas[i] != null && cardPoint[i] != null)
-            {
-                cardPoint[i].position = GetCardPosition(currentIndex);
-                currentIndex++;
-            }
+            board.Left = Mathf.Max(board.Left, 0);
+            board.Right = Mathf.Max(board.Right, 0);
+            board.Up = Mathf.Max(board.Up, 0);
+            board.Down = Mathf.Max(board.Down, 0);
         }
-    }
 
-    private void OnDrawGizmos()
-    {
-        var leftUp = transform.position + new Vector3(-board.Left, board.Up);
-        var leftDown = transform.position + new Vector3(-board.Left, -board.Down);
-        var RightUp = transform.position + new Vector3(board.Right, board.Up);
-        var RightDown = transform.position + new Vector3(board.Right, -board.Down);
-
-        Gizmos.color = Color.yellow;
-
-        Gizmos.DrawLine(leftUp, leftDown);
-        Gizmos.DrawLine(leftDown, RightDown);
-        Gizmos.DrawLine(RightDown, RightUp);
-        Gizmos.DrawLine(RightUp, leftUp);
-
-        // Рисуем точки для распределения карт
-        if (cardDatas != null && cardDatas.Length > 0)
+        /// <summary>
+        /// Получить позицию для карты по индексу
+        /// </summary>
+        public Vector3 GetCardPosition(int index)
         {
-            Gizmos.color = Color.green;
             int filledSlots = 0;
+
             for (int i = 0; i < cardDatas.Length; i++)
             {
                 if (cardDatas[i] != null)
                     filledSlots++;
             }
             
-            for (int i = 0; i < filledSlots; i++)
+            if (filledSlots <= 0)
+                return transform.position;
+            
+            Vector3 basePosition = transform.position;
+            
+            float totalWidth = board.Left + board.Right;
+            float spacing = 1f; // Отступ между картами
+            
+            if (filledSlots > 1)
             {
-                Vector3 pos = GetCardPosition(i);
-                Gizmos.DrawSphere(pos, 0.1f);
+                spacing = totalWidth / (filledSlots - 1);
+            }
+            
+            // Начинаем с левого края
+            float startX = basePosition.x - board.Left;
+            float xPos = startX + (index * spacing);
+            
+            // Вертикальная позиция (центр по вертикали)
+            float yPos = basePosition.y + ((board.Up - board.Down) * 0.5f);
+            
+            return new Vector3(xPos, yPos, basePosition.z);
+        }
+
+        /// <summary>
+        /// Обновить позиции всех карт
+        /// </summary>
+        public void UpdateCardPositions()
+        {
+            if (cardDatas == null || cardPoint == null)
+                return;
+                
+            int currentIndex = 0;
+            for (int i = 0; i < cardDatas.Length; i++)
+            {
+                if (cardDatas[i] != null && cardPoint[i] != null)
+                {
+                    cardPoint[i].position = GetCardPosition(currentIndex);
+                    currentIndex++;
+                }
             }
         }
 
-        Gizmos.color = Color.white;
-    }
-
-    /// <summary>
-    /// Добавляет новую карту в руку
-    /// </summary>
-    public void AddCard(CardData newCard)
-    {   
-        // Ищем первую свободную ячейку
-        int freeIndex = -1;
-        for (int i = 0; i < sizeDeck; i++)
+        private void OnDrawGizmos()
         {
-            if (cardDatas[i] == null)
+            var leftUp = transform.position + new Vector3(-board.Left, board.Up);
+            var leftDown = transform.position + new Vector3(-board.Left, -board.Down);
+            var RightUp = transform.position + new Vector3(board.Right, board.Up);
+            var RightDown = transform.position + new Vector3(board.Right, -board.Down);
+
+            Gizmos.color = Color.yellow;
+
+            Gizmos.DrawLine(leftUp, leftDown);
+            Gizmos.DrawLine(leftDown, RightDown);
+            Gizmos.DrawLine(RightDown, RightUp);
+            Gizmos.DrawLine(RightUp, leftUp);
+
+            // Рисуем точки для распределения карт
+            if (cardDatas != null && cardDatas.Length > 0)
             {
-                freeIndex = i;
-                break;
+                Gizmos.color = Color.green;
+                int filledSlots = 0;
+                for (int i = 0; i < cardDatas.Length; i++)
+                {
+                    if (cardDatas[i] != null)
+                        filledSlots++;
+                }
+                
+                for (int i = 0; i < filledSlots; i++)
+                {
+                    Vector3 pos = GetCardPosition(i);
+                    Gizmos.DrawSphere(pos, 0.1f);
+                }
             }
+
+            Gizmos.color = Color.white;
         }
 
-        if (freeIndex >= 0)
-        {
-            // Добавляем карту в свободную ячейку
-            cardDatas[freeIndex] = newCard;
-            // Обновляем позиции всех карт
-            UpdateCardPositions();
-        }
-        else
-        {
-            Debug.LogWarning("Нет свободных слотов для карты!");
-        }
-    }
-
-    /// <summary>
-    /// Удаляет карту по индексу
-    /// </summary>
-    public void RemoveCard(CardData deletedCard)
-    {
-        for (int i = 0; i < cardDatas.Length; i++)
-        {
-            if(cardDatas[i] == deletedCard)
+        /// <summary>
+        /// Добавляет новую карту в руку
+        /// </summary>
+        public void AddCard(CardData newCard)
+        {   
+            // Ищем первую свободную ячейку
+            int freeIndex = -1;
+            for (int i = 0; i < sizeDeck; i++)
             {
-                cardDatas[i] = null;
+                if (cardDatas[i] == null)
+                {
+                    freeIndex = i;
+                    break;
+                }
+            }
+
+            if (freeIndex >= 0)
+            {
+                // Добавляем карту в свободную ячейку
+                cardDatas[freeIndex] = newCard;
                 // Обновляем позиции всех карт
                 UpdateCardPositions();
-                break;
+            }
+            else
+            {
+                Debug.LogWarning("Нет свободных слотов для карты!");
             }
         }
-    }
-    
-    /// <summary>
-    /// Получить общее количество карт в руке
-    /// </summary>
-    public int GetCardCount()
-    {
-        int count = 0;
-        if (cardDatas != null)
+
+        /// <summary>
+        /// Удаляет карту по индексу
+        /// </summary>
+        public void RemoveCard(CardData deletedCard)
         {
             for (int i = 0; i < cardDatas.Length; i++)
             {
-                if (cardDatas[i] != null)
-                    count++;
+                if(cardDatas[i] == deletedCard)
+                {
+                    cardDatas[i] = null;
+                    // Обновляем позиции всех карт
+                    UpdateCardPositions();
+                    break;
+                }
             }
         }
-        return count;
-    }
-}
+        
+        /// <summary>
+        /// Получить общее количество карт в руке
+        /// </summary>
+        public int GetCardCount()
+        {
+            int count = 0;
+            if (cardDatas != null)
+            {
+                for (int i = 0; i < cardDatas.Length; i++)
+                {
+                    if (cardDatas[i] != null)
+                        count++;
+                }
+            }
+            return count;
+        }
 
-[Serializable]
-public struct DeckBoard
-{
-    public float Up;
-    public float Down;
-    public float Left;
-    public float Right;
+        public void ClearCards()
+        {
+            if(GetCardCount() <= 0) return;
+
+            foreach (var card in cardDatas)
+            {
+                if(card != null) card.CardDestroy();
+            }
+        }
+    }
+
+    [Serializable]
+    public struct DeckBoard
+    {
+        public float Up;
+        public float Down;
+        public float Left;
+        public float Right;
+    }
 }

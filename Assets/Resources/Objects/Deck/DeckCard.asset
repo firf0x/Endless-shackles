@@ -12,6 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b57c127418b8dd46a175044710cae58, type: 3}
   m_Name: DeckCard
   m_EditorClassIdentifier: 
+  <playerData>k__BackingField:
+    type: 0
+    ignoreLayers: 0
+    cardName: 
+    description: 
+    icon: {fileID: 0}
+    effects: []
+    Event:
+      m_PersistentCalls:
+        m_Calls: []
   cardsAttack:
   - type: 1
     ignoreLayers: 3

@@ -34,8 +34,8 @@ namespace Game.Cards
                     Parent.GetComponent<CardData>().CardDestroy();
                 }
 
-                ToString();
-                feature.ToString();
+                // ToString();
+                // feature.ToString();
                 feature.TakeDamage(currentDamageValue);
             }
             else

@@ -7,20 +7,14 @@ namespace Game.Lib
     public class Health : IDamageble
     {
         private int value;
+        private int maxValue;
         public int Value => value;
-        public bool isDie { get; private set; }
         public event Action OnDead;
 
         public Health(int healthValue)
         {
+            this.maxValue = healthValue;
             this.value = healthValue;
-        }
-
-        public Health(int healthValue, Action subscribes)
-        {
-            this.value = healthValue;
-            
-            OnDead += subscribes;
         }
 
         public void TakeDamage(int amount)
@@ -33,16 +27,13 @@ namespace Game.Lib
             
             if( value <= 0 )
             {
-                isDie = true;
                 OnDead?.Invoke();
-                
-                OnDead = null;
             }
         }
 
-        public void Restart()
+        public void Reset()
         {
-            isDie = false;
+            value = maxValue;
         }
     }
 

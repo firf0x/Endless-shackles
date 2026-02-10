@@ -115,9 +115,7 @@ namespace Game.Deck.Fabric
                 Effects = cardData.Effects
             };
 
-            Action subscribes = () => cardData.Event?.Invoke();
-
-            return new PlayerDecorator(subscribes, baseCard);;
+            return new PlayerDecorator(deckDatas.GameOverWindow, baseCard);
         }
     }
 }

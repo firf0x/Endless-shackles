@@ -6,5 +6,6 @@ namespace Game.Lib
         
         void AddCard(TDataType newCard);
         void RemoveCard(TDataType deletedCard);
+        public int GetCardCount();
     }
 }
