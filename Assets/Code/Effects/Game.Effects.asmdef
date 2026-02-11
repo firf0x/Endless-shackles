@@ -3,8 +3,7 @@
     "rootNamespace": "Game.Effects",
     "references": [
         "GUID:c76fb6da50f2e70499f1d9f831484e0f",
-        "GUID:f94c6af0bc09637469cdc5ba0c829a34",
-        "GUID:250453114fae784439c95d2ee64c6372"
+        "GUID:f94c6af0bc09637469cdc5ba0c829a34"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

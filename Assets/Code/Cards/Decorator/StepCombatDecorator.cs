@@ -8,7 +8,10 @@ namespace Game.Cards
     public class StepCombatDecorator : CardDecorator, IStepTick
     {
         public int currentStep { get; private set; }
+        public event Action<int> OnStepChanged;
+        
         private readonly int maxStep;
+
         private IDeck<CardData> enemyDeck;
         private IDamageble player;
 
@@ -26,12 +29,10 @@ namespace Game.Cards
         {
             Debug.Log($"{CardName} | currentStep : {currentStep}");
 
-            currentStep--;
+            --currentStep;
 
             if(currentStep <= 0)
             {
-                int isDefence = 0;
-                
                 foreach (var item in enemyDeck.cardDatas)
                 {
                     if(item != null)
@@ -44,6 +45,8 @@ namespace Game.Cards
 
                 if(enemyDeck.GetCardCount() <= 0)
                 {
+                    // Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var attackData);
+                    // attackData.GetEffect<EffectIgnoreShields>
                     player.TakeDamage(100);
                 }
 

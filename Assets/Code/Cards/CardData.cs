@@ -14,9 +14,21 @@ namespace Game.Cards
             decorateCard?.Use(target);
         }
 
-        public T GetCardFeature<T>() where T : class
+        public T GetCardFeature<T>() where T : CardDecorator
         {
-            return decorateCard as T;
+            var current = decorateCard;
+
+            while (current != null)
+            {
+                if (current is T foundDecorator)
+                {
+                    return foundDecorator;
+                }
+                
+                if (current is CardDecorator cardDecorator) current = cardDecorator.GetInnerCard();
+                else current = null;
+            }
+            return null;
         }
         
         public bool TryGetCardFeature<T>(out T decorator) where T : CardDecorator
@@ -31,6 +43,21 @@ namespace Game.Cards
                     decorator = foundDecorator;
                     return true;
                 }
+                
+                if (current is CardDecorator cardDecorator) current = cardDecorator.GetInnerCard();
+                else current = null;
+            }
+            
+            return false;
+        }
+
+        public bool CheckCardFeature<T>() where T : CardDecorator
+        {
+            var current = decorateCard;
+
+            while (current != null)
+            {
+                if (current is T) return true;
                 
                 if (current is CardDecorator cardDecorator) current = cardDecorator.GetInnerCard();
                 else current = null;

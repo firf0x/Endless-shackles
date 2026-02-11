@@ -5,7 +5,7 @@ namespace Game.Cards
 {
     public class HealthDecorator : CardDecorator, IDamageble
     {
-        private Health healthSystem;
+        public Health healthSystem { get; private set; }
 
         public HealthDecorator(int hp, ICard<CardTypeEnum> card) : base(card)
         {
@@ -25,7 +25,7 @@ namespace Game.Cards
 
         public override string ToString()
         {
-            string message = $"Health: текущее количество {healthSystem.Value} здоровья.";
+            string message = $"Health: текущее количество {healthSystem.HealPoints.Value} здоровья.";
             Debug.Log(message);
             return message;
         }
