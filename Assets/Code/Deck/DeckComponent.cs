@@ -20,7 +20,7 @@ namespace Game.Deck
 
         private void Awake()
         {
-            var localCreator = new CardCreator(config, playerSystem);
+            var localCreator = new CardCreator(config, defenceDeck, playerSystem);
             creator = localCreator;
             // defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
         }

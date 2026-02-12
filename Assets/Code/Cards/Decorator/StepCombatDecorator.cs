@@ -11,12 +11,14 @@ namespace Game.Cards
         private readonly int maxStep;
         private bool isSpawn = true;
         private PlayerSystem player;
+        private IDeck<CardData> defendDeck;
 
-        public StepCombatDecorator(int step, PlayerSystem player, ICard<CardTypeEnum> card) : base(card)
+        public StepCombatDecorator(int step, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
             maxStep = step;
             currentStep = step;
             this.player = player;
+            defendDeck = deck;
             StepCombatSystem.Instance.EventUpdate += OnUpdate;
         }
 
@@ -31,9 +33,19 @@ namespace Game.Cards
             
             if(currentStep <= 0)
             {
-                
+                if(defendDeck.GetCardCount() > 0 )
+                {
+                    foreach (var card in defendDeck.cardDatas)
+                    {
+                        if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
+                        {
+                            decorator.TakeDamage(Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue);
+                            break;
+                        }
+                    }
+                }
+                else player.Kill();
 
-                player.Kill();
                 currentStep = maxStep;
             }
         }

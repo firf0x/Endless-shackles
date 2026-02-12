@@ -1,4 +1,5 @@
 using System;
+using Game.Lib;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,7 +10,7 @@ namespace Game.GameSystem
     {
         public bool IsAlive { get; private set; } = true;
         public UnityEvent OnPlayerDied;
-        
+
         public void Kill()
         {
             if (!IsAlive) return;

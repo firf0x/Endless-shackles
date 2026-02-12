@@ -10,10 +10,12 @@ namespace Game.Deck.Fabric
     {
         private readonly DeckCardsConfig config;
         private readonly PlayerSystem player;
-        public CardCreator(DeckCardsConfig config, PlayerSystem player)
+        private readonly IDeck<CardData> defendDeck;
+        public CardCreator(DeckCardsConfig config, IDeck<CardData> deck, PlayerSystem player)
         {
             this.config = config;
             this.player = player;
+            this.defendDeck = deck;
         }
 
         public override ICard<CardTypeEnum> Create()
@@ -101,7 +103,7 @@ namespace Game.Deck.Fabric
             ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
             ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
 
-            return new StepCombatDecorator(cardData.StepValue, player, cardWithHealth);
+            return new StepCombatDecorator(cardData.StepValue, player, defendDeck, cardWithHealth);
         }
     }
 }

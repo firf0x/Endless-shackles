@@ -33,7 +33,7 @@ namespace Game.Deck
 
         public void AddCard(CardData newCard)
         {
-            cards.Add(newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType, newCard);
+            cards.TryAdd(newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType, newCard);
         }
 
         public void RemoveCard(CardData deletedCard, bool isClearAll)
