@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
@@ -7,11 +9,11 @@ namespace Game.Deck
 {
     public sealed class DefendDeck : MonoBehaviour, IDeck<CardData>
     {
-        public DefendDeck Instance { get; private set; }
+        public static DefendDeck Instance { get; private set; }
         [SerializeField] private int sizeDeck;
-        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
-        [field:SerializeField] public GameObject player { get; private set; }
-
+        [field:SerializeField, ReadOnly] public Dictionary<DefenceType, CardData> cards { get; private set; } // Только карты защиты
+        public IReadOnlyList<CardData> cardDatas => cards.Values.ToList();
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -21,7 +23,7 @@ namespace Game.Deck
             }
             
             Instance = this;
-            cardDatas = new CardData[sizeDeck];
+            cards = new Dictionary<DefenceType, CardData>();
         }
 
         private void OnValidate()
@@ -31,22 +33,19 @@ namespace Game.Deck
 
         public void AddCard(CardData newCard)
         {
-            int freeIndex = -1;
-            for (int i = 0; i < sizeDeck; i++)
+            cards.Add(newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType, newCard);
+        }
+
+        public void RemoveCard(CardData deletedCard, bool isClearAll)
+        {
+            for (int i = 0; i < cards.Count; i++)
             {
-                if (cardDatas[i] == null)
+                if(cardDatas[i] == deletedCard)
                 {
-                    freeIndex = i;
+                    cards.Remove(deletedCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType);
                     break;
                 }
             }
-
-            cardDatas[freeIndex] = newCard;
-        }
-
-        public void RemoveCard(CardData deletedCard)
-        {
-            
         }
 
         /// <summary>
@@ -57,7 +56,7 @@ namespace Game.Deck
             int count = 0;
             if (cardDatas != null)
             {
-                for (int i = 0; i < cardDatas.Length; i++)
+                for (int i = 0; i < cardDatas.Count; i++)
                 {
                     if (cardDatas[i] != null)
                         count++;
@@ -72,9 +71,13 @@ namespace Game.Deck
 
             foreach (var card in cardDatas)
             {
-                if(card != null) card.CardDestroy();
-                player.GetComponent<CardData>();
+                if(card != null)
+                {
+                    card.CardDestroy(true);
+                }
             }
         }
+
+        public void UpdateAllCardsPosition() { }
     }
 }

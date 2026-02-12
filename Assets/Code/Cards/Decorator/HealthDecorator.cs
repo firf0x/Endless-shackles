@@ -20,7 +20,7 @@ namespace Game.Cards
 
         public void OnDead()
         {
-            Parent.GetComponent<CardData>().CardDestroy();
+            Parent.GetComponent<CardData>().CardDestroy(false);
         }
 
         public override string ToString()

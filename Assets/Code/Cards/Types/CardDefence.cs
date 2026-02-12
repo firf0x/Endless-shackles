@@ -8,5 +8,6 @@ namespace Game.Cards
     {
         //? Этот класс является исключительно зоной с данными.
         [SerializeField, InspectorName("Health")] public int HealthValue;
+        [SerializeField] public DefenceType DefenceType;
     }
 }

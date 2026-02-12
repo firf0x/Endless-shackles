@@ -29,12 +29,10 @@ namespace Game.Cards
                     effect.Apply(this);
                 }
 
-
                 //! Удаление карты атаки при нанесении урона по карте монстра
                 if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
                 {
-                    Parent.GetComponent<CardData>().CardDestroy();
-                    // StepCombatSystem.Instance.StepUpdate();
+                    Parent.GetComponent<CardData>().CardDestroy(false);
                 }
 
                 feature.TakeDamage(currentDamageValue);

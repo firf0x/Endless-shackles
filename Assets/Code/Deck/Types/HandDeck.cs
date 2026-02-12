@@ -4,12 +4,14 @@ using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
 using Game.GameSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Deck
 {
     public class HandDeck : MonoBehaviour, IDeck<CardData>
     {
-        public HandDeck Instance { get; private set; }
+        public static HandDeck Instance { get; private set; }
 
         [SerializeField] private int sizeDeck;
         [SerializeField] private DeckBoard board;
@@ -18,7 +20,8 @@ namespace Game.Deck
         [Tooltip("Отступ между картами при распределении")]
         [SerializeField] private float Spacing = 0.1f;
 
-        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты этой колоды
+        [field:SerializeField, ReadOnly] public CardData[] cards { get; private set; } // Только карты защиты
+        public IReadOnlyList<CardData> cardDatas => cards;
         private Transform[] cardPos;
 
         private void Start()
@@ -32,9 +35,7 @@ namespace Game.Deck
             Instance = this;
 
             cardPos = new Transform[sizeDeck];
-            cardDatas = new CardData[sizeDeck];
-
-            // StepCombatSystem.Instance.EventUpdate += UpdateAllCardsPosition;
+            cards = new CardData[sizeDeck];
         }
 
         private void OnValidate()
@@ -67,19 +68,19 @@ namespace Game.Deck
         /// </summary>
         public void UpdateAllCardsPosition()
         {
-            if (cardDatas == null) return;
+            if (cards == null) return;
             
             int insertPosition = 0;
             
-            for (int i = 0; i < cardDatas.Length; i++)
+            for (int i = 0; i < cards.Length; i++)
             {
-                if (cardDatas[i] != null)
+                if (cards[i] != null)
                 {
                     if (i != insertPosition)
                     {
                         // Перемещаем элемент на новую позицию
-                        cardDatas[insertPosition] = cardDatas[i];
-                        cardDatas[i] = null;
+                        cards[insertPosition] = cards[i];
+                        cards[i] = null;
                     }
                     
                     // Устанавливаем позицию карты
@@ -89,12 +90,12 @@ namespace Game.Deck
                 }
             }
             
-            for (int i = insertPosition; i < cardDatas.Length; i++)
+            for (int i = insertPosition; i < cards.Length; i++)
             {
-                cardDatas[i] = null;
+                cards[i] = null;
             }
             
-            Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
+            // Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
         }
 
         private void OnDrawGizmos()
@@ -122,9 +123,9 @@ namespace Game.Deck
         {   
             // Ищем первую свободную ячейку
             int freeIndex = -1;
-            for (int i = 0; i < sizeDeck; i++)
+            for (int i = 0; i < cards.Length; i++)
             {
-                if (cardDatas[i] == null)
+                if (cards[i] == null)
                 {
                     freeIndex = i;
                     break;
@@ -134,7 +135,7 @@ namespace Game.Deck
             if (freeIndex >= 0)
             {
                 // Добавляем карту в свободную ячейку
-                cardDatas[freeIndex] = newCard;
+                cards[freeIndex] = newCard;
 
                 UpdateAllCardsPosition();
             }
@@ -147,18 +148,18 @@ namespace Game.Deck
         /// <summary>
         /// Удаляет карту по индексу
         /// </summary>
-        public void RemoveCard(CardData deletedCard)
+        public void RemoveCard(CardData deletedCard, bool isClearAll)
         {
-            for (int i = 0; i < cardDatas.Length; i++)
+            for (int i = 0; i < cards.Length; i++)
             {
-                if(cardDatas[i] == deletedCard)
+                if(cards[i] == deletedCard)
                 {
-                    cardDatas[i] = null;
+                    cards[i] = null;
                     break;
                 }
             }
 
-            UpdateAllCardsPosition();
+            if(!isClearAll) UpdateAllCardsPosition();
         }
         
         /// <summary>
@@ -167,11 +168,11 @@ namespace Game.Deck
         public int GetCardCount()
         {
             int count = 0;
-            if (cardDatas != null)
+            if (cards != null)
             {
-                for (int i = 0; i < cardDatas.Length; i++)
+                for (int i = 0; i < cards.Length; i++)
                 {
-                    if (cardDatas[i] != null)
+                    if (cards[i] != null)
                         count++;
                 }
             }
@@ -182,15 +183,13 @@ namespace Game.Deck
         {
             if(GetCardCount() <= 0) return;
 
-            foreach (var card in cardDatas)
+            foreach (var card in cards)
             {
-                if(card != null) card.CardDestroy();
+                if(card != null)
+                {
+                    card.CardDestroy(true);
+                }
             }
-        }
-
-        private void OnDestroy()
-        {
-            // StepCombatSystem.Instance.EventUpdate -= UpdateAllCardsPosition;
         }
     }
 

@@ -16,10 +16,11 @@ namespace Game.Deck
         [field:SerializeField] public MonsterDeck monsterDeck { get; private set; }
 
         private Creator<ICard<CardTypeEnum>> creator;
+        [SerializeField] private PlayerSystem playerSystem = new();
 
         private void Awake()
         {
-            var localCreator = new CardCreator(config);
+            var localCreator = new CardCreator(config, playerSystem);
             creator = localCreator;
             // defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
         }
@@ -67,6 +68,7 @@ namespace Game.Deck
             handDeck.ClearCards();
             defenceDeck.ClearCards();
             monsterDeck.ClearCards();
+            playerSystem.Respawn();
         }
     }
 }

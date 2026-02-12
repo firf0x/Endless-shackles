@@ -9,6 +9,7 @@ public class CursorComponent : MonoBehaviour
 {
     [Header("Raycast Settings")]
     [SerializeField] private LayerMask interactableLayer;
+    [SerializeField] private LayerMask placeZoneLayer;
     [SerializeField] private float raycastDistance = 100f;
     [SerializeField] private InputActionAsset inputAction;
 
@@ -89,6 +90,8 @@ public class CursorComponent : MonoBehaviour
             CardData card;
             if (hit.collider.TryGetComponent<CardData>(out card))
             {
+                if(card.decorateCard.Type == CardTypeEnum.Monster) return;
+                
                 currentCard = card;
                 cardStartPosition = currentCard.transform.position;
                 isDragging = true;
@@ -113,7 +116,7 @@ public class CursorComponent : MonoBehaviour
         Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, raycastDistance, interactableLayer);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, raycastDistance);
 
         foreach (RaycastHit2D hit in hits)
         {
@@ -121,6 +124,27 @@ public class CursorComponent : MonoBehaviour
             {
                 currentCard.Execute(hit.collider.gameObject);
                 break;
+            }
+
+            // Debug.Log();
+
+            if (hit.collider != null && hit.collider.gameObject.layer == 8)
+            {
+                string zoneTypeName = hit.collider.gameObject.name;
+    
+                Debug.Log(zoneTypeName);
+                
+                // Проверяем является ли текущая карта картой защиты
+                if (currentCard.TryGetCardFeature<CustomTypeDecorator<DefenceType>>(out var decorator))
+                {
+                    if (zoneTypeName == decorator.CustomType.ToString())
+                    {
+                        Debug.Log("Карта добавилась");
+                        DefendDeck.Instance.AddCard(currentCard);
+                        HandDeck.Instance.RemoveCard(currentCard, false);
+                        break;
+                    }
+                }
             }
         }
 

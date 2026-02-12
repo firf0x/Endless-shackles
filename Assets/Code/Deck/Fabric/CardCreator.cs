@@ -1,5 +1,6 @@
 using System;
 using Game.Cards;
+using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
 
@@ -8,9 +9,11 @@ namespace Game.Deck.Fabric
     public class CardCreator : Creator<ICard<CardTypeEnum>>
     {
         private readonly DeckCardsConfig config;
-        public CardCreator(DeckCardsConfig config)
+        private readonly PlayerSystem player;
+        public CardCreator(DeckCardsConfig config, PlayerSystem player)
         {
             this.config = config;
+            this.player = player;
         }
 
         public override ICard<CardTypeEnum> Create()
@@ -73,8 +76,10 @@ namespace Game.Deck.Fabric
                 Icon = cardData.Icon,
                 Effects = cardData.Effects
             };
+            
+            ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, baseCard);
 
-            return new HealthDecorator(cardData.HealthValue, baseCard);
+            return new HealthDecorator(cardData.HealthValue, defenceType);
         }
 
         private ICard<CardTypeEnum> CreateMonsterCard(int index)
@@ -96,7 +101,7 @@ namespace Game.Deck.Fabric
             ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
             ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
 
-            return new StepCombatDecorator(cardData.StepValue, cardWithHealth);
+            return new StepCombatDecorator(cardData.StepValue, player, cardWithHealth);
         }
     }
 }

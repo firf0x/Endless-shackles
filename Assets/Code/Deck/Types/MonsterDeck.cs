@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
@@ -10,10 +12,12 @@ namespace Game.Deck
         public MonsterDeck Instance { get; private set; }
 
         [SerializeField] private int sizeDeck;
-        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты монстров
+        [field:SerializeField, ReadOnly] public CardData[] cards { get; private set; } // Только карты защиты
+        public IReadOnlyList<CardData> cardDatas => cards;
 
-        [SerializeField] private DefendDeck _defendDeck;
-        private IDeck<CardData> defendDeck => _defendDeck;
+        [Tooltip("Отступ между картами при распределении")]
+        [SerializeField] private float Spacing = 0.1f;
+        [SerializeField] private DeckBoard board;
 
         private void Awake()
         {
@@ -23,7 +27,7 @@ namespace Game.Deck
                 return;
             }
 
-            cardDatas = new CardData[sizeDeck];
+            cards = new CardData[sizeDeck];
         }
 
         private void OnValidate()
@@ -33,22 +37,109 @@ namespace Game.Deck
 
         public void AddCard(CardData newCard)
         {
+            // Ищем первую свободную ячейку
             int freeIndex = -1;
-            for (int i = 0; i < sizeDeck; i++)
+            for (int i = 0; i < cards.Length; i++)
             {
-                if (cardDatas[i] == null)
+                if (cards[i] == null)
                 {
                     freeIndex = i;
                     break;
                 }
             }
 
-            cardDatas[freeIndex] = newCard;
+            if (freeIndex >= 0)
+            {
+                // Добавляем карту в свободную ячейку
+                cards[freeIndex] = newCard;
+
+                UpdateAllCardsPosition();
+            }
+            else
+            {
+                Debug.LogWarning("Нет свободных слотов для карты!");
+            }
         }
 
-        public void RemoveCard(CardData deletedCard)
+        public void RemoveCard(CardData deletedCard, bool isClearAll)
         {
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if(cards[i] == deletedCard)
+                {
+                    cards[i] = null;
+                    break;
+                }
+            }
+
+            if(!isClearAll) UpdateAllCardsPosition();
+        }
+
+        /// <summary>
+        /// Получить позицию для карты по индексу
+        /// </summary>
+        private Vector3 GetCardPosition(int index)
+        {
+            float startX = transform.position.x - board.Left;
             
+            float posX = startX + (index * Spacing);
+            float posY = transform.position.y;
+            float posZ = transform.position.z;
+            
+            return new Vector3(posX, posY, posZ);
+        }
+
+        /// <summary>
+        /// Обновляет позиции всех карт в руке
+        /// </summary>
+        public void UpdateAllCardsPosition()
+        {
+            if (cards == null) return;
+            
+            int insertPosition = 0;
+            
+            for (int i = 0; i < cards.Length; i++)
+            {
+                if (cardDatas[i] != null)
+                {
+                    if (i != insertPosition)
+                    {
+                        // Перемещаем элемент на новую позицию
+                        cards[insertPosition] = cardDatas[i];
+                        cards[i] = null;
+                    }
+                    
+                    // Устанавливаем позицию карты
+                    Vector3 newPosition = GetCardPosition(insertPosition);
+                    cardDatas[insertPosition].transform.position = newPosition;
+                    insertPosition++;
+                }
+            }
+            
+            for (int i = insertPosition; i < cards.Length; i++)
+            {
+                cards[i] = null;
+            }
+            
+            // Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
+        }
+
+        private void OnDrawGizmos()
+        {
+            var leftUp = transform.position + new Vector3(-board.Left, board.Up);
+            var leftDown = transform.position + new Vector3(-board.Left, -board.Down);
+            var RightUp = transform.position + new Vector3(board.Right, board.Up);
+            var RightDown = transform.position + new Vector3(board.Right, -board.Down);
+
+            Gizmos.color = Color.red;
+
+            Gizmos.DrawLine(leftUp, leftDown);
+            Gizmos.DrawLine(leftDown, RightDown);
+            Gizmos.DrawLine(RightDown, RightUp);
+            Gizmos.DrawLine(RightUp, leftUp);
+
+
+            Gizmos.color = Color.white;
         }
 
         /// <summary>
@@ -57,12 +148,11 @@ namespace Game.Deck
         public int GetCardCount()
         {
             int count = 0;
-            if (cardDatas != null)
+            if (cards != null)
             {
-                for (int i = 0; i < cardDatas.Length; i++)
+                for (int i = 0; i < cards.Length; i++)
                 {
-                    if (cardDatas[i] != null)
-                        count++;
+                    if (cards[i] != null) count++;
                 }
             }
             return count;
@@ -72,9 +162,13 @@ namespace Game.Deck
         {
             if(GetCardCount() <= 0) return;
 
-            foreach (var card in cardDatas)
+
+            foreach (var card in cards)
             {
-                if(card != null) card.CardDestroy();
+                if(card != null)
+                {
+                    card.CardDestroy(true);
+                }
             }
         }
     }
