@@ -3,34 +3,44 @@ using System;
 using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
+using Game.GameSystem;
 
 namespace Game.Deck
 {
     public class HandDeck : MonoBehaviour, IDeck<CardData>
     {
+        public HandDeck Instance { get; private set; }
+
         [SerializeField] private int sizeDeck;
         [SerializeField] private DeckBoard board;
         [SerializeField] private IDeck<CardData> defendDeck;
         
-        [Tooltip("Если true, карты распределяются горизонтально. Если false - вертикально")]
-        [SerializeField] private bool horizontalDistribution = true;
-        
         [Tooltip("Отступ между картами при распределении")]
-        [SerializeField] private float cardSpacing = 0.1f;
+        [SerializeField] private float Spacing = 0.1f;
 
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты этой колоды
-        private Transform[] cardPoint;
+        private Transform[] cardPos;
 
-        private void Awake()
+        private void Start()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            
+            Instance = this;
+
+            cardPos = new Transform[sizeDeck];
             cardDatas = new CardData[sizeDeck];
-            cardPoint = new Transform[sizeDeck];
+
+            // StepCombatSystem.Instance.EventUpdate += UpdateAllCardsPosition;
         }
 
         private void OnValidate()
         {
             sizeDeck = Mathf.Max(sizeDeck, 0);
-            cardSpacing = Mathf.Max(cardSpacing, 0);
+            Spacing = Mathf.Max(Spacing, 0);
             
             board.Left = Mathf.Max(board.Left, 0);
             board.Right = Mathf.Max(board.Right, 0);
@@ -41,56 +51,50 @@ namespace Game.Deck
         /// <summary>
         /// Получить позицию для карты по индексу
         /// </summary>
-        public Vector3 GetCardPosition(int index)
+        private Vector3 GetCardPosition(int index)
         {
-            int filledSlots = 0;
-
-            for (int i = 0; i < cardDatas.Length; i++)
-            {
-                if (cardDatas[i] != null)
-                    filledSlots++;
-            }
+            float startX = transform.position.x - board.Left;
             
-            if (filledSlots <= 0)
-                return transform.position;
+            float posX = startX + (index * Spacing);
+            float posY = transform.position.y;
+            float posZ = transform.position.z;
             
-            Vector3 basePosition = transform.position;
-            
-            float totalWidth = board.Left + board.Right;
-            float spacing = 1f; // Отступ между картами
-            
-            if (filledSlots > 1)
-            {
-                spacing = totalWidth / (filledSlots - 1);
-            }
-            
-            // Начинаем с левого края
-            float startX = basePosition.x - board.Left;
-            float xPos = startX + (index * spacing);
-            
-            // Вертикальная позиция (центр по вертикали)
-            float yPos = basePosition.y + ((board.Up - board.Down) * 0.5f);
-            
-            return new Vector3(xPos, yPos, basePosition.z);
+            return new Vector3(posX, posY, posZ);
         }
 
         /// <summary>
-        /// Обновить позиции всех карт
+        /// Обновляет позиции всех карт в руке
         /// </summary>
-        public void UpdateCardPositions()
+        public void UpdateAllCardsPosition()
         {
-            if (cardDatas == null || cardPoint == null)
-                return;
-                
-            int currentIndex = 0;
+            if (cardDatas == null) return;
+            
+            int insertPosition = 0;
+            
             for (int i = 0; i < cardDatas.Length; i++)
             {
-                if (cardDatas[i] != null && cardPoint[i] != null)
+                if (cardDatas[i] != null)
                 {
-                    cardPoint[i].position = GetCardPosition(currentIndex);
-                    currentIndex++;
+                    if (i != insertPosition)
+                    {
+                        // Перемещаем элемент на новую позицию
+                        cardDatas[insertPosition] = cardDatas[i];
+                        cardDatas[i] = null;
+                    }
+                    
+                    // Устанавливаем позицию карты
+                    Vector3 newPosition = GetCardPosition(insertPosition);
+                    cardDatas[insertPosition].transform.position = newPosition;
+                    insertPosition++;
                 }
             }
+            
+            for (int i = insertPosition; i < cardDatas.Length; i++)
+            {
+                cardDatas[i] = null;
+            }
+            
+            Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
         }
 
         private void OnDrawGizmos()
@@ -107,23 +111,6 @@ namespace Game.Deck
             Gizmos.DrawLine(RightDown, RightUp);
             Gizmos.DrawLine(RightUp, leftUp);
 
-            // Рисуем точки для распределения карт
-            if (cardDatas != null && cardDatas.Length > 0)
-            {
-                Gizmos.color = Color.green;
-                int filledSlots = 0;
-                for (int i = 0; i < cardDatas.Length; i++)
-                {
-                    if (cardDatas[i] != null)
-                        filledSlots++;
-                }
-                
-                for (int i = 0; i < filledSlots; i++)
-                {
-                    Vector3 pos = GetCardPosition(i);
-                    Gizmos.DrawSphere(pos, 0.1f);
-                }
-            }
 
             Gizmos.color = Color.white;
         }
@@ -148,8 +135,8 @@ namespace Game.Deck
             {
                 // Добавляем карту в свободную ячейку
                 cardDatas[freeIndex] = newCard;
-                // Обновляем позиции всех карт
-                UpdateCardPositions();
+
+                UpdateAllCardsPosition();
             }
             else
             {
@@ -167,11 +154,11 @@ namespace Game.Deck
                 if(cardDatas[i] == deletedCard)
                 {
                     cardDatas[i] = null;
-                    // Обновляем позиции всех карт
-                    UpdateCardPositions();
                     break;
                 }
             }
+
+            UpdateAllCardsPosition();
         }
         
         /// <summary>
@@ -199,6 +186,11 @@ namespace Game.Deck
             {
                 if(card != null) card.CardDestroy();
             }
+        }
+
+        private void OnDestroy()
+        {
+            // StepCombatSystem.Instance.EventUpdate -= UpdateAllCardsPosition;
         }
     }
 

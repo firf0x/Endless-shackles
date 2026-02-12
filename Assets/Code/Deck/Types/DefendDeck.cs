@@ -7,14 +7,21 @@ namespace Game.Deck
 {
     public sealed class DefendDeck : MonoBehaviour, IDeck<CardData>
     {
+        public DefendDeck Instance { get; private set; }
         [SerializeField] private int sizeDeck;
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
         [field:SerializeField] public GameObject player { get; private set; }
 
         private void Awake()
         {
-            cardDatas = new CardData[sizeDeck];
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
             
+            Instance = this;
+            cardDatas = new CardData[sizeDeck];
         }
 
         private void OnValidate()

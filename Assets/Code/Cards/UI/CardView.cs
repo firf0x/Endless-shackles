@@ -50,7 +50,7 @@ namespace Game.Cards.UI
             if (damageText != null && viewModel.isAttackDecorator) damageText.text = viewModel.Damage;
             if (stepText != null && viewModel.isStepDecorator) stepText.text = viewModel.Step;
             
-            Debug.Log($"Обновление данных => {viewModel.Name}");
+            // Debug.Log($"Обновление данных => {viewModel.Name}");
         }
 
         private void OnDestroy()

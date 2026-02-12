@@ -7,6 +7,8 @@ namespace Game.Deck
 {
     public sealed class MonsterDeck : MonoBehaviour, IDeck<CardData>
     {
+        public MonsterDeck Instance { get; private set; }
+
         [SerializeField] private int sizeDeck;
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Карты монстров
 
@@ -15,6 +17,12 @@ namespace Game.Deck
 
         private void Awake()
         {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+
             cardDatas = new CardData[sizeDeck];
         }
 

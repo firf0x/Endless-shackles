@@ -19,10 +19,9 @@ namespace Game.Deck
 
         private void Awake()
         {
-            var localCreator = new CardCreator(config, this);
+            var localCreator = new CardCreator(config);
             creator = localCreator;
-
-            defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
+            // defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
         }
 
         public void CreateNewCard()
@@ -38,16 +37,19 @@ namespace Game.Deck
                 case CardTypeEnum.Attack:
                     cardPrefab = Instantiate(config.prefabCardAttack, transform);
                     handDeck.AddCard(cardPrefab.GetComponent<CardData>());
+                    cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
                     break;
                 
                 case CardTypeEnum.Defence:
                     cardPrefab = Instantiate(config.prefabCardDefence, transform);
                     handDeck.AddCard(cardPrefab.GetComponent<CardData>());
+                    cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
                     break;
                 
                 case CardTypeEnum.Monster:
                     cardPrefab = Instantiate(config.prefabCardMonster, transform);
                     monsterDeck.AddCard(cardPrefab.GetComponent<CardData>());
+                    cardPrefab.GetComponent<CardData>().currentDeck = monsterDeck;
                     break;
 
                 default:

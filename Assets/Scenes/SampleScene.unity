@@ -876,8 +876,7 @@ MonoBehaviour:
     Down: 1
     Left: 5
     Right: 5
-  horizontalDistribution: 1
-  cardSpacing: 0.1
+  Spacing: 2
   <cardDatas>k__BackingField: []
 --- !u!4 &1484304926
 Transform:
@@ -1413,6 +1412,6 @@ SceneRoots:
   - {fileID: 1484304926}
   - {fileID: 2030320491}
   - {fileID: 947424033}
-  - {fileID: 1649064997}
   - {fileID: 1538868815}
+  - {fileID: 1649064997}
   - {fileID: 677489113}

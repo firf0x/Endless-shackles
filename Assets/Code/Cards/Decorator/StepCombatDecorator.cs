@@ -9,49 +9,36 @@ namespace Game.Cards
     {
         public int currentStep { get; private set; }
         public event Action<int> OnStepChanged;
-        
+
         private readonly int maxStep;
+        private bool isSpawn = true;
 
-        private IDeck<CardData> enemyDeck;
-        private IDamageble player;
-
-        public StepCombatDecorator(int step, IDeck<CardData> deck, IDamageble player, ICard<CardTypeEnum> card) : base(card)
+        public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {
-            this.player = player;
             maxStep = step;
             currentStep = step;
-            enemyDeck = deck;
 
             StepCombatSystem.Instance.EventUpdate += OnUpdate;
         }
 
         public void OnUpdate()
         {
-            Debug.Log($"{CardName} | currentStep : {currentStep}");
 
-            --currentStep;
+            if(isSpawn)
+            {
+                isSpawn = false;
+                return;
+            }
+            else currentStep--;
+            
+            // Debug.Log($"{CardName} | currentStep : {currentStep}");
 
             if(currentStep <= 0)
             {
-                foreach (var item in enemyDeck.cardDatas)
-                {
-                    if(item != null)
-                    {
-                        Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var attackData);
-                        attackData.Use(item.gameObject);
-                        break;
-                    }
-                }
-
-                if(enemyDeck.GetCardCount() <= 0)
-                {
-                    // Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var attackData);
-                    // attackData.GetEffect<EffectIgnoreShields>
-                    player.TakeDamage(100);
-                }
-
                 currentStep = maxStep;
             }
+
+            OnStepChanged?.Invoke(currentStep);
         }
 
         public override void Dispose()
