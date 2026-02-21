@@ -12,8 +12,14 @@ namespace Game.Deck
         public static DefendDeck Instance { get; private set; }
         [SerializeField] private int sizeDeck;
         [field:SerializeField, ReadOnly] public Dictionary<DefenceType, CardData> cards { get; private set; } // Только карты защиты
-        public IReadOnlyList<CardData> cardDatas => cards.Values.ToList();
-        
+        public CardData[] cardDatas 
+        {
+            get
+            {
+                return cards.Values.ToArray();
+            }
+        }
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -33,18 +39,42 @@ namespace Game.Deck
 
         public void AddCard(CardData newCard)
         {
-            cards.TryAdd(newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType, newCard);
+            var key = newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType;
+            
+            if (cards.ContainsKey(key))
+            {
+                // Перезаписываем
+                if (cards[key] == null)
+                {
+                    cards[key] = newCard;
+                    Debug.Log($"Ключ {key} существовал с null, перезаписан");
+                }
+                else Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
+            }
+            else
+            {
+                cards.Add(key, newCard);
+                Debug.Log($"Добавлена новая карта");
+            }
         }
 
         public void RemoveCard(CardData deletedCard, bool isClearAll)
         {
-            for (int i = 0; i < cards.Count; i++)
+            if (isClearAll) cards.Clear();
+            else
             {
-                if(cardDatas[i] == deletedCard)
+                // Ищем ключ по значению
+                DefenceType? keyToRemove = null;
+                foreach (var card in cards)
                 {
-                    cards.Remove(deletedCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType);
-                    break;
+                    if (card.Value == deletedCard)
+                    {
+                        keyToRemove = card.Key;
+                        break;
+                    }
                 }
+                
+                if (keyToRemove.HasValue) cards.Remove(keyToRemove.Value);
             }
         }
 
@@ -53,16 +83,7 @@ namespace Game.Deck
         /// </summary>
         public int GetCardCount()
         {
-            int count = 0;
-            if (cardDatas != null)
-            {
-                for (int i = 0; i < cardDatas.Count; i++)
-                {
-                    if (cardDatas[i] != null)
-                        count++;
-                }
-            }
-            return count;
+            return cards.Values.Count(card => card != null);
         }
 
         public void ClearCards()
@@ -78,6 +99,14 @@ namespace Game.Deck
             }
         }
 
-        public void UpdateAllCardsPosition() { }
+        public bool ContainsCard(DefenceType defenceType)
+        {
+            return cards != null && cards.ContainsKey(defenceType);
+        }
+
+        //! Update data!!! обновляется список возможных карт которым можно нанести урон.
+        public void UpdateAllCardsPosition()
+        {
+        }
     }
 }

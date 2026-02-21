@@ -31,12 +31,19 @@ namespace Game.Cards
             }
             else currentStep--;
             
+            // foreach (var item in defendDeck.cardDatas)
+            // {
+            //     Debug.Log(item);
+            // }
+
             if(currentStep <= 0)
             {
                 if(defendDeck.GetCardCount() > 0 )
                 {
                     foreach (var card in defendDeck.cardDatas)
                     {
+                        if(card == null || card.decorateCard == null) continue;
+                        // Debug.Log(card.decorateCard.CardName);
                         if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
                         {
                             decorator.TakeDamage(Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue);
@@ -45,6 +52,8 @@ namespace Game.Cards
                     }
                 }
                 else player.Kill();
+
+                defendDeck.UpdateAllCardsPosition();
 
                 currentStep = maxStep;
             }

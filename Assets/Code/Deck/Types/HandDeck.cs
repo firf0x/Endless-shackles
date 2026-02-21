@@ -20,8 +20,7 @@ namespace Game.Deck
         [Tooltip("Отступ между картами при распределении")]
         [SerializeField] private float Spacing = 0.1f;
 
-        [field:SerializeField, ReadOnly] public CardData[] cards { get; private set; } // Только карты защиты
-        public IReadOnlyList<CardData> cardDatas => cards;
+        [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
         private Transform[] cardPos;
 
         private void Start()
@@ -35,7 +34,7 @@ namespace Game.Deck
             Instance = this;
 
             cardPos = new Transform[sizeDeck];
-            cards = new CardData[sizeDeck];
+            cardDatas = new CardData[sizeDeck];
         }
 
         private void OnValidate()
@@ -68,19 +67,19 @@ namespace Game.Deck
         /// </summary>
         public void UpdateAllCardsPosition()
         {
-            if (cards == null) return;
+            if (cardDatas == null) return;
             
             int insertPosition = 0;
             
-            for (int i = 0; i < cards.Length; i++)
+            for (int i = 0; i < cardDatas.Length; i++)
             {
-                if (cards[i] != null)
+                if (cardDatas[i] != null)
                 {
                     if (i != insertPosition)
                     {
                         // Перемещаем элемент на новую позицию
-                        cards[insertPosition] = cards[i];
-                        cards[i] = null;
+                        cardDatas[insertPosition] = cardDatas[i];
+                        cardDatas[i] = null;
                     }
                     
                     // Устанавливаем позицию карты
@@ -90,9 +89,9 @@ namespace Game.Deck
                 }
             }
             
-            for (int i = insertPosition; i < cards.Length; i++)
+            for (int i = insertPosition; i < cardDatas.Length; i++)
             {
-                cards[i] = null;
+                cardDatas[i] = null;
             }
             
             // Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
@@ -123,9 +122,9 @@ namespace Game.Deck
         {   
             // Ищем первую свободную ячейку
             int freeIndex = -1;
-            for (int i = 0; i < cards.Length; i++)
+            for (int i = 0; i < cardDatas.Length; i++)
             {
-                if (cards[i] == null)
+                if (cardDatas[i] == null)
                 {
                     freeIndex = i;
                     break;
@@ -135,7 +134,7 @@ namespace Game.Deck
             if (freeIndex >= 0)
             {
                 // Добавляем карту в свободную ячейку
-                cards[freeIndex] = newCard;
+                cardDatas[freeIndex] = newCard;
 
                 UpdateAllCardsPosition();
             }
@@ -150,11 +149,11 @@ namespace Game.Deck
         /// </summary>
         public void RemoveCard(CardData deletedCard, bool isClearAll)
         {
-            for (int i = 0; i < cards.Length; i++)
+            for (int i = 0; i < cardDatas.Length; i++)
             {
-                if(cards[i] == deletedCard)
+                if(cardDatas[i] == deletedCard)
                 {
-                    cards[i] = null;
+                    cardDatas[i] = null;
                     break;
                 }
             }
@@ -168,11 +167,11 @@ namespace Game.Deck
         public int GetCardCount()
         {
             int count = 0;
-            if (cards != null)
+            if (cardDatas != null)
             {
-                for (int i = 0; i < cards.Length; i++)
+                for (int i = 0; i < cardDatas.Length; i++)
                 {
-                    if (cards[i] != null)
+                    if (cardDatas[i] != null)
                         count++;
                 }
             }
@@ -183,7 +182,7 @@ namespace Game.Deck
         {
             if(GetCardCount() <= 0) return;
 
-            foreach (var card in cards)
+            foreach (var card in cardDatas)
             {
                 if(card != null)
                 {

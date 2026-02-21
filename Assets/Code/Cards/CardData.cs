@@ -72,7 +72,7 @@ namespace Game.Cards
             decorateCard = null;
         }
 
-        // TODO: Нужно подумать о пуле объектов, так как я полностью очищаю декораторы и их связи. Что поззволит мне задавать информацию полностью с нуля.
+        // TODO: Нужно подумать о пуле объектов, так как я полностью очищаю декораторы и их связи. Что позволит мне задавать информацию полностью с нуля.
 
         private void BreakDecoratorChain(ICard<CardTypeEnum> card)
         {
@@ -84,14 +84,14 @@ namespace Game.Cards
                 {
                     var nextCard = decorator.GetInnerCard();
                     
-                    Debug.Log($"Удаление: {currentCard.GetType().Name}");
+                    // Debug.Log($"Удаление: {currentCard.GetType().Name}");
 
                     currentCard.Dispose();
                     currentCard = nextCard;
                 }
                 else
                 {
-                    Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
+                    // Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
                     currentCard.Dispose();
                     currentCard = null;
                     break;
@@ -104,6 +104,7 @@ namespace Game.Cards
             BreakDecoratorChain(decorateCard);
             decorateCard = null;
             currentDeck.RemoveCard(this, isClearAll);
+            decorateCard.Parent = null;
 
             if (gameObject != null) Destroy(gameObject);
         }

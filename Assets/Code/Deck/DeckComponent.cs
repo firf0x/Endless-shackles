@@ -70,5 +70,10 @@ namespace Game.Deck
             monsterDeck.ClearCards();
             playerSystem.Respawn();
         }
+
+        public void OnDestroy()
+        {
+            playerSystem.Dispose();
+        }
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   cardsAttack:
   - type: 1
     ignoreLayers: 3
-    cardName: 
+    name: 
     description: 
     icon: {fileID: 21300000, guid: c191fc67bfd7ff24598b1fd026de8220, type: 2}
     effects: []
@@ -23,7 +23,7 @@ MonoBehaviour:
   cardsDefence:
   - type: 2
     ignoreLayers: -1
-    cardName: Horned Helmet
+    name: Horned Helmet
     description: "\u0417\u0430\u0449\u0438\u0442\u0430 \u0433\u043E\u043B\u043E\u0432\u044B"
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
     effects: []
@@ -31,7 +31,7 @@ MonoBehaviour:
     DefenceType: 0
   - type: 2
     ignoreLayers: -1
-    cardName: Bone Armor
+    name: Bone Armor
     description: "\u0417\u0430\u0449\u0438\u0442\u0430 \u0442\u0435\u043B\u0430"
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
     effects: []
@@ -39,7 +39,7 @@ MonoBehaviour:
     DefenceType: 1
   - type: 2
     ignoreLayers: -1
-    cardName: Eyed Shield
+    name: Eyed Shield
     description: "\u0417\u0430\u0449\u0438\u0442\u0430 \u0441 \u043F\u043E\u043C\u043E\u0449\u044C\u044E
       \u0432\u0441\u043F\u043E\u043C\u043E\u0433\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0445
       \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
@@ -50,7 +50,7 @@ MonoBehaviour:
   cardsMonster:
   - type: 4
     ignoreLayers: 5
-    cardName: Bird
+    name: 
     description: "\u0422\u0443\u043F\u0430\u044F \u043F\u0442\u0438\u0446\u0430.
       \u043D\u043E \u043D\u0435 \u0441\u043E\u0432\u0441\u0435\u043C \u0441\u043B\u0430\u0431\u0430"
     icon: {fileID: 21300000, guid: 1c75912d695c46e40933ad11c9598af8, type: 3}
@@ -60,7 +60,7 @@ MonoBehaviour:
     StepValue: 3
   - type: 4
     ignoreLayers: 5
-    cardName: Fantom
+    name: 
     description: "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u0442 \u0449\u0438\u0442\u044B."
     icon: {fileID: 21300000, guid: 1c75912d695c46e40933ad11c9598af8, type: 3}
     effects: []

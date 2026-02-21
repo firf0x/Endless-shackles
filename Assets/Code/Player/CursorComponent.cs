@@ -132,14 +132,14 @@ public class CursorComponent : MonoBehaviour
             {
                 string zoneTypeName = hit.collider.gameObject.name;
     
-                Debug.Log(zoneTypeName);
+                // Debug.Log(zoneTypeName);
                 
                 // Проверяем является ли текущая карта картой защиты
                 if (currentCard.TryGetCardFeature<CustomTypeDecorator<DefenceType>>(out var decorator))
                 {
                     if (zoneTypeName == decorator.CustomType.ToString())
                     {
-                        Debug.Log("Карта добавилась");
+                        // Debug.Log("Карта добавилась");
                         DefendDeck.Instance.AddCard(currentCard);
                         HandDeck.Instance.RemoveCard(currentCard, false);
                         break;
