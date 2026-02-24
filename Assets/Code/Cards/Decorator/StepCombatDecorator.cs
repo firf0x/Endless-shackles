@@ -8,6 +8,7 @@ namespace Game.Cards
     public class StepCombatDecorator : CardDecorator, IStepTick
     {
         public int currentStep { get; private set; }
+        public event Action OnStepInteraction;
         private readonly int maxStep;
         private bool isSpawn = true;
         private PlayerSystem player;
@@ -29,31 +30,12 @@ namespace Game.Cards
                 isSpawn = false;
                 return;
             }
-            else currentStep--;
             
-            // foreach (var item in defendDeck.cardDatas)
-            // {
-            //     Debug.Log(item);
-            // }
+            currentStep--;
 
             if(currentStep <= 0)
             {
-                if(defendDeck.GetCardCount() > 0 )
-                {
-                    foreach (var card in defendDeck.cardDatas)
-                    {
-                        if(card == null || card.decorateCard == null) continue;
-                        // Debug.Log(card.decorateCard.CardName);
-                        if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
-                        {
-                            decorator.TakeDamage(Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue);
-                            break;
-                        }
-                    }
-                }
-                else player.Kill();
-
-                defendDeck.UpdateAllCardsPosition();
+                OnStepInteraction?.Invoke();
 
                 currentStep = maxStep;
             }
@@ -61,6 +43,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
+            OnStepInteraction = null;
             StepCombatSystem.Instance.EventUpdate -= OnUpdate;
         }
     }

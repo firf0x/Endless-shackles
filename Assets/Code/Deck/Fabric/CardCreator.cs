@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.Cards;
 using Game.GameSystem;
 using Game.Lib;
@@ -10,12 +11,16 @@ namespace Game.Deck.Fabric
     {
         private readonly DeckCardsConfig config;
         private readonly PlayerSystem player;
+        private readonly IDeck<CardData> handDeck;
         private readonly IDeck<CardData> defendDeck;
-        public CardCreator(DeckCardsConfig config, IDeck<CardData> deck, PlayerSystem player)
+        private readonly IDeck<CardData> monsterDeck;
+        public CardCreator(DeckCardsConfig config, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, PlayerSystem player)
         {
             this.config = config;
             this.player = player;
-            this.defendDeck = deck;
+            this.handDeck = handDeck;
+            this.defendDeck = defendDeck;
+            this.monsterDeck = monsterDeck;
         }
 
         public override ICard<CardTypeEnum> Create()
@@ -43,7 +48,6 @@ namespace Game.Deck.Fabric
             return card;
         }
 
-
         private ICard<CardTypeEnum> CreateAttackCard(int index)
         {
             var cardsAttack = config.CardsAttacks;
@@ -57,10 +61,9 @@ namespace Game.Deck.Fabric
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Effects = cardData.Effects
             };
 
-            return new AttackDecorator(cardData.DamageValue, baseCard);
+            return new AttackDecorator(cardData.DamageValue, player, baseCard);
         }
 
         private ICard<CardTypeEnum> CreateDefenceCard(int index)
@@ -76,7 +79,7 @@ namespace Game.Deck.Fabric
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Effects = cardData.Effects
+                // Effects = cardData.Effects
             };
             
             ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, baseCard);
@@ -97,13 +100,13 @@ namespace Game.Deck.Fabric
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Effects = cardData.Effects
             };
 
-            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, baseCard);
+            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, player, baseCard);
             ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(cardData.Modifiers, handDeck, defendDeck, monsterDeck, player, cardWithHealth);
 
-            return new StepCombatDecorator(cardData.StepValue, player, defendDeck, cardWithHealth);
+            return new StepCombatDecorator(cardData.StepValue, player, defendDeck, modifierCard);
         }
     }
 }

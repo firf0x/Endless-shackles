@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Game.Cards.Modifier;
+using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
 
@@ -17,15 +19,12 @@ namespace Game.Cards
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
         public virtual Sprite Icon => decoratedCard.Icon;
-        public virtual List<EffectBase<ICard<CardTypeEnum>>> Effects => decoratedCard.Effects;
         public virtual GameObject Parent 
         { 
             get => decoratedCard.Parent;
             set => decoratedCard.Parent = value;
         }
 
-        public virtual List<T> GetEffects<T>() where T : EffectBase<ICard<CardTypeEnum>> => decoratedCard.GetEffects<T>();
-        public virtual T GetEffect<T>() where T : EffectBase<ICard<CardTypeEnum>> => decoratedCard.GetEffect<T>();
         public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
 

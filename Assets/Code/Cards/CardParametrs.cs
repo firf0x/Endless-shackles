@@ -14,14 +14,13 @@ namespace Game.Cards
         [SerializeField] private string name;
         [SerializeField, TextArea] private string description;
         [SerializeField] private Sprite icon;
-        [SerializeField] private List<EffectBase<ICard<CardTypeEnum>>> effects;
-
+        [SerializeField] private List<ModifierBase> modifiers;
 
         public CardTypeEnum Type => type;
         public CardTypeEnum IgnoreLayers => ignoreLayers;
         public string CardName => name;
         public string Description => description;
         public Sprite Icon => icon;
-        public List<EffectBase<ICard<CardTypeEnum>>> Effects => effects;
+        public List<ModifierBase> Modifiers => modifiers;
     }
 }

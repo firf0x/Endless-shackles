@@ -1,0 +1,69 @@
+using UnityEngine;
+using Game.Lib;
+using Game.Cards.Modifier;
+using Game.GameSystem;
+using System.Collections.Generic;
+
+namespace Game.Cards
+{
+    public class ModifierDecorator : CardDecorator
+    {
+        private List<ModifierBase> modifiers;
+        private PlayerSystem player;
+        private IDeck<CardData> handDeck;
+        private IDeck<CardData> defendDeck;
+        private IDeck<CardData> monsterDeck;
+
+        public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, PlayerSystem player, ICard<CardTypeEnum> card) : base(card)
+        {
+            this.player = player;
+            this.handDeck = handDeck;
+            this.defendDeck = defendDeck;
+            this.monsterDeck = monsterDeck;
+            this.modifiers = modifiers;
+        }
+
+        public override void Use(GameObject target)
+        {
+            var context = CreateContext(target);
+            
+            foreach (var modifier in modifiers)
+            {
+                modifier.Apply(context);
+            }
+
+            base.Use(target);
+        }
+
+        private ModifierContext CreateContext(GameObject target)
+        {
+            return new ModifierContext
+            {
+                //TODO: я так подумал и считаю, что CardData должена быть закеширована
+                SourceCard = this,
+                TargetCard = target?.GetComponent<CardData>()?.decorateCard,
+                TargetGameObject = target,
+                Player = player,
+                HandDeck = handDeck,
+                DefendDeck = defendDeck,
+                MonsterDeck = monsterDeck,
+            };
+        }
+
+        public override string ToString()
+        {
+            string message = $"Modifier: текущее количество модификаторов {modifiers.Count}.";
+            Debug.Log(message);
+            return message;
+        }
+
+        public override void Dispose()
+        {
+            modifiers.Clear();
+            player = null;
+            handDeck = null;
+            defendDeck = null;
+            monsterDeck = null;
+        }
+    }
+}

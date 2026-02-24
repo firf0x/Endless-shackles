@@ -12,12 +12,13 @@ namespace Game.Deck
         // [field: SerializeField] public CardPlayer playerData { get; private set; }
 
         // * Здесь задаются данные о картах.
-        [SerializeField] private List<CardAttack> cardsAttack = new List<CardAttack>();
-        [SerializeField] private List<CardDefence> cardsDefence = new List<CardDefence>();
-        [SerializeField] private List<CardMonster> cardsMonster = new List<CardMonster>();
+        [SerializeField, Space(15)] private List<CardAttack> cardsAttack = new List<CardAttack>();
+        [SerializeField, Space(15)] private List<CardDefence> cardsDefence = new List<CardDefence>();
+        [SerializeField, Space(15)] private List<CardMonster> cardsMonster = new List<CardMonster>();
 
         // * Какие карты должны использоваться для создания карт. 
-        [field: SerializeField] public GameObject prefabCardAttack { get; private set; }
+        
+        [field: SerializeField, Space(10)] public GameObject prefabCardAttack { get; private set; }
         [field: SerializeField] public GameObject prefabCardDefence { get; private set; }
         [field: SerializeField] public GameObject prefabCardMonster { get; private set; }
         [field: SerializeField] public GameObject prefabCardPlayer { get; private set; }

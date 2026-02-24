@@ -84,16 +84,15 @@ namespace Game.Cards
                 {
                     var nextCard = decorator.GetInnerCard();
                     
-                    // Debug.Log($"Удаление: {currentCard.GetType().Name}");
+                    Debug.Log($"Удаление: {currentCard.GetType().Name}");
 
                     currentCard.Dispose();
                     currentCard = nextCard;
                 }
                 else
                 {
-                    // Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
+                    Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
                     currentCard.Dispose();
-                    currentCard = null;
                     break;
                 }
             }
@@ -101,10 +100,10 @@ namespace Game.Cards
 
         public void CardDestroy(bool isClearAll)
         {
-            BreakDecoratorChain(decorateCard);
-            decorateCard = null;
-            currentDeck.RemoveCard(this, isClearAll);
             decorateCard.Parent = null;
+            BreakDecoratorChain(decorateCard);
+            currentDeck.RemoveCard(this, isClearAll);
+            decorateCard = null;
 
             if (gameObject != null) Destroy(gameObject);
         }
