@@ -47,6 +47,7 @@ namespace Game.Cards
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
+                DamageValue = Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue
             };
         }
 
@@ -60,10 +61,13 @@ namespace Game.Cards
         public override void Dispose()
         {
             modifiers.Clear();
+            modifiers = null;
             player = null;
             handDeck = null;
             defendDeck = null;
             monsterDeck = null;
+
+            base.Dispose();
         }
     }
 }

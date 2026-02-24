@@ -63,7 +63,7 @@ namespace Game.Deck.Fabric
                 Icon = cardData.Icon,
             };
 
-            return new AttackDecorator(cardData.DamageValue, player, baseCard);
+            return new AttackDecorator(cardData.DamageValue, player, defendDeck, baseCard);
         }
 
         private ICard<CardTypeEnum> CreateDefenceCard(int index)
@@ -102,11 +102,13 @@ namespace Game.Deck.Fabric
                 Icon = cardData.Icon,
             };
 
-            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, player, baseCard);
-            ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(cardData.Modifiers, handDeck, defendDeck, monsterDeck, player, cardWithHealth);
+            List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
-            return new StepCombatDecorator(cardData.StepValue, player, defendDeck, modifierCard);
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, player, baseCard);
+            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, player, defendDeck, modifierCard);
+            ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
+
+            return new StepCombatDecorator(cardData.StepValue, cardWithHealth);
         }
     }
 }

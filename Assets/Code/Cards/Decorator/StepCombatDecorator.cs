@@ -11,15 +11,11 @@ namespace Game.Cards
         public event Action OnStepInteraction;
         private readonly int maxStep;
         private bool isSpawn = true;
-        private PlayerSystem player;
-        private IDeck<CardData> defendDeck;
 
-        public StepCombatDecorator(int step, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
+        public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {
             maxStep = step;
             currentStep = step;
-            this.player = player;
-            defendDeck = deck;
             StepCombatSystem.Instance.EventUpdate += OnUpdate;
         }
 
@@ -45,6 +41,8 @@ namespace Game.Cards
         {
             OnStepInteraction = null;
             StepCombatSystem.Instance.EventUpdate -= OnUpdate;
+            
+            base.Dispose();
         }
     }
 }

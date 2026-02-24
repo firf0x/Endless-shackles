@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Game.Cards.Strategy;
 using Game.GameSystem;
 using Game.Lib;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace Game.Cards
@@ -11,55 +13,80 @@ namespace Game.Cards
         public int currentDamageValue { get; private set; }
         private PlayerSystem player;
         private IDeck<CardData> defenceDeck;
+        private StrategyHandler<StrategyAttackBase> strategyHandle;
 
-        public AttackDecorator(int damageValue, PlayerSystem player, ICard<CardTypeEnum> card) : base(card)
+        public AttackDecorator(int damageValue, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
             this.defaultDamageValue = damageValue;
             ChangeDamage(0); // установка для того чтобы defaultDamageValue применился
-            
+
+            defenceDeck = deck;
             this.player = player;
-            // this.defenceDeck = deck;
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            strategyHandle = new StrategyHandler<StrategyAttackBase>(CreateStrategyByType());
+        }
+
+        private StrategyAttackBase CreateStrategyByType()
+        {
+            if (Type.HasFlag(CardTypeEnum.Monster))
+            {
+                Parent.GetComponent<CardData>().GetCardFeature<StepCombatDecorator>().OnStepInteraction += OnStep;
+                return new MonsterAttackStrategy(
+                    player: player,
+                    damageValue: currentDamageValue,
+                    defenceDeck
+                );
+
+            }
+            else
+            {
+                // Стандартная стратегия атаки
+                return new StandartAttackStategy(
+                    target: null,
+                    parent: Parent,
+                    damageValue: currentDamageValue,
+                    ignoreLayers: IgnoreLayers
+                );
+            }
+        }
+
+        private void OnStep()
+        {
+            Use(null);
         }
 
         public override void Use(GameObject target)
         {
             base.Use(target);
-
-            CardData data = target.GetComponent<CardData>();
-
-            if(data.TryGetCardFeature<HealthDecorator>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(IgnoreLayers))
-            {
-                //! Удаление карты атаки при нанесении урона по карте монстра
-                if(data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
-                {
-                    Parent.GetComponent<CardData>().CardDestroy(false);
-                }
-
-                feature.TakeDamage(currentDamageValue);
-            }
+            UpdateStrategyParameters(target);
+            strategyHandle.ExecuteStrategy();
         }
 
-        private void OnMonsterAttack()
+        private void UpdateStrategyParameters(GameObject target)
         {
-            if(defenceDeck.GetCardCount() > 0 )
-            {
-                foreach (var card in defenceDeck.cardDatas)
-                {
-                    if(card == null || card.decorateCard == null) continue;
-                    if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
-                    {
-                        decorator.TakeDamage(Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue);
-                        break;
-                    }
-                }
-            }
-            else player.Kill();
+            strategyHandle.Strategy.UpdateDamageValue(currentDamageValue);
+            strategyHandle.Strategy.UpdateTarget(target);
         }
 
         public void ChangeDamage(int value)
         {
             currentDamageValue = defaultDamageValue + value;
             currentDamageValue = Mathf.Abs(currentDamageValue);
+        }
+
+        public void ChangeStrategy(StrategyAttackBase newStrategy)
+        {
+            if (newStrategy == null)
+            {
+                Debug.LogError("Cannot change to null strategy");
+                return;
+            }
+            
+            strategyHandle.ChangeStrategy(newStrategy);
         }
 
         public override string ToString()
@@ -71,7 +98,8 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            // if (Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnMonsterAttack;
+            if (Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            base.Dispose();
         }
     }
 }

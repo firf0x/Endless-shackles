@@ -42,10 +42,10 @@ namespace Game.Cards
         //     return null;
         // }
         public void Use(GameObject target) { }
-
+        public void Start() { }
         public void Dispose()
         {
-            // Modifiers.Clear();
+            Parent = null;
         }
     }
 }

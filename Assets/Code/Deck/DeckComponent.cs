@@ -61,6 +61,8 @@ namespace Game.Deck
             card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+
+            card.Start();
         }
 
         public void ResetDatas()

@@ -14,5 +14,6 @@ namespace Game.Lib
         GameObject Parent { get; set; }
 
         void Use(GameObject target);
+        void Start();
     }
 }

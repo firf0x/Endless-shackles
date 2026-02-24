@@ -11,7 +11,7 @@ namespace Game.Lib
 		/// <summary>
         /// Текущая стратегия
         /// </summary>
-		private TStrategy Strategy;
+		public TStrategy Strategy { get; private set; }
 
 		/// <summary>
 		/// Создает экземпляр StrategyHandler с первоначальной стратегией

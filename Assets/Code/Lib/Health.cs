@@ -36,6 +36,15 @@ namespace Game.Lib
             else OnHealPointsChanged?.Invoke();
         }
 
+        public void Heal(int amount)
+        {
+            HealPoints.Value += amount;
+        
+            HealPoints.Value = Mathf.Min( HealPoints.Value, maxValue );
+            
+            OnHealPointsChanged?.Invoke();
+        }
+
         public void Reset()
         {
             HealPoints.Value = maxValue;

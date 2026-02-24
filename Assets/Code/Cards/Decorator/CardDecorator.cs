@@ -27,10 +27,10 @@ namespace Game.Cards
 
         public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
+        public virtual void Start() => decoratedCard.Start();
 
         public virtual void Dispose()
         {
-            
             decoratedCard?.Dispose();
             decoratedCard = null;
         }

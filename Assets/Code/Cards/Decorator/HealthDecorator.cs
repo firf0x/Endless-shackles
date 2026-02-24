@@ -32,11 +32,14 @@ namespace Game.Cards
 
         public override void Dispose()
         {
+
             if (healthSystem != null)
             {
                 healthSystem.OnDead -= OnDead;
                 healthSystem = null;
             }
+         
+            base.Dispose();
         }
     }
 }
