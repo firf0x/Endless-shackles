@@ -48,7 +48,6 @@ namespace Game.Cards.UI
 
         private void OnModelDamageChanged(int value)
         {
-            Debug.Log(value);
             Damage = value.ToString();
             UpdateUI?.Invoke();
         }

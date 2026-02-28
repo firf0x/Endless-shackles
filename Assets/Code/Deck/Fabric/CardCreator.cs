@@ -86,7 +86,6 @@ namespace Game.Deck.Fabric
                 CardName = cardData.CardName,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                // Effects = cardData.Effects
             };
             
             ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, baseCard);

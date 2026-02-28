@@ -17,7 +17,6 @@ namespace Game.Cards
 
         public AttackDecorator(int damageValue, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
-            // currentDamage = new();
             this.defaultDamageValue = damageValue;
             ChangeDamage(0); // установка для того чтобы defaultDamageValue применился
 
