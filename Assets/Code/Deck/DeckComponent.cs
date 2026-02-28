@@ -22,7 +22,6 @@ namespace Game.Deck
         {
             var localCreator = new CardCreator(config, handDeck, defenceDeck, monsterDeck, playerSystem);
             creator = localCreator;
-            // defenceDeck.player.GetComponent<CardData>().decorateCard = localCreator.CreatePlayerCard();
         }
 
         public void CreateNewCard()
@@ -48,6 +47,7 @@ namespace Game.Deck
                     break;
                 
                 case CardTypeEnum.Monster:
+                    // if(monsterDeck.is) break;
                     cardPrefab = Instantiate(config.prefabCardMonster, transform);
                     monsterDeck.AddCard(cardPrefab.GetComponent<CardData>());
                     cardPrefab.GetComponent<CardData>().currentDeck = monsterDeck;
@@ -57,6 +57,22 @@ namespace Game.Deck
                     Debug.LogError("Такого типа карты не существует.");
                     break;
             }
+
+            card.Parent = cardPrefab;
+            cardPrefab.GetComponent<CardData>().decorateCard = card;
+            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+
+            card.Start();
+        }
+
+        public void CreateAttackCard()
+        {
+            ICard<CardTypeEnum> card = creator.CreateAttackCard();
+            GameObject cardPrefab = null;
+            // StepCombatSystem.Instance.StepUpdate();
+            cardPrefab = Instantiate(config.prefabCardAttack, transform);
+            handDeck.AddCard(cardPrefab.GetComponent<CardData>());
+            cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
 
             card.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().decorateCard = card;

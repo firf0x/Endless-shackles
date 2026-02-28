@@ -18,12 +18,14 @@ namespace Game.Cards
         public virtual CardTypeEnum IgnoreLayers => decoratedCard.IgnoreLayers;
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
+        public virtual bool isLocked => decoratedCard.isLocked;
         public virtual Sprite Icon => decoratedCard.Icon;
         public virtual GameObject Parent 
         { 
             get => decoratedCard.Parent;
             set => decoratedCard.Parent = value;
         }
+
 
         public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
         public virtual void Use(GameObject target) => decoratedCard.Use(target);

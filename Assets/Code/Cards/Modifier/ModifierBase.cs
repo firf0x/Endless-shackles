@@ -16,6 +16,7 @@ namespace Game.Lib
         public ModifierTypeEnum Type => modifierType;
         public Sprite Icon => icon;
 
-        public abstract void Apply(ModifierContext context) ;
+        public abstract void Apply(ModifierContext context);
+        public virtual void Init() { }
     }
 }

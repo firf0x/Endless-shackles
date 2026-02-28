@@ -118,7 +118,7 @@ namespace Game.Deck
         /// <summary>
         /// Добавляет новую карту в руку
         /// </summary>
-        public void AddCard(CardData newCard)
+        public bool AddCard(CardData newCard)
         {   
             // Ищем первую свободную ячейку
             int freeIndex = -1;
@@ -137,10 +137,12 @@ namespace Game.Deck
                 cardDatas[freeIndex] = newCard;
 
                 UpdateAllCardsPosition();
+                return true;
             }
             else
             {
                 Debug.LogWarning("Нет свободных слотов для карты!");
+                return false;
             }
         }
 

@@ -10,6 +10,7 @@ namespace Game.Lib
         TEnum IgnoreLayers { get; }
         string CardName { get; }
         string Description { get; }
+        bool isLocked { get; }
         Sprite Icon { get; }
         GameObject Parent { get; set; }
 

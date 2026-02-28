@@ -18,6 +18,11 @@ namespace Game.Cards
             healthSystem.TakeDamage(amount);
         }
 
+        public void Heal(int amount)
+        {
+            healthSystem.Heal(amount);
+        }
+
         public void OnDead()
         {
             Parent.GetComponent<CardData>().CardDestroy(false);

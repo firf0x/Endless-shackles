@@ -54,5 +54,6 @@ namespace Game.Lib
     public interface IDamageble
     {
         void TakeDamage(int amount);
+        void Heal(int amount);
     }
 }

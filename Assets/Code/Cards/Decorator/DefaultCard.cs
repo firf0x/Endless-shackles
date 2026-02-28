@@ -11,13 +11,15 @@ namespace Game.Cards
         public CardTypeEnum IgnoreLayers { get; set; } //! При очистке нельзя убирать
         public string CardName { get; set; }
         public string Description { get; set; }
+        public bool isLocked { get; set; }
         public Sprite Icon { get; set; }
         public GameObject Parent { get; set; }  //! При очистке нельзя убирать
+
 
         // public List<T> GetModifiers<T>() where T : ModifierBase
         // {
         //     List<T> result = new List<T>();
-            
+
         //     foreach (var modifier in Modifiers)
         //     {
         //         if (modifier is T typedEffect)
@@ -25,7 +27,7 @@ namespace Game.Cards
         //             result.Add(typedEffect);
         //         }
         //     }
-            
+
         //     return result;
         // }
 

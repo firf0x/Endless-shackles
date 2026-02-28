@@ -37,7 +37,7 @@ namespace Game.Deck
             sizeDeck = Mathf.Max(sizeDeck, 0);
         }
 
-        public void AddCard(CardData newCard)
+        public bool AddCard(CardData newCard)
         {
             var key = newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType;
             
@@ -48,13 +48,19 @@ namespace Game.Deck
                 {
                     cards[key] = newCard;
                     Debug.Log($"Ключ {key} существовал с null, перезаписан");
+                    return true;
                 }
-                else Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
+                else 
+                {
+                    Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
+                    return false;
+                }
             }
             else
             {
                 cards.Add(key, newCard);
                 Debug.Log($"Добавлена новая карта");
+                return true;
             }
         }
 

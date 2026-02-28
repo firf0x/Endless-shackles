@@ -54,10 +54,7 @@ namespace Game.Cards
             }
         }
 
-        private void OnStep()
-        {
-            Use(null);
-        }
+        private void OnStep() => Use(null);
 
         public override void Use(GameObject target)
         {

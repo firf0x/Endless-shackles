@@ -23,6 +23,14 @@ namespace Game.Cards
             this.modifiers = modifiers;
         }
 
+        public override void Start()
+        {
+            foreach (var modifier in modifiers)
+            {
+                modifier.Init();
+            }
+        }
+
         public override void Use(GameObject target)
         {
             var context = CreateContext(target);
@@ -39,7 +47,7 @@ namespace Game.Cards
         {
             return new ModifierContext
             {
-                //TODO: я так подумал и считаю, что CardData должена быть закеширована
+                //TODO: я так подумал и считаю, что CardData должена быть закеширована это сократит количество вызовов getcomponent
                 SourceCard = this,
                 TargetCard = target?.GetComponent<CardData>()?.decorateCard,
                 TargetGameObject = target,

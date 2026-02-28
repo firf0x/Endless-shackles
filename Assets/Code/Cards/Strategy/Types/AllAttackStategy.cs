@@ -35,6 +35,7 @@ namespace Game.Cards.Strategy
                 }
 
                 feature.TakeDamage(currentDamageValue);
+                StepCombatSystem.Instance.StepUpdate();
             }
         }
 
@@ -132,20 +133,24 @@ namespace Game.Cards.Strategy
         }
     }
 
-    public class DeckStrikeAttackStrategy : StrategyAttackBase
+    public class DeckStrikeAttackRegenerateStrategy : StrategyAttackBase
     {
-        public override string Name => "Default Attack";
+        public override string Name => "Deck strike";
         private PlayerSystem player;
         private int currentDamageValue;
+        private int currentHealValue;
         private IDeck<CardData> defenceDeck;
         private IDeck<CardData> monsterDeck;
-
-        public DeckStrikeAttackStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck, IDeck<CardData> monsterDeck)
+        private ICard<CardTypeEnum> objectCard;
+        
+        public DeckStrikeAttackRegenerateStrategy(PlayerSystem player, int damageValue, int regenerateHP, IDeck<CardData> defenceDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card)
         {
             this.player = player;
-            currentDamageValue = damageValue;
+            this.currentDamageValue = damageValue;
+            this.currentHealValue = regenerateHP;
             this.defenceDeck = defenceDeck;
             this.monsterDeck = monsterDeck;
+            objectCard = card;
         }
 
         public override void Execute()
@@ -161,19 +166,66 @@ namespace Game.Cards.Strategy
                     {
                         multiply++;
                         decorator.TakeDamage(currentDamageValue);
-                        break;
                     }
                 }
 
-                foreach (var card in monsterDeck.cardDatas)
+                for (int i = 0; i < multiply; i++)
                 {
-                    // card.GetCardFeature<HealthDecorator>().healthSystem.H
+                    foreach (var card in monsterDeck.cardDatas)
+                    {
+                        if(card == null || card.gameObject == objectCard.Parent) continue;
+                        card.GetCardFeature<HealthDecorator>().healthSystem.Heal(currentHealValue);
+                    }
                 }
             }
             else player.Kill();
         }
 
         public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
+    }
+
+    public class MultiplyDamageByTypeStrategy : StrategyAttackBase
+    {
+        public override string Name => "Default Attack";
+        private PlayerSystem player;
+        private int currentDamageValue;
+        private IDeck<CardData> defenceDeck;
+        private DefenceType type;
+
+        public MultiplyDamageByTypeStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck, DefenceType defenceType)
+        {
+            this.player = player;
+            this.currentDamageValue = damageValue;
+            this.defenceDeck = defenceDeck;
+            this.type = defenceType;
+        }
+
+        public override void Execute()
+        {
+            if(defenceDeck.GetCardCount() > 0 )
+            {
+                foreach (var card in defenceDeck.cardDatas)
+                {
+                    if(card == null || card.decorateCard == null) continue;
+                    if(type == card.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType && card.TryGetCardFeature<HealthDecorator>(out var decorator))
+                    {
+                        decorator.TakeDamage(currentDamageValue * 2);
+                        break;
+                    }
+                    if(card.TryGetCardFeature<HealthDecorator>(out var defendCard))
+                    {
+                        defendCard.TakeDamage(currentDamageValue);
+                        break;
+                    }
+                }
+            }
+            else player.Kill();
+        }
+
+        public override void UpdateDamageValue(int newDamageValue)
+        {
+            currentDamageValue = newDamageValue;
+        }
     }
 
     #endregion
