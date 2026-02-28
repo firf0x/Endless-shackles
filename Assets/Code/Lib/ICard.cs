@@ -14,7 +14,8 @@ namespace Game.Lib
         Sprite Icon { get; }
         GameObject Parent { get; set; }
 
-        void Use(GameObject target);
         void Start();
+        void Use(GameObject target);
+        void SetLock(bool enabled);
     }
 }

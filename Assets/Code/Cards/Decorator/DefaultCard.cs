@@ -15,36 +15,10 @@ namespace Game.Cards
         public Sprite Icon { get; set; }
         public GameObject Parent { get; set; }  //! При очистке нельзя убирать
 
-
-        // public List<T> GetModifiers<T>() where T : ModifierBase
-        // {
-        //     List<T> result = new List<T>();
-
-        //     foreach (var modifier in Modifiers)
-        //     {
-        //         if (modifier is T typedEffect)
-        //         {
-        //             result.Add(typedEffect);
-        //         }
-        //     }
-
-        //     return result;
-        // }
-
-        // public T GetModifier<T>() where T : ModifierBase
-        // {
-        //     foreach (var modifier in Modifiers)
-        //     {
-        //         if (modifier is T typedEffect)
-        //         {
-        //             return typedEffect;
-        //         }
-        //     }
-
-        //     return null;
-        // }
-        public void Use(GameObject target) { }
         public void Start() { }
+        public void Use(GameObject target) { }
+        public void SetLock(bool enabled) => isLocked = enabled;
+
         public void Dispose()
         {
             Parent = null;

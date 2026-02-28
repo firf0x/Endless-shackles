@@ -22,19 +22,26 @@ namespace Game.Cards.UI
         private void Start()
         {
             viewModel = new CardViewModel(GetComponent<CardData>());
-            
+
             InitializeView();
             UpdateView();
+
+            StepCombatSystem.Instance.EventUpdate += UpdateView;
+            viewModel.UpdateUI += UpdateView;
+            
+
         }
         
-        private void OnEnable()
-        {
-            StepCombatSystem.Instance.EventUpdate += UpdateView;
-        }
+        // private void OnEnable()
+        // {
+        //     StepCombatSystem.Instance.EventUpdate += UpdateView;
+        //     viewModel.UpdateUI += UpdateView;
+        // }
         
         private void OnDisable()
         {
             StepCombatSystem.Instance.EventUpdate -= UpdateView;
+            viewModel.UpdateUI -= UpdateView;
         }
         
         private void InitializeView()
@@ -59,6 +66,8 @@ namespace Game.Cards.UI
             {
                 StepCombatSystem.Instance.EventUpdate -= UpdateView;
             }
+            viewModel.UpdateUI -= UpdateView;
+            viewModel.Dispose();
         }
     }
 }

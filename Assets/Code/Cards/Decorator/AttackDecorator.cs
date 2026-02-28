@@ -10,13 +10,14 @@ namespace Game.Cards
     public class AttackDecorator : CardDecorator
     {
         public readonly int defaultDamageValue;
-        public int currentDamageValue { get; private set; }
+        public ReactiveProperty<int> currentDamage { get; private set; } = new();
         private PlayerSystem player;
         private IDeck<CardData> defenceDeck;
         private StrategyHandler<StrategyAttackBase> strategyHandle;
 
         public AttackDecorator(int damageValue, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
+            // currentDamage = new();
             this.defaultDamageValue = damageValue;
             ChangeDamage(0); // установка для того чтобы defaultDamageValue применился
 
@@ -37,7 +38,7 @@ namespace Game.Cards
                 Parent.GetComponent<CardData>().GetCardFeature<StepCombatDecorator>().OnStepInteraction += OnStep;
                 return new MonsterAttackStrategy(
                     player: player,
-                    damageValue: currentDamageValue,
+                    damageValue: currentDamage.Value,
                     defenceDeck
                 );
 
@@ -48,7 +49,7 @@ namespace Game.Cards
                 return new StandartAttackStategy(
                     target: null,
                     parent: Parent,
-                    damageValue: currentDamageValue,
+                    damageValue: currentDamage.Value,
                     ignoreLayers: IgnoreLayers
                 );
             }
@@ -65,14 +66,14 @@ namespace Game.Cards
 
         private void UpdateStrategyParameters(GameObject target)
         {
-            strategyHandle.Strategy.UpdateDamageValue(currentDamageValue);
+            strategyHandle.Strategy.UpdateDamageValue(currentDamage.Value);
             strategyHandle.Strategy.UpdateTarget(target);
         }
 
         public void ChangeDamage(int value)
         {
-            currentDamageValue = defaultDamageValue + value;
-            currentDamageValue = Mathf.Abs(currentDamageValue);
+            currentDamage.Value = defaultDamageValue + value;
+            currentDamage.Value = Mathf.Abs(currentDamage.Value);
         }
 
         public void ChangeStrategy(StrategyAttackBase newStrategy)
@@ -88,7 +89,7 @@ namespace Game.Cards
 
         public override string ToString()
         {
-            string message = $"Attack: было нанесено {currentDamageValue} урона.";
+            string message = $"Attack: было нанесено {currentDamage.Value} урона.";
             Debug.Log(message);
             return message;
         }

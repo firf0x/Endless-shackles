@@ -7,7 +7,7 @@ namespace Game.Cards
 {
     public class StepCombatDecorator : CardDecorator, IStepTick
     {
-        public int currentStep { get; private set; }
+        public ReactiveProperty<int> currentStep { get; private set; } = new();
         public event Action OnStepInteraction;
         private readonly int maxStep;
         private bool isSpawn = true;
@@ -15,7 +15,7 @@ namespace Game.Cards
         public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {
             maxStep = step;
-            currentStep = step;
+            currentStep.Value = step;
             StepCombatSystem.Instance.EventUpdate += OnUpdate;
         }
 
@@ -27,13 +27,13 @@ namespace Game.Cards
                 return;
             }
             
-            currentStep--;
+            currentStep.Value--;
 
-            if(currentStep <= 0)
+            if(currentStep.Value <= 0)
             {
                 OnStepInteraction?.Invoke();
 
-                currentStep = maxStep;
+                currentStep.Value = maxStep;
             }
         }
 

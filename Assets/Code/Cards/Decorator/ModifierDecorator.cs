@@ -3,6 +3,7 @@ using Game.Lib;
 using Game.Cards.Modifier;
 using Game.GameSystem;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Game.Cards
 {
@@ -23,8 +24,19 @@ namespace Game.Cards
             this.modifiers = modifiers;
         }
 
+        public void AddModifier(ModifierBase modifier)
+        {
+            if(modifier != null && !modifiers.Contains(modifier)) modifiers.Add(modifier);
+        }
+
+        public void RemoveModifier(ModifierBase modifier)
+        {
+            if(modifiers.Contains(modifier)) modifiers.Remove(modifier);
+        }
+
         public override void Start()
         {
+            // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
             {
                 modifier.Init();
@@ -33,14 +45,31 @@ namespace Game.Cards
 
         public override void Use(GameObject target)
         {
+            // Создание контекста с текущей картов в SourceCard
             var context = CreateContext(target);
             
+            // Нужен для отправки данных о карте атаки
+            Debug.Log("Отправка обратной связи");
+            if(target != null) target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
+            Debug.Log("Конец обратной связи");
+
+            // Отработка всех модификаторов на текущей карте
             foreach (var modifier in modifiers)
             {
                 modifier.Apply(context);
             }
 
             base.Use(target);
+        }
+
+        public void UpdateModifiers(GameObject target)
+        {
+            var context = CreateContext(target);
+
+            foreach (var modifier in modifiers)
+            {
+                modifier.OnUpdate(context);
+            }            
         }
 
         private ModifierContext CreateContext(GameObject target)
@@ -55,7 +84,7 @@ namespace Game.Cards
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
-                DamageValue = Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamageValue
+                DamageValue = Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamage.Value
             };
         }
 
