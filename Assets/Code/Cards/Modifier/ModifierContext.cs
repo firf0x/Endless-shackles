@@ -9,6 +9,7 @@ namespace Game.Cards.Modifier
     {
         public ICard<CardTypeEnum> SourceCard { get; set; }         // Карта-источник модификатора
         public ICard<CardTypeEnum> TargetCard { get; set; }         // Целевая карта
+        public GameObject SourceGameObject { get; set; }            // Истоник игрового объекта
         public GameObject TargetGameObject { get; set; }            // Целевой игровой объект
         public int DamageValue { get; set; }                        // Значение урона
         // public List<ICard<CardTypeEnum>> CardsInHand { get; set; }  // Карты в руке

@@ -184,6 +184,46 @@ namespace Game.Cards.Strategy
         public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
     }
 
+    public class MultiplyDamageStrategy : StrategyAttackBase
+    {
+        public override string Name => "Default Attack";
+        private PlayerSystem player;
+        private int currentDamageValue;
+        private IDeck<CardData> defenceDeck;
+        private AttackDecorator currentCard;
+
+        public MultiplyDamageStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck, AttackDecorator currentCard)
+        {
+            this.player = player;
+            this.currentDamageValue = damageValue;
+            this.defenceDeck = defenceDeck;
+            this.currentCard = currentCard;
+        }
+
+        public override void Execute()
+        {
+            if(defenceDeck.GetCardCount() > 0 )
+            {
+                foreach (var card in defenceDeck.cardDatas)
+                {
+                    if(card == null || card.decorateCard == null) continue;
+                    if(card.TryGetCardFeature<HealthDecorator>(out var defendCard))
+                    {
+                        defendCard.TakeDamage(currentDamageValue);
+                        currentCard.ChangeDamage(currentDamageValue);
+                        break;
+                    }
+                }
+            }
+            else player.Kill();
+        }
+
+        public override void UpdateDamageValue(int newDamageValue)
+        {
+            currentDamageValue = newDamageValue;
+        }
+    }
+
     public class MultiplyDamageByTypeStrategy : StrategyAttackBase
     {
         public override string Name => "Default Attack";
@@ -212,6 +252,43 @@ namespace Game.Cards.Strategy
                         decorator.TakeDamage(currentDamageValue * 2);
                         break;
                     }
+                    if(card.TryGetCardFeature<HealthDecorator>(out var defendCard))
+                    {
+                        defendCard.TakeDamage(currentDamageValue);
+                        break;
+                    }
+                }
+            }
+            else player.Kill();
+        }
+
+        public override void UpdateDamageValue(int newDamageValue)
+        {
+            currentDamageValue = newDamageValue;
+        }
+    }
+
+    public class LoopAttackByStepStrategy : StrategyAttackBase
+    {
+        public override string Name => "Default Attack";
+        private PlayerSystem player;
+        private int currentDamageValue;
+        private IDeck<CardData> defenceDeck;
+
+        public LoopAttackByStepStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck)
+        {
+            this.player = player;
+            this.currentDamageValue = damageValue;
+            this.defenceDeck = defenceDeck;
+        }
+
+        public override void Execute()
+        {
+            if(defenceDeck.GetCardCount() > 0 )
+            {
+                foreach (var card in defenceDeck.cardDatas)
+                {
+                    if(card == null || card.decorateCard == null) continue;
                     if(card.TryGetCardFeature<HealthDecorator>(out var defendCard))
                     {
                         defendCard.TakeDamage(currentDamageValue);

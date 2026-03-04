@@ -32,12 +32,6 @@ namespace Game.Cards.UI
 
         }
         
-        private void OnEnable()
-        {
-            StepCombatSystem.Instance.EventUpdate += UpdateView;
-            viewModel.UpdateUI += UpdateView;
-        }
-        
         private void OnDisable()
         {
             StepCombatSystem.Instance.EventUpdate -= UpdateView;

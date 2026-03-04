@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "deck strike modifier", menuName = "Modifiers/Deck Strike")]
-    public sealed class ModifierDeckStrike : ModifierBase
+    [CreateAssetMenu(fileName = "Loop attack by step modifier", menuName = "Modifiers/LoopAttackByStep")]
+    public sealed class ModifierLoopAttackByStep : ModifierBase
     {
-        [SerializeField] private int RegenerateHP;
         private bool isActive;
 
         public override void Init()
@@ -21,8 +20,8 @@ namespace Game.Cards.Modifier
 
             context.SourceCard.Parent.GetComponent<CardData>()
                 .GetCardFeature<AttackDecorator>()
-                .ChangeStrategy(new DeckStrikeAttackRegenerateStrategy(context.Player, context.DamageValue, RegenerateHP, context.DefendDeck, context.MonsterDeck, context.SourceCard));
-        
+                .ChangeStrategy(new LoopAttackByStepStrategy(context.Player, context.DamageValue, context.DefendDeck));
+
             isActive = false;
         }
     }

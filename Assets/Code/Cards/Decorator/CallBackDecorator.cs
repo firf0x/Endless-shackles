@@ -11,7 +11,7 @@ namespace Game.Cards
         /// <summary>
         /// Отправляет текущий объект в ModifierDecorator другой карты. Для ответных реакций карты с другой кратой.
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="target">Карта являющейся инициатором вызова</param>
         public void Call(GameObject target)
         {
             Debug.Log(target.name + " : Карта которая была инициатором вызова");

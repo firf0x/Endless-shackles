@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "Invisible modifier", menuName = "Modifiers/Invisible")]
-    public sealed class ModifierInvisible : ModifierBase
+    [CreateAssetMenu(fileName = "Poisoning modifier", menuName = "Modifiers/Poisoning")]
+    public sealed class ModifierPoisoning : ModifierBase
     {
         public override void Apply(ModifierContext context) { }
         public override void OnUpdate(ModifierContext context)
         {
-            context.SourceCard.SetLock(!context.SourceCard.isLocked);
+            
         }
     }
 }

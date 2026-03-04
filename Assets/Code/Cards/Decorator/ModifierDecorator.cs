@@ -48,10 +48,13 @@ namespace Game.Cards
             // Создание контекста с текущей картов в SourceCard
             var context = CreateContext(target);
             
-            // Нужен для отправки данных о карте атаки
-            Debug.Log("Отправка обратной связи");
-            if(target != null) target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
-            Debug.Log("Конец обратной связи");
+            if(target != null)
+            {
+                // Нужен для отправки данных о карте взаимодействующей с текущей
+                // Debug.Log("Отправка обратной связи");
+                target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
+                // Debug.Log("Конец обратной связи");
+            }
 
             // Отработка всех модификаторов на текущей карте
             foreach (var modifier in modifiers)
