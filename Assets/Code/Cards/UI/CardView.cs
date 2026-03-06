@@ -28,8 +28,6 @@ namespace Game.Cards.UI
 
             StepCombatSystem.Instance.EventUpdate += UpdateView;
             viewModel.UpdateUI += UpdateView;
-            
-
         }
         
         private void OnDisable()

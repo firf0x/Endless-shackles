@@ -89,8 +89,9 @@ namespace Game.Deck.Fabric
             };
             
             ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, baseCard);
+            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(defenceType);
 
-            return new HealthDecorator(cardData.HealthValue, defenceType);
+            return new HealthDecorator(cardData.HealthValue, callBackCard);
         }
 
         private ICard<CardTypeEnum> CreateMonsterCard(int index)

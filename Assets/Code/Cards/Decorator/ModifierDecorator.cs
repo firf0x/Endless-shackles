@@ -3,7 +3,6 @@ using Game.Lib;
 using Game.Cards.Modifier;
 using Game.GameSystem;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Game.Cards
 {
@@ -45,15 +44,15 @@ namespace Game.Cards
 
         public override void Use(GameObject target)
         {
-            // Создание контекста с текущей картов в SourceCard
+            // Создание контекста с текущей картой в SourceCard
             var context = CreateContext(target);
             
             if(target != null)
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
-                // Debug.Log("Отправка обратной связи");
+                Debug.Log("Отправка обратной связи");
                 target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
-                // Debug.Log("Конец обратной связи");
+                Debug.Log("Конец обратной связи");
             }
 
             // Отработка всех модификаторов на текущей карте

@@ -26,7 +26,8 @@ MonoBehaviour:
     name: Horned Helmet
     description: "\u0417\u0430\u0449\u0438\u0442\u0430 \u0433\u043E\u043B\u043E\u0432\u044B"
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
-    modifiers: []
+    modifiers:
+    - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}
     HealthValue: 13
     DefenceType: 0
   - type: 2
@@ -34,7 +35,8 @@ MonoBehaviour:
     name: Bone Armor
     description: "\u0417\u0430\u0449\u0438\u0442\u0430 \u0442\u0435\u043B\u0430"
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
-    modifiers: []
+    modifiers:
+    - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}
     HealthValue: 5
     DefenceType: 1
   - type: 2
@@ -44,7 +46,8 @@ MonoBehaviour:
       \u0432\u0441\u043F\u043E\u043C\u043E\u0433\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0445
       \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u043E\u0432"
     icon: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
-    modifiers: []
+    modifiers:
+    - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}
     HealthValue: 15
     DefenceType: 4
   cardsMonster:
@@ -53,11 +56,10 @@ MonoBehaviour:
     name: 
     description: "\u0418\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u0442 \u0449\u0438\u0442\u044B."
     icon: {fileID: 21300000, guid: 1c75912d695c46e40933ad11c9598af8, type: 3}
-    modifiers:
-    - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}
+    modifiers: []
     DamageValue: 1
     HealthValue: 15
-    StepValue: 4
+    StepValue: 1
   <prefabCardAttack>k__BackingField: {fileID: 3465050260203635359, guid: 90126a11e0a12a242bf0bc801e8ad95b, type: 3}
   <prefabCardDefence>k__BackingField: {fileID: 406906183301028158, guid: 21e3b906692dced45a93162711329d4d, type: 3}
   <prefabCardMonster>k__BackingField: {fileID: 1119248145784775390, guid: e44005c0e513f784ba90ccebfb7806a7, type: 3}

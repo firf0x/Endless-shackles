@@ -6,6 +6,7 @@ namespace Game.Cards.Strategy
     public abstract class StrategyAttackBase : IStrategy
     {
         public abstract string Name { get; }
+        public abstract ICard<CardTypeEnum> Card { get; protected set; }
 
         public abstract void Execute();
 

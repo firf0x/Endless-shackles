@@ -15,12 +15,18 @@ namespace Game.Cards
 
         public void TakeDamage(int amount)
         {
-            if(!isLocked) healthSystem.TakeDamage(amount);
+            if(!isLocked)
+            {
+                healthSystem.TakeDamage(amount);
+            }
         }
 
         public void Heal(int amount)
         {
-            if(!isLocked) healthSystem.Heal(amount);
+            if(!isLocked)
+            {
+                healthSystem.Heal(amount);
+            }
         }
 
         public void OnDead()

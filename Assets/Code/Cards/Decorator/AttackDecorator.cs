@@ -54,7 +54,11 @@ namespace Game.Cards
             }
         }
 
-        private void OnStep() => Use(null);
+        private void OnStep()
+        {
+            // Нужно сделать так чтобы target = карте защиты
+            Use(null);
+        }
 
         public override void Use(GameObject target)
         {
