@@ -20,7 +20,7 @@ namespace Game.Cards.Modifier
 
             context.SourceCard.Parent.GetComponent<CardData>()
                 .GetCardFeature<AttackDecorator>()
-                .ChangeStrategy(new LoopAttackByStepStrategy(context.Player, context.DamageValue, context.DefendDeck));
+                .ChangeStrategy(new LoopAttackByStepStrategy(context.DamageValue));
 
             isActive = false;
         }

@@ -35,6 +35,8 @@ namespace Game.Cards
 
         public override void Start()
         {
+            if(modifiers.Count == 0) return;
+
             // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
             {
@@ -45,8 +47,8 @@ namespace Game.Cards
         public override void Use(GameObject target)
         {
             // Создание контекста с текущей картой в SourceCard
-            var context = CreateContext(target);
-            
+            var context = CreateContext(target);            
+
             if(target != null)
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
@@ -66,27 +68,31 @@ namespace Game.Cards
 
         public void UpdateModifiers(GameObject target)
         {
+            if(modifiers.Count == 0) return;
+
             var context = CreateContext(target);
 
-            foreach (var modifier in modifiers)
+            foreach (var modifier in modifiers.ToArray())
             {
                 modifier.OnUpdate(context);
-            }            
+            }
         }
 
         private ModifierContext CreateContext(GameObject target)
         {
+
             return new ModifierContext
             {
                 //TODO: я так подумал и считаю, что CardData должена быть закеширована это сократит количество вызовов getcomponent
                 SourceCard = this,
+                SourceGameObject = Parent,
                 TargetCard = target?.GetComponent<CardData>()?.decorateCard,
                 TargetGameObject = target,
                 Player = player,
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
-                DamageValue = Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().currentDamage.Value
+                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0
             };
         }
 

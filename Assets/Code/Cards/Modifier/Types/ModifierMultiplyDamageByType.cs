@@ -23,7 +23,7 @@ namespace Game.Cards.Modifier
 
             context.SourceCard.Parent.GetComponent<CardData>()
                 .GetCardFeature<AttackDecorator>()
-                .ChangeStrategy(new MultiplyDamageByTypeStrategy(context.Player, context.DamageValue, context.DefendDeck, defenceType));
+                .ChangeStrategy(new MultiplyDamageByTypeStrategy(context.Player, context.DamageValue, defenceType));
             
             isActive = false;
         }

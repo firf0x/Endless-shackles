@@ -21,7 +21,7 @@ namespace Game.Cards.Modifier
 
             context.SourceCard.Parent.GetComponent<CardData>()
                 .GetCardFeature<AttackDecorator>()
-                .ChangeStrategy(new DeckStrikeAttackRegenerateStrategy(context.Player, context.DamageValue, RegenerateHP, context.DefendDeck, context.MonsterDeck, context.SourceCard));
+                .ChangeStrategy(new DeckStrikeAttackRegenerateStrategy(context.Player, context.DamageValue, RegenerateHP, context.MonsterDeck, context.SourceCard));
         
             isActive = false;
         }

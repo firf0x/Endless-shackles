@@ -9,29 +9,38 @@ namespace Game.Cards.Strategy
     public class StandartAttackStategy : StrategyAttackBase
     {
         public override string Name => "Default Attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
         private GameObject target;
+        private GameObject parent;
         private int currentDamageValue;
         private CardTypeEnum ignoreLayers;
 
         public StandartAttackStategy(GameObject target, GameObject parent, int damageValue, CardTypeEnum ignoreLayers)
         {
             this.target = target;
-            this.currentDamageValue = damageValue;
+            this.parent = parent;
+            currentDamageValue = damageValue;
             this.ignoreLayers = ignoreLayers;
+        }
+
+        public override bool IsValidTarget(GameObject target)
+        {
+            if (!base.IsValidTarget(target)) return false;
+            var data = target.GetComponent<CardData>();
+            // Цель не должна быть в игнорируемом слое
+            return !data.decorateCard.IgnoreLayers.HasFlag(ignoreLayers);
         }
 
         public override void Execute()
         {
-            CardData data = target.GetComponent<CardData>();
+            if (target == null) return;
 
-            if (data.TryGetCardFeature<HealthDecorator>(out var feature) && !data.decorateCard.IgnoreLayers.HasFlag(ignoreLayers))
+            var data = target.GetComponent<CardData>();
+            if (data.TryGetCardFeature<HealthDecorator>(out var feature))
             {
-                // Удаление карты атаки при нанесении урона по карте монстра
+                // Удаление карты атаки при нанесении урона монстру
                 if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
                 {
-                    (Card as CardData)?.CardDestroy(false);
+                    parent.GetComponent<CardData>().CardDestroy(false);
                 }
 
                 feature.TakeDamage(currentDamageValue);
@@ -43,173 +52,222 @@ namespace Game.Cards.Strategy
         public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
     }
 
-    public class MonsterAttackStrategy : DefenceDeckAttackStrategy
+    public class MonsterAttackStrategy : StrategyAttackBase
     {
         public override string Name => "Default Attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        public MonsterAttackStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck)
-            : base(player, damageValue, defenceDeck)
-        {
-            Card = null; // в данной стратегии нет привязанной карты
-        }
-
-        // Используется полностью базовое поведение: атака первой попавшейся карты защиты
-    }
-
-    #endregion
-
-    #region Modifiers Attack
-
-    public class IgnoreDefenceTypeAttackStategy : DefenceDeckAttackStrategy
-    {
-        public override string Name => "Ignore defence type attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        private readonly DefenceType type;
-        private CardData lastDefenceCard; // последняя просмотренная карта (на случай, если все нужного типа)
-
-        public IgnoreDefenceTypeAttackStategy(PlayerSystem player, DefenceType defenceType, int damageValue, IDeck<CardData> defendDeck)
-            : base(player, damageValue, defendDeck)
-        {
-            type = defenceType;
-            Card = null;
-        }
-
-        protected override bool IsTarget(CardData card)
-        {
-            // Запоминаем карту для возможного использования в HandleNoTarget
-            lastDefenceCard = card;
-            // Цель – карта, у которой тип защиты НЕ равен заданному
-            return card.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType != type;
-        }
-
-        protected override void HandleNoTarget()
-        {
-            // Если все карты имеют игнорируемый тип защиты – убить игрока
-            if (lastDefenceCard != null)
-                Player.Kill();
-        }
-    }
-
-    public class MultiplyDamageStrategy : DefenceDeckAttackStrategy
-    {
-        public override string Name => "Default Attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        private readonly AttackDecorator currentCard;
-
-        public MultiplyDamageStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck, AttackDecorator currentCard)
-            : base(player, damageValue, defenceDeck)
-        {
-            this.currentCard = currentCard;
-            Card = null; // при необходимости можно получить карту из currentCard, если она там есть
-        }
-
-        protected override void ApplyDamage(CardData target)
-        {
-            base.ApplyDamage(target);
-            currentCard.ChangeDamage(DamageValue);
-        }
-    }
-
-    public class MultiplyDamageByTypeStrategy : DefenceDeckAttackStrategy
-    {
-        public override string Name => "Default Attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        private readonly DefenceType type;
-
-        public MultiplyDamageByTypeStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck, DefenceType defenceType)
-            : base(player, damageValue, defenceDeck)
-        {
-            type = defenceType;
-            Card = null;
-        }
-
-        protected override bool IsTarget(CardData card)
-        {
-            // Если тип совпадает – урон удваивается (обрабатывается в ApplyDamage)
-            return true; // всегда выбираем первую карту, но модифицируем урон в ApplyDamage
-        }
-
-        protected override void ApplyDamage(CardData target)
-        {
-            if (target.TryGetCardFeature<HealthDecorator>(out var health))
-            {
-                int finalDamage = type == target.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType
-                    ? DamageValue * 2
-                    : DamageValue;
-                health.TakeDamage(finalDamage);
-            }
-        }
-    }
-
-    public class LoopAttackByStepStrategy : DefenceDeckAttackStrategy
-    {
-        public override string Name => "Default Attack";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        public LoopAttackByStepStrategy(PlayerSystem player, int damageValue, IDeck<CardData> defenceDeck)
-            : base(player, damageValue, defenceDeck)
-        {
-            Card = null;
-        }
-
-        // Полностью базовое поведение
-    }
-
-    public class DeckStrikeAttackRegenerateStrategy : StrategyAttackBase
-    {
-        public override string Name => "Deck strike";
-        public override ICard<CardTypeEnum> Card { get; protected set; }
-
-        private readonly PlayerSystem player;
+        private PlayerSystem player;
         private int currentDamageValue;
-        private readonly int currentHealValue;
-        private readonly IDeck<CardData> defenceDeck;
-        private readonly IDeck<CardData> monsterDeck;
+        private GameObject target;
 
-        public DeckStrikeAttackRegenerateStrategy(PlayerSystem player, int damageValue, int regenerateHP,
-            IDeck<CardData> defenceDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card)
+        public MonsterAttackStrategy(PlayerSystem player, int damageValue)
         {
             this.player = player;
             currentDamageValue = damageValue;
-            currentHealValue = regenerateHP;
-            this.defenceDeck = defenceDeck;
-            this.monsterDeck = monsterDeck;
-            Card = card;
         }
 
         public override void Execute()
         {
-            if (defenceDeck.GetCardCount() == 0)
+            if (target == null)
             {
                 player.Kill();
                 return;
             }
 
-            int multiply = 0;
-            foreach (var card in defenceDeck.cardDatas)
+            if (target.TryGetComponent<CardData>(out var card) &&
+                card.TryGetCardFeature<HealthDecorator>(out var health))
             {
-                if (card?.decorateCard == null) continue;
-                if (card.TryGetCardFeature<HealthDecorator>(out var decorator))
-                {
-                    multiply++;
-                    decorator.TakeDamage(currentDamageValue);
-                }
+                health.TakeDamage(currentDamageValue);
+            }
+        }
+
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
+        public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
+    }
+
+    #endregion
+
+    #region Modifier Attack Strategies
+
+    public class IgnoreDefenceTypeAttackStategy : StrategyAttackBase
+    {
+        public override string Name => "Ignore defence type attack";
+        private int currentDamageValue;
+        private PlayerSystem player;
+        private DefenceType type;
+        private GameObject target;
+
+        public IgnoreDefenceTypeAttackStategy(PlayerSystem player, DefenceType defenceType, int damageValue)
+        {
+            this.player = player;
+            currentDamageValue = damageValue;
+            type = defenceType;
+        }
+
+        public override bool IsValidTarget(GameObject target)
+        {
+            if (!base.IsValidTarget(target)) return false;
+            var defenceType = target.GetComponent<CardData>()?.GetCardFeature<CustomTypeDecorator<DefenceType>>();
+            return defenceType != null && defenceType.CustomType != type;
+        }
+
+        public override void Execute()
+        {
+            if (target == null)
+            {
+                player.Kill();
+                return;
             }
 
-            for (int i = 0; i < multiply; i++)
+            if (target.TryGetComponent<CardData>(out var card) &&
+                card.TryGetCardFeature<HealthDecorator>(out var health))
             {
-                foreach (var card in monsterDeck.cardDatas)
+                health.TakeDamage(currentDamageValue);
+            }
+        }
+
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
+        public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
+    }
+
+    public class DeckStrikeAttackRegenerateStrategy : StrategyAttackBase
+    {
+        public override string Name => "Deck strike";
+        private PlayerSystem player;
+        private int currentDamageValue;
+        private int currentHealValue;
+        private IDeck<CardData> monsterDeck;
+        private ICard<CardTypeEnum> objectCard;
+        private GameObject target;
+
+        public DeckStrikeAttackRegenerateStrategy(PlayerSystem player, int damageValue, int regenerateHP,
+                                                  IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card)
+        {
+            this.player = player;
+            currentDamageValue = damageValue;
+            currentHealValue = regenerateHP;
+            this.monsterDeck = monsterDeck;
+            objectCard = card;
+        }
+
+        public override void Execute()
+        {
+            if (target == null)
+            {
+                player.Kill();
+                return;
+            }
+
+            // Наносим урон одной цели
+            if (target.TryGetComponent<CardData>(out var targetCard) &&
+                targetCard.TryGetCardFeature<HealthDecorator>(out var health))
+            {
+                health.TakeDamage(currentDamageValue);
+            }
+
+            // Лечим всех монстров (кроме самого себя) один раз
+            foreach (var card in monsterDeck.cardDatas)
+            {
+                if (card == null || card.gameObject == objectCard.Parent) continue;
+                if (card.TryGetCardFeature<HealthDecorator>(out var monsterHealth))
                 {
-                    if (card?.gameObject == Card?.Parent) continue; // пропускаем самого себя
-                    card?.GetCardFeature<HealthDecorator>()?.healthSystem.Heal(currentHealValue);
+                    monsterHealth.healthSystem.Heal(currentHealValue);
                 }
             }
         }
 
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
+        public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
+    }
+
+    public class MultiplyDamageStrategy : StrategyAttackBase
+    {
+        public override string Name => "Multiply damage Attack";
+        private PlayerSystem player;
+        private AttackDecorator currentCard;
+        private GameObject target;
+
+        public MultiplyDamageStrategy(PlayerSystem player, AttackDecorator currentCard)
+        {
+            this.player = player;
+            this.currentCard = currentCard;
+        }
+
+        public override void Execute()
+        {
+            if (target == null)
+            {
+                player.Kill();
+                return;
+            }
+
+            if (target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(currentCard.currentDamage.Value * 2);
+        }
+
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
+    }
+
+    public class MultiplyDamageByTypeStrategy : StrategyAttackBase
+    {
+        public override string Name => "Multiply by type Attack";
+        private PlayerSystem player;
+        private int currentDamageValue;
+        private DefenceType type;
+        private GameObject target;
+
+        public MultiplyDamageByTypeStrategy(PlayerSystem player, int damageValue, DefenceType defenceType)
+        {
+            this.player = player;
+            this.currentDamageValue = damageValue;
+            this.type = defenceType;
+        }
+
+        public override void Execute()
+        {
+            if (target == null)
+            {
+                player.Kill();
+                return;
+            }
+
+            if (!target.TryGetComponent<CardData>(out var card) ||
+                !card.TryGetCardFeature<HealthDecorator>(out var health))
+                return;
+
+            int damage = currentDamageValue;
+            var defenceType = card.GetCardFeature<CustomTypeDecorator<DefenceType>>();
+            if (defenceType != null && defenceType.CustomType == type)
+                damage *= 2;
+
+            health.TakeDamage(damage);
+        }
+
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
+        public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
+    }
+
+    public class LoopAttackByStepStrategy : StrategyAttackBase
+    {
+        public override string Name => "Default Attack";
+        private int currentDamageValue;
+        private GameObject target;
+
+        public LoopAttackByStepStrategy(int damageValue)
+        {
+            currentDamageValue = damageValue;
+        }
+
+        public override void Execute()
+        {
+            if (target == null) return;
+
+            if (target.TryGetComponent<CardData>(out var card) &&
+                card.TryGetCardFeature<HealthDecorator>(out var health))
+            {
+                health.TakeDamage(currentDamageValue);
+            }
+        }
+
+        public override void UpdateTarget(GameObject newTarget) => target = newTarget;
         public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
     }
 

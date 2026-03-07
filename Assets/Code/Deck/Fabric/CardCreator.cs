@@ -88,10 +88,14 @@ namespace Game.Deck.Fabric
                 Icon = cardData.Icon,
             };
             
-            ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, baseCard);
-            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(defenceType);
+            List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
-            return new HealthDecorator(cardData.HealthValue, callBackCard);
+            // Я не могу вызвать у другой карты модификаторы?
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, player, baseCard);
+            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(modifierCard);
+            ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, callBackCard);
+
+            return new HealthDecorator(cardData.HealthValue, defenceType);
         }
 
         private ICard<CardTypeEnum> CreateMonsterCard(int index)

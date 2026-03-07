@@ -37,8 +37,7 @@ namespace Game.Cards
                 Parent.GetComponent<CardData>().GetCardFeature<StepCombatDecorator>().OnStepInteraction += OnStep;
                 return new MonsterAttackStrategy(
                     player: player,
-                    damageValue: currentDamage.Value,
-                    defenceDeck
+                    damageValue: currentDamage.Value
                 );
 
             }
@@ -56,8 +55,25 @@ namespace Game.Cards
 
         private void OnStep()
         {
-            // Нужно сделать так чтобы target = карте защиты
-            Use(null);
+            GameObject target = null;
+
+            // Ищем первую карту в defenceDeck, у которой есть HealthDecorator
+            foreach (var card in defenceDeck.cardDatas)
+            {
+                if (card != null && card.TryGetCardFeature<HealthDecorator>(out _))
+                {
+                    target = card.gameObject;
+                    break;
+                }
+            }
+
+            if (defenceDeck.GetCardCount() == 0)
+            {
+                player.Kill();
+                return;
+            }
+
+            Use(target);
         }
 
         public override void Use(GameObject target)
