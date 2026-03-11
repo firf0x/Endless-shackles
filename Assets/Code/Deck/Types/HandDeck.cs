@@ -135,6 +135,7 @@ namespace Game.Deck
             {
                 // Добавляем карту в свободную ячейку
                 cardDatas[freeIndex] = newCard;
+                newCard.currentDeck = this;
 
                 UpdateAllCardsPosition();
                 return true;

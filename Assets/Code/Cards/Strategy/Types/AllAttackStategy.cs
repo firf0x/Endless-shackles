@@ -103,26 +103,30 @@ namespace Game.Cards.Strategy
             type = defenceType;
         }
 
-        public override bool IsValidTarget(GameObject target)
-        {
-            if (!base.IsValidTarget(target)) return false;
-            var defenceType = target.GetComponent<CardData>()?.GetCardFeature<CustomTypeDecorator<DefenceType>>();
-            return defenceType != null && defenceType.CustomType != type;
-        }
-
         public override void Execute()
         {
-            if (target == null)
+            CardData defenceItem = null;
+            var cardData = target.GetComponent<CardData>();
+
+            if(cardData.currentDeck.GetCardCount() == 0)
             {
                 player.Kill();
                 return;
             }
 
-            if (target.TryGetComponent<CardData>(out var card) &&
-                card.TryGetCardFeature<HealthDecorator>(out var health))
+            foreach (var card in cardData.currentDeck.cardDatas)
             {
-                health.TakeDamage(currentDamageValue);
+                if(card == null) continue;
+
+                if (card.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType != type)
+                {
+                    card.GetCardFeature<HealthDecorator>().TakeDamage(currentDamageValue);
+                    return;
+                }
+                else defenceItem = card;
             }
+
+            if(defenceItem != null) player.Kill();
         }
 
         public override void UpdateTarget(GameObject newTarget) => target = newTarget;
@@ -245,9 +249,10 @@ namespace Game.Cards.Strategy
         public override void UpdateDamageValue(int newDamageValue) => currentDamageValue = newDamageValue;
     }
 
+    // Это что за пиздец?
     public class LoopAttackByStepStrategy : StrategyAttackBase
     {
-        public override string Name => "Default Attack";
+        public override string Name => "Loop by step Attack";
         private int currentDamageValue;
         private GameObject target;
 

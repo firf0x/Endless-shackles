@@ -47,6 +47,8 @@ namespace Game.Deck
                 if (cards[key] == null)
                 {
                     cards[key] = newCard;
+                    newCard.currentDeck = this;
+                    
                     Debug.Log($"Ключ {key} существовал с null, перезаписан");
                     return true;
                 }
@@ -59,6 +61,7 @@ namespace Game.Deck
             else
             {
                 cards.Add(key, newCard);
+                newCard.currentDeck = this;
                 Debug.Log($"Добавлена новая карта");
                 return true;
             }

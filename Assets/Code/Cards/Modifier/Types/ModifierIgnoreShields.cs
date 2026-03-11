@@ -18,6 +18,7 @@ namespace Game.Cards.Modifier
         {
             if(isActive == false) return;
 
+
             context.SourceCard.Parent.GetComponent<CardData>()
                 .GetCardFeature<AttackDecorator>()
                 .ChangeStrategy(new IgnoreDefenceTypeAttackStategy(context.Player, DefenceType.Shield, context.DamageValue));

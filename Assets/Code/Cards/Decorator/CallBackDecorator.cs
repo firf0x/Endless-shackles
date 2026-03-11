@@ -14,8 +14,8 @@ namespace Game.Cards
         /// <param name="target">Карта являющейся инициатором вызова</param>
         public void Call(GameObject target)
         {
-            Debug.Log(target.name + " : Карта которая была инициатором вызова");
-            Debug.Log(Parent.name + " : Карта которая была провзаимодействованой");
+            // Debug.Log(target.name + " : Карта которая была инициатором вызова");
+            // Debug.Log(Parent.name + " : Карта которая была провзаимодействованой");
             if (target != null) Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().UpdateModifiers(target);
         }
     }

@@ -52,9 +52,9 @@ namespace Game.Cards
             if(target != null)
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
-                Debug.Log("Отправка обратной связи");
+                // Debug.Log("Отправка обратной связи");
                 target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
-                Debug.Log("Конец обратной связи");
+                // Debug.Log("Конец обратной связи");
             }
 
             // Отработка всех модификаторов на текущей карте
@@ -80,7 +80,6 @@ namespace Game.Cards
 
         private ModifierContext CreateContext(GameObject target)
         {
-
             return new ModifierContext
             {
                 //TODO: я так подумал и считаю, что CardData должена быть закеширована это сократит количество вызовов getcomponent
