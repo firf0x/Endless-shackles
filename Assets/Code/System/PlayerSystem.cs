@@ -11,7 +11,7 @@ namespace Game.GameSystem
         public bool IsAlive { get; private set; } = true;
         public UnityEvent OnPlayerDied;
 
-        public void Kill()
+        public virtual void Kill()
         {
             if (!IsAlive) return;
             
@@ -19,7 +19,7 @@ namespace Game.GameSystem
             OnPlayerDied?.Invoke();
         }
 
-        public void Respawn()
+        public virtual void Respawn()
         {
             if (!IsAlive) IsAlive = true;
         }

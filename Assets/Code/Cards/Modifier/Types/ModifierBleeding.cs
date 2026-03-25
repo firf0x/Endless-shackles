@@ -8,23 +8,18 @@ namespace Game.Cards.Modifier
     {
         [SerializeField] private int MaxStack;
         [SerializeField] private int Damage;
-        private int currentStack;
-
-        public override void Init()
-        {
-            currentStack = MaxStack;
-        }
 
         public override void Apply(ModifierContext context)
         {
-            var decorator = context.SourceCard.Parent.GetComponent<CardData>().GetCardFeature<HealthDecorator>();
-            decorator.TakeDamage(Damage * currentStack);
+            var decorator = context.SourceCardData.GetCardFeature<HealthDecorator>();
+            decorator.TakeDamage(Damage * context.CurrentStackModifier);
         }
 
         public override void OnUpdate(ModifierContext context)
         {
-            currentStack -= 1;
-            currentStack = Mathf.Max(currentStack, 0);
+            context.SourceCardData.GetCardFeature<ModifierDecorator>().RemoveModifier(this);
         }
+
+        public override string ToString() => "Modifier bleeding";
     }
 }

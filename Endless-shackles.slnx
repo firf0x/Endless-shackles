@@ -4,5 +4,6 @@
   <Project Path="Game.Lib.csproj" />
   <Project Path="Game.Player.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="Tests.csproj" />
   <Project Path="GameSystem.csproj" />
 </Solution>

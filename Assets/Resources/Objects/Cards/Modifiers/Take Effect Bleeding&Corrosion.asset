@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4a013d210fb352479a3273cc9c82da8, type: 3}
+  m_Name: Take Effect Bleeding&Corrosion
+  m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierTakeEffect
+  <modifierName>k__BackingField: 
+  <modifierDescription>k__BackingField: 
+  <modifierType>k__BackingField: 0
+  <icon>k__BackingField: {fileID: 0}
+  <isStack>k__BackingField: 0
+  isRandom: 1
+  AdditionalModifiers:
+  - {fileID: 11400000, guid: 7383865643e300f41bd7ea841c4d0f16, type: 2}
+  - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}

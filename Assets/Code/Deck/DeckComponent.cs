@@ -20,8 +20,7 @@ namespace Game.Deck
 
         private void Awake()
         {
-            var localCreator = new CardCreator(config, handDeck, defenceDeck, monsterDeck, playerSystem);
-            creator = localCreator;
+            creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck, playerSystem);
         }
 
         public void CreateNewCard()
@@ -69,7 +68,6 @@ namespace Game.Deck
         {
             ICard<CardTypeEnum> card = creator.CreateAttackCard();
             GameObject cardPrefab = null;
-            // StepCombatSystem.Instance.StepUpdate();
             cardPrefab = Instantiate(config.prefabCardAttack, transform);
             handDeck.AddCard(cardPrefab.GetComponent<CardData>());
             cardPrefab.GetComponent<CardData>().currentDeck = handDeck;

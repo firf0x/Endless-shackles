@@ -6,15 +6,11 @@ namespace Game.Lib
 {    
     public abstract class ModifierBase : ScriptableObject
     {
-        [SerializeField] private string modifierName;
-        [SerializeField] private string modifierDescription;
-        [SerializeField] private ModifierTypeEnum modifierType;
-        [SerializeField] private Sprite icon;
-
-        public string Name => modifierName;
-        public string Description => modifierDescription;
-        public ModifierTypeEnum Type => modifierType;
-        public Sprite Icon => icon;
+        [field:SerializeField] public string modifierName { get; private set; }
+        [field:SerializeField] public string modifierDescription { get; private set; }
+        [field:SerializeField] public ModifierTypeEnum modifierType { get; private set; }
+        [field:SerializeField] public Sprite icon { get; private set; }
+        [field:SerializeField] public bool isStack { get; private set; } // TODO: нужно либо задать вопрос или просто закоментировать
 
         public virtual void Apply(ModifierContext context) { }
         public virtual void OnUpdate(ModifierContext context) { }

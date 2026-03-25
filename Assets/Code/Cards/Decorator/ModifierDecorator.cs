@@ -8,7 +8,7 @@ namespace Game.Cards
 {
     public class ModifierDecorator : CardDecorator
     {
-        private List<ModifierBase> modifiers;
+        public List<ModifierData> modifiers { get; private set; }
         private PlayerSystem player;
         private IDeck<CardData> handDeck;
         private IDeck<CardData> defendDeck;
@@ -20,38 +20,61 @@ namespace Game.Cards
             this.handDeck = handDeck;
             this.defendDeck = defendDeck;
             this.monsterDeck = monsterDeck;
-            this.modifiers = modifiers;
+            this.modifiers = new();
+
+            foreach (var modifier in modifiers)
+            {
+                this.modifiers.Add(new ModifierData(modifier, 1));
+            }
         }
 
         public void AddModifier(ModifierBase modifier)
         {
-            if(modifier != null && !modifiers.Contains(modifier)) modifiers.Add(modifier);
+            if (modifier == null) return;
+
+            ModifierData existing = modifiers.Find(m => m.Modifier == modifier);
+
+            if (existing != null)
+            {
+                if(existing.Modifier.isStack) return;
+                existing.Stack += 1;
+            }
+            else modifiers.Add(new ModifierData(modifier, 1));
+
         }
 
         public void RemoveModifier(ModifierBase modifier)
         {
-            if(modifiers.Contains(modifier)) modifiers.Remove(modifier);
+            if (modifier == null) return;
+
+            var existing = modifiers.Find(m => m.Modifier == modifier);
+            if (existing != null)
+            {
+                existing.Stack -= 1;
+                if (existing.Stack <= 0) modifiers.Remove(existing);
+            }
         }
 
         public override void Start()
         {
+            ToString();
+
             if(modifiers.Count == 0) return;
 
             // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
             {
-                modifier.Init();
+                modifier.Modifier.Init();
             }
         }
 
         public override void Use(GameObject target)
         {
-            // Создание контекста с текущей картой в SourceCard
-            var context = CreateContext(target);            
-
             if(target != null)
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
+                ToString();
+
                 // Debug.Log("Отправка обратной связи");
                 target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
                 // Debug.Log("Конец обратной связи");
@@ -60,7 +83,7 @@ namespace Game.Cards
             // Отработка всех модификаторов на текущей карте
             foreach (var modifier in modifiers)
             {
-                modifier.Apply(context);
+                modifier.Modifier.Apply(CreateContext(target, modifier));
             }
 
             base.Use(target);
@@ -70,34 +93,55 @@ namespace Game.Cards
         {
             if(modifiers.Count == 0) return;
 
-            var context = CreateContext(target);
 
             foreach (var modifier in modifiers.ToArray())
             {
-                modifier.OnUpdate(context);
+                modifier.Modifier.OnUpdate(CreateContext(target, modifier));
             }
         }
 
-        private ModifierContext CreateContext(GameObject target)
+        private ModifierContext CreateContext(GameObject target, ModifierData modifierData)
         {
             return new ModifierContext
             {
                 //TODO: я так подумал и считаю, что CardData должена быть закеширована это сократит количество вызовов getcomponent
                 SourceCard = this,
                 SourceGameObject = Parent,
+                SourceCardData = Parent.GetComponent<CardData>(),
                 TargetCard = target?.GetComponent<CardData>()?.decorateCard,
                 TargetGameObject = target,
+                TargetCardData = target.GetComponent<CardData>(),
                 Player = player,
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
-                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0
+                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
+                CurrentStackModifier = modifierData.Stack
             };
         }
 
         public override string ToString()
         {
-            string message = $"Modifier: текущее количество модификаторов {modifiers.Count}.";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append($"Modifier: текущее количество модификаторов {modifiers.Count}. ");
+
+            if (modifiers.Count > 0)
+            {
+                sb.Append("Список: ");
+                for (int i = 0; i < modifiers.Count; i++)
+                {
+                    var modData = modifiers[i];
+                    sb.Append($"[{modData.Modifier.ToString()}: стак {modData.Stack}]");
+                    
+                    if (i < modifiers.Count - 1) sb.Append(", ");
+                }
+            }
+            else
+            {
+                sb.Append("Модификаторы отсутствуют.");
+            }
+
+            string message = sb.ToString();
             Debug.Log(message);
             return message;
         }

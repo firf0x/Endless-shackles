@@ -13,6 +13,8 @@ namespace Game.Cards.UI
         public string Damage { get; private set; }
         public string Step { get; private set; }
 
+        
+
         public event Action UpdateUI;
 
         public CardViewModel(CardData model)

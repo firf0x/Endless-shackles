@@ -143,8 +143,7 @@ namespace Game.Cards.Strategy
         private ICard<CardTypeEnum> objectCard;
         private GameObject target;
 
-        public DeckStrikeAttackRegenerateStrategy(PlayerSystem player, int damageValue, int regenerateHP,
-                                                  IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card)
+        public DeckStrikeAttackRegenerateStrategy(PlayerSystem player, int damageValue, int regenerateHP, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card)
         {
             this.player = player;
             currentDamageValue = damageValue;
@@ -155,28 +154,30 @@ namespace Game.Cards.Strategy
 
         public override void Execute()
         {
-            if (target == null)
-            {
-                player.Kill();
-                return;
-            }
+            var cardData = target.GetComponent<CardData>();
 
-            // Наносим урон одной цели
-            if (target.TryGetComponent<CardData>(out var targetCard) &&
-                targetCard.TryGetCardFeature<HealthDecorator>(out var health))
+            if(cardData.currentDeck.GetCardCount() > 0 )
             {
-                health.TakeDamage(currentDamageValue);
-            }
+                int multiply = 0;
 
-            // Лечим всех монстров (кроме самого себя) один раз
-            foreach (var card in monsterDeck.cardDatas)
-            {
-                if (card == null || card.gameObject == objectCard.Parent) continue;
-                if (card.TryGetCardFeature<HealthDecorator>(out var monsterHealth))
+                foreach (var card in cardData.currentDeck.cardDatas)
                 {
-                    monsterHealth.healthSystem.Heal(currentHealValue);
+                    if(card == null || card.decorateCard == null) continue;
+                    if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
+                    {
+                        multiply++;
+                        decorator.TakeDamage(currentDamageValue);
+                        break;
+                    }
+                }
+
+                foreach (var card in monsterDeck.cardDatas)
+                {
+                    if(card == null || objectCard.Parent == card.gameObject || !card.TryGetCardFeature<HealthDecorator>(out var decorator)) continue;
+                    decorator.Heal(currentHealValue * multiply);
                 }
             }
+            else player.Kill();
         }
 
         public override void UpdateTarget(GameObject newTarget) => target = newTarget;
@@ -233,14 +234,14 @@ namespace Game.Cards.Strategy
                 return;
             }
 
-            if (!target.TryGetComponent<CardData>(out var card) ||
-                !card.TryGetCardFeature<HealthDecorator>(out var health))
-                return;
+            var cardData = target.GetComponent<CardData>();
+
+            if (!cardData.TryGetCardFeature<HealthDecorator>(out var health)) return;
 
             int damage = currentDamageValue;
-            var defenceType = card.GetCardFeature<CustomTypeDecorator<DefenceType>>();
-            if (defenceType != null && defenceType.CustomType == type)
-                damage *= 2;
+            var defenceType = cardData.GetCardFeature<CustomTypeDecorator<DefenceType>>();
+
+            if (defenceType != null && defenceType.CustomType == type) damage *= 2;
 
             health.TakeDamage(damage);
         }

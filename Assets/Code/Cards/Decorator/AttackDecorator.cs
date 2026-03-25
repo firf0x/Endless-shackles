@@ -92,7 +92,7 @@ namespace Game.Cards
         public void ChangeDamage(int value)
         {
             currentDamage.Value = defaultDamageValue + value;
-            currentDamage.Value = Mathf.Abs(currentDamage.Value);
+            currentDamage.Value = Mathf.Max(0, currentDamage.Value);
         }
 
         public void ChangeStrategy(StrategyAttackBase newStrategy)
@@ -115,7 +115,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            if (Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
             base.Dispose();
         }
     }

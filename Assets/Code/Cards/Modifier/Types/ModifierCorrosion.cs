@@ -8,19 +8,17 @@ namespace Game.Cards.Modifier
     {
         public override void OnUpdate(ModifierContext context)
         {
-            var cardData = context.SourceCard.Parent.GetComponent<CardData>();
-
-            Debug.Log(cardData.name);
-
-            if (cardData.TryGetCardFeature<HealthDecorator>(out var decorator))
+            if (context.SourceCardData.TryGetCardFeature<HealthDecorator>(out var decorator))
             {
                 var attackDecorator = context.TargetGameObject.GetComponent<CardData>().GetCardFeature<AttackDecorator>();
                 int currentDamage = attackDecorator.currentDamage.Value;
                 
                 decorator.TakeDamage(currentDamage);
 
-                context.SourceGameObject.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().RemoveModifier(this);
+                if(context.SourceCard != null) context.SourceCardData.GetCardFeature<ModifierDecorator>().RemoveModifier(this);
             }
         }
+
+        public override string ToString() => "Modifier corrosion";
     }
 }
