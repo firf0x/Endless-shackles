@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6875e680a9c467f41b775a19c63e6b79, type: 3}
   m_Name: Bleeding modifier
   m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierBleeding
-  modifierName: 
-  modifierDescription: 
-  modifierType: 0
-  icon: {fileID: 0}
+  <modifierName>k__BackingField: 
+  <modifierDescription>k__BackingField: 
+  <modifierType>k__BackingField: 0
+  <icon>k__BackingField: {fileID: 2586869892543285870, guid: e55f200c25f113449be39c5c7c39ab03, type: 3}
+  <isStack>k__BackingField: 0
   MaxStack: 99
   Damage: 3

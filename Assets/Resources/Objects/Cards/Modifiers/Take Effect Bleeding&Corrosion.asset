@@ -15,9 +15,8 @@ MonoBehaviour:
   <modifierName>k__BackingField: 
   <modifierDescription>k__BackingField: 
   <modifierType>k__BackingField: 0
-  <icon>k__BackingField: {fileID: 0}
+  <icon>k__BackingField: {fileID: 384771527755328561, guid: e55f200c25f113449be39c5c7c39ab03, type: 3}
   <isStack>k__BackingField: 0
-  isRandom: 1
+  isRandom: 0
   AdditionalModifiers:
-  - {fileID: 11400000, guid: 7383865643e300f41bd7ea841c4d0f16, type: 2}
   - {fileID: 11400000, guid: 0bc2e978b636cd74da9eb81f257abbc2, type: 2}

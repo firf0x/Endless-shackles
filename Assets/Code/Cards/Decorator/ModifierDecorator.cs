@@ -3,12 +3,20 @@ using Game.Lib;
 using Game.Cards.Modifier;
 using Game.GameSystem;
 using System.Collections.Generic;
+using System;
 
 namespace Game.Cards
 {
-    public class ModifierDecorator : CardDecorator
+    public class ModifierDecorator : CardDecorator, ICallbackReceiver
     {
-        public List<ModifierData> modifiers { get; private set; }
+        public IReadOnlyList<ModifierData> Modifiers => modifiers;
+        
+        public event Action<ModifierData> OnAdded;
+        public event Action<ModifierData> OnRemoved;
+        public event Action<ModifierData> OnChanged;
+        public event Action<ModifierData> OnCleared;
+
+        private List<ModifierData> modifiers;
         private PlayerSystem player;
         private IDeck<CardData> handDeck;
         private IDeck<CardData> defendDeck;
@@ -24,7 +32,7 @@ namespace Game.Cards
 
             foreach (var modifier in modifiers)
             {
-                this.modifiers.Add(new ModifierData(modifier, 1));
+                AddModifier(modifier);
             }
         }
 
@@ -38,9 +46,14 @@ namespace Game.Cards
             {
                 if(existing.Modifier.isStack) return;
                 existing.Stack += 1;
+                OnChanged?.Invoke(existing);
             }
-            else modifiers.Add(new ModifierData(modifier, 1));
-
+            else
+            {
+                ModifierData d = new ModifierData(modifier, 1);
+                modifiers.Add(d);
+                OnAdded?.Invoke(d);
+            }
         }
 
         public void RemoveModifier(ModifierBase modifier)
@@ -52,6 +65,7 @@ namespace Game.Cards
             {
                 existing.Stack -= 1;
                 if (existing.Stack <= 0) modifiers.Remove(existing);
+                OnRemoved?.Invoke(existing);
             }
         }
 
@@ -70,13 +84,17 @@ namespace Game.Cards
 
         public override void Use(GameObject target)
         {
-            if(target != null)
+            CardData cardData = target.GetComponent<CardData>();
+
+            if(cardData.decorateCard.IgnoreLayers.HasFlag(CardTypeEnum.Attack))
+            {
+                cardData.GetCardFeature<ModifierDecorator>().UpdateModifiers(target);
+            }
+            else
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
-                ToString();
-
                 // Debug.Log("Отправка обратной связи");
-                target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
+                cardData.GetCardFeature<CallBackDecorator>().Call(Parent);
                 // Debug.Log("Конец обратной связи");
             }
 
@@ -93,10 +111,19 @@ namespace Game.Cards
         {
             if(modifiers.Count == 0) return;
 
-
             foreach (var modifier in modifiers.ToArray())
             {
                 modifier.Modifier.OnUpdate(CreateContext(target, modifier));
+            }
+        }
+
+        public void OnCallbackReceived(GameObject target)
+        {
+            if(modifiers.Count == 0) return;
+
+            foreach (var modifier in modifiers.ToArray())
+            {
+                modifier.Modifier.OnCallBack(CreateContext(target, modifier));
             }
         }
 
@@ -104,7 +131,7 @@ namespace Game.Cards
         {
             return new ModifierContext
             {
-                //TODO: я так подумал и считаю, что CardData должена быть закеширована это сократит количество вызовов getcomponent
+                //TODO: я так подумал и считаю, что CardData должена быть закеширована в сам ICard, это сократит количество вызовов getcomponent
                 SourceCard = this,
                 SourceGameObject = Parent,
                 SourceCardData = Parent.GetComponent<CardData>(),

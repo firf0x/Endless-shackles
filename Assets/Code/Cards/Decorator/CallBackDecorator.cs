@@ -16,7 +16,10 @@ namespace Game.Cards
         {
             // Debug.Log(target.name + " : Карта которая была инициатором вызова");
             // Debug.Log(Parent.name + " : Карта которая была провзаимодействованой");
-            if (target != null) Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().UpdateModifiers(target);
+            Debug.Log(Parent.GetComponent<CardData>());
+            Debug.Log(Parent.GetComponent<CardData>().TryGetCardFeature<ModifierDecorator>(out var decorator));
+            Debug.Log(target);
+            if (target != null) Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
         }
     }
 }

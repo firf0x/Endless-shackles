@@ -17,7 +17,9 @@ namespace Game.Cards.Modifier
 
                 int randomIndex = Random.Range(0, AdditionalModifiers.Count);
                 ModifierBase selected = AdditionalModifiers[randomIndex];
-                context.TargetCardData.GetCardFeature<ModifierDecorator>().AddModifier(selected);
+                
+                if(context.TargetCardData.TryGetCardFeature<ModifierDecorator>(out var decorator)) decorator.AddModifier(selected);
+                
                 Debug.Log($"Добавленый на карту {context.TargetGameObject.name} модификатор => {selected}");
             }
             else
@@ -27,9 +29,9 @@ namespace Game.Cards.Modifier
             Debug.Log("Модификаторы добавлены на вражескую карту");
         }
 
-        public override void OnUpdate(ModifierContext context)
+        public override void OnCallBack(ModifierContext context)
         {
-            if(context.TargetCard.IgnoreLayers.HasFlag(CardTypeEnum.Attack | CardTypeEnum.Defence)) return;
+            Debug.Log(context.TargetCardData.decorateCard.CardName);
             Apply(context);
         }
     

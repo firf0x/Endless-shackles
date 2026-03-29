@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Game.Cards.Modifier;
 using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
@@ -13,7 +16,10 @@ namespace Game.Cards.UI
         public string Damage { get; private set; }
         public string Step { get; private set; }
 
-        
+        public IReadOnlyList<ModifierData> Modifiers { get; private set; }
+        public event Action<ModifierData> ModifierAdded;
+        public event Action<ModifierData> ModifierRemoved;
+        // public event Action<ModifierData> ModifierChanged;
 
         public event Action UpdateUI;
 
@@ -32,6 +38,16 @@ namespace Game.Cards.UI
                 var m = model.GetCardFeature<HealthDecorator>();
                 m.healthSystem.HealPoints.OnChanged += OnModelHPChanged;
                 m.healthSystem.HealPoints.Value = m.healthSystem.HealPoints.Value;
+            }
+            if(isModifierDecorator)
+            {
+                var m = model.GetCardFeature<ModifierDecorator>();
+                m.OnAdded += OnModifierAdded;
+                m.OnRemoved += OnModifierRemoved;
+                // m.OnChanged += OnModelModifierChanged;
+                
+                // Копируем текущий список модификаторов
+                Modifiers = m.Modifiers.ToList().AsReadOnly();
             }
             if(isStepDecorator)
             {
@@ -54,6 +70,37 @@ namespace Game.Cards.UI
             UpdateUI?.Invoke();
         }
 
+        #region Modifiers
+        
+        private void OnModifierAdded(ModifierData modifier)
+        {
+            var list = Modifiers.ToList();
+            list.Add(modifier);
+            Modifiers = list.AsReadOnly();
+            
+            ModifierAdded?.Invoke(modifier);
+            UpdateUI?.Invoke();
+        }
+
+        private void OnModifierRemoved(ModifierData modifier)
+        {
+            var list = Modifiers.ToList();
+            list.Remove(modifier);
+            Modifiers = list.AsReadOnly();
+            
+            ModifierRemoved?.Invoke(modifier);
+            UpdateUI?.Invoke();
+        }
+
+        private void OnModelModifierChanged(ModifierData modifierData)
+        {
+
+            // ModifierChanged?.Invoke();
+            UpdateUI?.Invoke();
+        }
+
+        #endregion
+
         private void OnModelStepChanged(int value)
         {
             Step = value.ToString();
@@ -62,12 +109,21 @@ namespace Game.Cards.UI
 
         public bool isAttackDecorator => model.CheckCardFeature<AttackDecorator>();
         public bool isHealthDecorator => model.CheckCardFeature<HealthDecorator>();
+        public bool isModifierDecorator => model.CheckCardFeature<ModifierDecorator>();
         public bool isStepDecorator => model.CheckCardFeature<StepCombatDecorator>();
 
         public void Dispose()
         {
             if(isAttackDecorator) model.GetCardFeature<AttackDecorator>().currentDamage.OnChanged -= OnModelDamageChanged;
             if(isHealthDecorator) model.GetCardFeature<HealthDecorator>().healthSystem.HealPoints.OnChanged -= OnModelHPChanged;
+            
+            if (isModifierDecorator)
+            {
+                var m = model.GetCardFeature<ModifierDecorator>();
+                m.OnAdded -= OnModifierAdded;
+                m.OnRemoved -= OnModifierRemoved;
+            }
+
             if(isStepDecorator) model.GetCardFeature<StepCombatDecorator>().currentStep.OnChanged -= OnModelStepChanged;
         }
     }

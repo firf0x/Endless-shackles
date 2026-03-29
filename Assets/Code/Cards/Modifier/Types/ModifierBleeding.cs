@@ -15,7 +15,7 @@ namespace Game.Cards.Modifier
             decorator.TakeDamage(Damage * context.CurrentStackModifier);
         }
 
-        public override void OnUpdate(ModifierContext context)
+        public override void OnCallBack(ModifierContext context)
         {
             context.SourceCardData.GetCardFeature<ModifierDecorator>().RemoveModifier(this);
         }
