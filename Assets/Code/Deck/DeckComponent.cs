@@ -67,8 +67,7 @@ namespace Game.Deck
         public void CreateAttackCard()
         {
             ICard<CardTypeEnum> card = creator.CreateAttackCard();
-            GameObject cardPrefab = null;
-            cardPrefab = Instantiate(config.prefabCardAttack, transform);
+            GameObject cardPrefab = Instantiate(config.prefabCardAttack, transform);
             handDeck.AddCard(cardPrefab.GetComponent<CardData>());
             cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
 
@@ -77,6 +76,20 @@ namespace Game.Deck
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             card.Start();
+        }
+
+        public void CreateDefenceCard()
+        {
+            ICard<CardTypeEnum> card = creator.CreateDefenceCard();
+            GameObject cardPrefab = Instantiate(config.prefabCardDefence, transform);
+            handDeck.AddCard(cardPrefab.GetComponent<CardData>());
+            cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
+
+            card.Parent = cardPrefab;
+            cardPrefab.GetComponent<CardData>().decorateCard = card;
+            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
+
+            card.Start();            
         }
 
         public void ResetDatas()

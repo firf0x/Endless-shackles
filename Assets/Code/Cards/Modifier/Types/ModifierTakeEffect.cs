@@ -9,7 +9,7 @@ namespace Game.Cards.Modifier
     {
         [SerializeField] private bool isRandom;
         [SerializeField] private List<ModifierBase> AdditionalModifiers;
-        public override void Apply(ModifierContext context)
+        public override void OnUpdate(ModifierContext context)
         {
             if(isRandom)
             {
@@ -24,16 +24,19 @@ namespace Game.Cards.Modifier
             }
             else
             {
-                foreach (ModifierBase modifier in AdditionalModifiers) context.TargetCardData.GetCardFeature<ModifierDecorator>().AddModifier(modifier);
+                foreach (ModifierBase modifier in AdditionalModifiers)
+                {
+                    context.TargetCardData.GetCardFeature<ModifierDecorator>().AddModifier(modifier);
+                }
             }
             Debug.Log("Модификаторы добавлены на вражескую карту");
         }
 
-        public override void OnCallBack(ModifierContext context)
-        {
-            Debug.Log(context.TargetCardData.decorateCard.CardName);
-            Apply(context);
-        }
+        // public override void OnCallBack(ModifierContext context)
+        // {
+        //     Debug.Log(context.TargetCardData.decorateCard.CardName);
+        //     OnUpdate(context);
+        // }
     
         public override string ToString() => "Modifier take effect";
     }

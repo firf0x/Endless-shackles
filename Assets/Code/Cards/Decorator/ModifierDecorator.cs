@@ -34,6 +34,7 @@ namespace Game.Cards
             {
                 AddModifier(modifier);
             }
+
         }
 
         public void AddModifier(ModifierBase modifier)
@@ -64,16 +65,19 @@ namespace Game.Cards
             if (existing != null)
             {
                 existing.Stack -= 1;
-                if (existing.Stack <= 0) modifiers.Remove(existing);
-                OnRemoved?.Invoke(existing);
+                if (existing.Stack <= 0)
+                {
+                    modifiers.Remove(existing);
+                    OnRemoved?.Invoke(existing);
+                }
+                OnChanged?.Invoke(existing);
             }
         }
 
         public override void Start()
         {
-            ToString();
-
             if(modifiers.Count == 0) return;
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var a)) StepCombatSystem.Instance.EventUpdate += OnStep;
 
             // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
@@ -82,26 +86,35 @@ namespace Game.Cards
             }
         }
 
+        public void OnStep()
+        {
+            if(modifiers.Count <= 0) return;
+
+            foreach (var modifier in modifiers.ToArray())
+            {
+                modifier.Modifier.Apply(CreateContext(null, modifier));
+            }
+        }
+
         public override void Use(GameObject target)
         {
+            Debug.Log($"{Parent.name}");
+            Debug.Log($"{target.name}");
+
+            UpdateModifiers(target);
+
             CardData cardData = target.GetComponent<CardData>();
 
-            if(cardData.decorateCard.IgnoreLayers.HasFlag(CardTypeEnum.Attack))
+            if(!cardData.decorateCard.IgnoreLayers.HasFlag(CardTypeEnum.Attack))
             {
                 cardData.GetCardFeature<ModifierDecorator>().UpdateModifiers(target);
             }
             else
             {
                 // Нужен для отправки данных о карте взаимодействующей с текущей
-                // Debug.Log("Отправка обратной связи");
+                Debug.Log("Отправка обратной связи");
                 cardData.GetCardFeature<CallBackDecorator>().Call(Parent);
-                // Debug.Log("Конец обратной связи");
-            }
-
-            // Отработка всех модификаторов на текущей карте
-            foreach (var modifier in modifiers)
-            {
-                modifier.Modifier.Apply(CreateContext(target, modifier));
+                Debug.Log("Конец обратной связи");
             }
 
             base.Use(target);
@@ -129,7 +142,20 @@ namespace Game.Cards
 
         private ModifierContext CreateContext(GameObject target, ModifierData modifierData)
         {
-            return new ModifierContext
+            if(target == null) return new ModifierContext
+            {
+                //TODO: я так подумал и считаю, что CardData должена быть закеширована в сам ICard, это сократит количество вызовов getcomponent
+                SourceCard = this,
+                SourceGameObject = Parent,
+                SourceCardData = Parent.GetComponent<CardData>(),
+                Player = player,
+                HandDeck = handDeck,
+                DefendDeck = defendDeck,
+                MonsterDeck = monsterDeck,
+                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
+                CurrentStackModifier = modifierData.Stack
+            };
+            else return new ModifierContext
             {
                 //TODO: я так подумал и считаю, что CardData должена быть закеширована в сам ICard, это сократит количество вызовов getcomponent
                 SourceCard = this,
@@ -181,6 +207,13 @@ namespace Game.Cards
             handDeck = null;
             defendDeck = null;
             monsterDeck = null;
+
+            OnAdded = null;
+            OnRemoved = null;
+            OnChanged = null;
+            OnCleared = null;
+
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var a)) StepCombatSystem.Instance.EventUpdate -= OnStep;
 
             base.Dispose();
         }

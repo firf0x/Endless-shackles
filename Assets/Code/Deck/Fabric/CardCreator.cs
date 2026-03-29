@@ -32,6 +32,7 @@ namespace Game.Deck.Fabric
         }
 
         public override ICard<CardTypeEnum> CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count));
+        public override ICard<CardTypeEnum> CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count));
 
         private ICard<CardTypeEnum> CreateRandomCard(CardTypeEnum typeEnum)
         {

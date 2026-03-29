@@ -7,9 +7,7 @@ namespace Game.Cards.Modifier
     public sealed class ModifierCorrosion : ModifierBase
     {
         public override void OnCallBack(ModifierContext context)
-        {
-            Debug.Log(ToString());
-            
+        {            
             if (context.SourceCardData.TryGetCardFeature<HealthDecorator>(out var decorator))
             {
                 var attackDecorator = context.TargetGameObject.GetComponent<CardData>().GetCardFeature<AttackDecorator>();
