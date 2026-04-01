@@ -14,7 +14,6 @@ namespace Game.Cards.Modifier
         public GameObject TargetGameObject { get; set; }            // Целевой игровой объект
         public int DamageValue { get; set; }                        // Значение урона
         public int CurrentStackModifier { get; set; }               // Значение стака текущего модификатора
-        public PlayerSystem Player { get; set; }                    // Ссылка на игрока
         public IDeck<CardData> HandDeck { get; set; }               // Колода в руке
         public IDeck<CardData> DefendDeck { get; set; }             // Колода защиты
         public IDeck<CardData> MonsterDeck { get; set; }            // Колода монстров

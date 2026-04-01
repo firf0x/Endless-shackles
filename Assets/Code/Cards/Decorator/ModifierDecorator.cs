@@ -17,14 +17,12 @@ namespace Game.Cards
         public event Action<ModifierData> OnCleared;
 
         private List<ModifierData> modifiers;
-        private PlayerSystem player;
         private IDeck<CardData> handDeck;
         private IDeck<CardData> defendDeck;
         private IDeck<CardData> monsterDeck;
 
-        public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, PlayerSystem player, ICard<CardTypeEnum> card) : base(card)
+        public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card) : base(card)
         {
-            this.player = player;
             this.handDeck = handDeck;
             this.defendDeck = defendDeck;
             this.monsterDeck = monsterDeck;
@@ -82,7 +80,7 @@ namespace Game.Cards
             // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
             {
-                modifier.Modifier.Init();
+                modifier.Modifier.Init(CreateContext(null, modifier));
             }
         }
 
@@ -148,7 +146,6 @@ namespace Game.Cards
                 SourceCard = this,
                 SourceGameObject = Parent,
                 SourceCardData = Parent.GetComponent<CardData>(),
-                Player = player,
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
@@ -164,7 +161,6 @@ namespace Game.Cards
                 TargetCard = target?.GetComponent<CardData>()?.decorateCard,
                 TargetGameObject = target,
                 TargetCardData = target.GetComponent<CardData>(),
-                Player = player,
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
@@ -203,7 +199,6 @@ namespace Game.Cards
         {
             modifiers.Clear();
             modifiers = null;
-            player = null;
             handDeck = null;
             defendDeck = null;
             monsterDeck = null;

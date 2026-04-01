@@ -20,7 +20,7 @@ namespace Game.Deck
 
         private void Awake()
         {
-            creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck, playerSystem);
+            creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck);
         }
 
         public void CreateNewCard()

@@ -10,14 +10,13 @@ namespace Game.Deck.Fabric
     public class CardCreator : Creator<ICard<CardTypeEnum>>
     {
         private readonly DeckCardsConfig config;
-        private readonly PlayerSystem player;
         private readonly IDeck<CardData> handDeck;
         private readonly IDeck<CardData> defendDeck;
         private readonly IDeck<CardData> monsterDeck;
-        public CardCreator(DeckCardsConfig config, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, PlayerSystem player)
+
+        public CardCreator(DeckCardsConfig config, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck)
         {
             this.config = config;
-            this.player = player;
             this.handDeck = handDeck;
             this.defendDeck = defendDeck;
             this.monsterDeck = monsterDeck;
@@ -68,10 +67,10 @@ namespace Game.Deck.Fabric
             
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, player, baseCard);
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
             ICard<CardTypeEnum> callBackCard = new CallBackDecorator(modifierCard);
 
-            return new AttackDecorator(cardData.DamageValue, player, defendDeck, callBackCard);
+            return new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
         }
 
         private ICard<CardTypeEnum> CreateDefenceCard(int index)
@@ -92,7 +91,7 @@ namespace Game.Deck.Fabric
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
             // Я не могу вызвать у другой карты модификаторы?
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, player, baseCard);
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
             ICard<CardTypeEnum> callBackCard = new CallBackDecorator(modifierCard);
             ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, callBackCard);
 
@@ -116,9 +115,9 @@ namespace Game.Deck.Fabric
 
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, player, baseCard);
+            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
             ICard<CardTypeEnum> callBackCard = new CallBackDecorator(modifierCard);
-            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, player, defendDeck, callBackCard);
+            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
             ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
 
             return new StepCombatDecorator(cardData.StepValue, cardWithHealth);

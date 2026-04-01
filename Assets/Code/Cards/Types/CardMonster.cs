@@ -1,4 +1,6 @@
 using System;
+using Game.Cards.Strategy;
+using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards
@@ -10,5 +12,7 @@ namespace Game.Cards
         [SerializeField, InspectorName("Damage")] public int DamageValue;
         [SerializeField, InspectorName("Health")] public int HealthValue;
         [SerializeField, InspectorName("Step")] public int StepValue;
+        [SerializeReference, SubclassSelector] public IAttackStrategy strategyAttack;
+
     }
 }

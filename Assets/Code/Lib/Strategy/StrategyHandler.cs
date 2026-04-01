@@ -5,8 +5,7 @@ namespace Game.Lib
 	/// <summary>
 	/// Обработчик стратегий, предоставляющий механизм для выполнения и переключения между различными стратегиями
 	/// </summary>
-	/// <typeparam name="TStrategy">Тип стратегии, должен реализовывать интерфейс IStrategy</typeparam>
-	public class StrategyHandler<TStrategy> : IStrategyHandle<TStrategy> where TStrategy : IStrategy
+	public class StrategyHandler<TStrategy> : IStrategyHandle<TStrategy> where TStrategy : IAttackStrategy
 	{
 		/// <summary>
         /// Текущая стратегия
@@ -37,14 +36,14 @@ namespace Game.Lib
 		/// <summary>
 		/// Выполняет текущую установленную стратегию
 		/// </summary>
-		public void ExecuteStrategy()
+		public void ExecuteStrategy(GameObject parent, GameObject target, int damage)
 		{
 			if (Strategy == null)
 			{
 				Debug.LogError($"Strategy cannot be null. Please provide a valid implementation of {typeof(TStrategy).Name}.");
 				return;
 			}
-			Strategy.Execute();
+			Strategy.Execute(parent, target, damage);
 		}
 
 		/// <summary>
@@ -54,21 +53,12 @@ namespace Game.Lib
 		public override string ToString() => $"Current strategy : {Strategy.Name}";
 	}
 
-	/// <summary>
-    /// Интерфейс для управления стратегиями определенного типа
-    /// </summary>
-    /// <typeparam name="TStrategy">Тип стратегии, должен реализовывать интерфейс IStrategy</typeparam>
 	public interface IStrategyHandle<TStrategy>
 	{
 		/// <summary>
 		/// Выполняет текущую установленную стратегию
 		/// </summary>
-		void ExecuteStrategy();
-		
-		/// <summary>
-        /// Изменяет текущую стратегию на указанную
-        /// </summary>
-        /// <param name="newStrategy">Новая стратегия для установки</param>
+		void ExecuteStrategy(GameObject parent, GameObject target, int damage);
 		void ChangeStrategy(TStrategy newStrategy);
 	}
 }

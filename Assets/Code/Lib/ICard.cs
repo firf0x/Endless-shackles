@@ -17,5 +17,6 @@ namespace Game.Lib
         void Start();
         void Use(GameObject target);
         void SetLock(bool enabled);
+        void Destroy();
     }
 }

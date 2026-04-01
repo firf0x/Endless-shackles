@@ -15,6 +15,6 @@ namespace Game.Lib
         public virtual void Apply(ModifierContext context) { }
         public virtual void OnUpdate(ModifierContext context) { }
         public virtual void OnCallBack(ModifierContext context) { }
-        public virtual void Init() { }
+        public virtual void Init(ModifierContext context) { }
     }
 }

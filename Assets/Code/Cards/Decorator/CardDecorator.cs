@@ -31,6 +31,7 @@ namespace Game.Cards
         public virtual void Start() => decoratedCard.Start();
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
         public void SetLock(bool enabled) => decoratedCard.SetLock(enabled);
+        public void Destroy() => decoratedCard.Destroy();
 
         public virtual void Dispose()
         {

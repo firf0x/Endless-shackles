@@ -8,8 +8,11 @@ namespace Game.GameSystem
     [Serializable]
     public class PlayerSystem : IDisposable
     {
+        public static PlayerSystem Instance;
         public bool IsAlive { get; private set; } = true;
         public UnityEvent OnPlayerDied;
+
+        public PlayerSystem() => Instance = this;
 
         public virtual void Kill()
         {
@@ -26,6 +29,7 @@ namespace Game.GameSystem
 
         public void Dispose()
         {
+            if(Instance == this) Instance = null;
             OnPlayerDied?.RemoveAllListeners();
         }
     }

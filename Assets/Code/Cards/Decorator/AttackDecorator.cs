@@ -11,46 +11,23 @@ namespace Game.Cards
     {
         public readonly int defaultDamageValue;
         public ReactiveProperty<int> currentDamage { get; private set; } = new();
-        private PlayerSystem player;
         private IDeck<CardData> defenceDeck;
-        private StrategyHandler<StrategyAttackBase> strategyHandle;
+        private StrategyHandler<IAttackStrategy> strategyHandle;
+        // private IAttackStrategy strategy;
 
-        public AttackDecorator(int damageValue, PlayerSystem player, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
+        public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
             this.defaultDamageValue = damageValue;
             ChangeDamage(0); // установка для того чтобы defaultDamageValue применился
 
             defenceDeck = deck;
-            this.player = player;
+            // this.strategy = strategy;
+            strategyHandle = new StrategyHandler<IAttackStrategy>(strategy);
         }
 
         public override void Start()
         {
             base.Start();
-            strategyHandle = new StrategyHandler<StrategyAttackBase>(CreateStrategyByType());
-        }
-
-        private StrategyAttackBase CreateStrategyByType()
-        {
-            if (Type.HasFlag(CardTypeEnum.Monster))
-            {
-                Parent.GetComponent<CardData>().GetCardFeature<StepCombatDecorator>().OnStepInteraction += OnStep;
-                return new MonsterAttackStrategy(
-                    player: player,
-                    damageValue: currentDamage.Value
-                );
-
-            }
-            else
-            {
-                // Стандартная стратегия атаки
-                return new StandartAttackStategy(
-                    target: null,
-                    parent: Parent,
-                    damageValue: currentDamage.Value,
-                    ignoreLayers: IgnoreLayers
-                );
-            }
         }
 
         private void OnStep()
@@ -69,7 +46,7 @@ namespace Game.Cards
 
             if (defenceDeck.GetCardCount() == 0)
             {
-                player.Kill();
+                PlayerSystem.Instance.Kill();
                 return;
             }
 
@@ -79,32 +56,15 @@ namespace Game.Cards
         public override void Use(GameObject target)
         {
             base.Use(target);
-            UpdateStrategyParameters(target);
-            strategyHandle.ExecuteStrategy();
+            strategyHandle.ExecuteStrategy(Parent, target, currentDamage.Value);
         }
-
-        private void UpdateStrategyParameters(GameObject target)
-        {
-            strategyHandle.Strategy.UpdateDamageValue(currentDamage.Value);
-            strategyHandle.Strategy.UpdateTarget(target);
-        }
-
         public void ChangeDamage(int value)
         {
             currentDamage.Value = defaultDamageValue + value;
             currentDamage.Value = Mathf.Max(0, currentDamage.Value);
         }
 
-        public void ChangeStrategy(StrategyAttackBase newStrategy)
-        {
-            if (newStrategy == null)
-            {
-                Debug.LogError("Cannot change to null strategy");
-                return;
-            }
-            
-            strategyHandle.ChangeStrategy(newStrategy);
-        }
+        public void ChangeStrategy(StrategyAttackBase newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
 
         public override string ToString()
         {
