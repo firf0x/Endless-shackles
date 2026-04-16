@@ -191,6 +191,6 @@ public class CursorComponent : MonoBehaviour
 
     public void GetCard(DeckComponent deck)
     {
-        deck.CreateNewCard();
+        deck.CreateNewCard(deck.transform);
     }
 }

@@ -3,10 +3,10 @@ using Game.Cards;
 // using Lib;
 using UnityEngine;
 
-namespace Game.Deck
+namespace Game.Cards
 {
-    [CreateAssetMenu(fileName = "Deck Cards Config", menuName = "Game/Deck Cards Config", order = 0)]
-    public class DeckCardsConfig : ScriptableObject
+    [CreateAssetMenu(fileName = "Cards Config", menuName = "Game/Cards Config", order = 0)]
+    public class CardsConfig : ScriptableObject
     {
         // * Здесь информация о игроке
         // [field: SerializeField] public CardPlayer playerData { get; private set; }

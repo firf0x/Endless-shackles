@@ -15,11 +15,12 @@ namespace Game.Cards
         public event Action<ModifierData> OnRemoved;
         public event Action<ModifierData> OnChanged;
         public event Action<ModifierData> OnCleared;
+        
+        public IDeck<CardData> handDeck { get; private set; }
+        public IDeck<CardData> defendDeck { get; private set; }
+        public IDeck<CardData> monsterDeck { get; private set; }
 
         private List<ModifierData> modifiers;
-        private IDeck<CardData> handDeck;
-        private IDeck<CardData> defendDeck;
-        private IDeck<CardData> monsterDeck;
 
         public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card) : base(card)
         {

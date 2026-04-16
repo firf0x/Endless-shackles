@@ -12,12 +12,12 @@ namespace Game.Lib
         /// </summary>
 		public TStrategy Strategy { get; private set; }
 
-		/// <summary>
-		/// Создает экземпляр StrategyHandler с первоначальной стратегией
-		/// </summary>
-		/// <param name="startStrategy">Стратегия, которая будет установлена по умолчанию. Не может быть null</param>
-		/// <exception cref="ArgumentNullException">Выбрасывается, если StartStrategy равен null</exception>
-		public StrategyHandler(TStrategy startStrategy) => ChangeStrategy(startStrategy);
+        /// <summary>
+        /// Создает экземпляр StrategyHandler с первоначальной стратегией
+        /// </summary>
+        /// <param name="startStrategy">Стратегия, которая будет установлена по умолчанию. Не может быть null</param>
+        /// <exception cref="ArgumentNullException">Выбрасывается, если StartStrategy равен null</exception>
+        public StrategyHandler(TStrategy startStrategy) => ChangeStrategy(startStrategy);
 
         /// <summary>
         /// Изменяет текущую стратегию на указанную
@@ -31,6 +31,7 @@ namespace Game.Lib
 				return;
 			}
 			Strategy = newStrategy;
+			Strategy.Init();
 		}
 
 		/// <summary>

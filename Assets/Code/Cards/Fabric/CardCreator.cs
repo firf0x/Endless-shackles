@@ -1,20 +1,17 @@
 using System;
 using System.Collections.Generic;
-using Game.Cards;
-using Game.GameSystem;
 using Game.Lib;
-using UnityEngine;
 
-namespace Game.Deck.Fabric
+namespace Game.Cards.Fabric
 {
     public class CardCreator : Creator<ICard<CardTypeEnum>>
     {
-        private readonly DeckCardsConfig config;
+        private readonly CardsConfig config;
         private readonly IDeck<CardData> handDeck;
         private readonly IDeck<CardData> defendDeck;
         private readonly IDeck<CardData> monsterDeck;
 
-        public CardCreator(DeckCardsConfig config, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck)
+        public CardCreator(CardsConfig config, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck)
         {
             this.config = config;
             this.handDeck = handDeck;
@@ -33,6 +30,7 @@ namespace Game.Deck.Fabric
         public override ICard<CardTypeEnum> CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count));
         public override ICard<CardTypeEnum> CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count));
 
+
         private ICard<CardTypeEnum> CreateRandomCard(CardTypeEnum typeEnum)
         {
             ICard<CardTypeEnum> card = null;
@@ -42,9 +40,6 @@ namespace Game.Deck.Fabric
                 case CardTypeEnum.Attack: card = CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count)); break;
                 case CardTypeEnum.Defence: card = CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count)); break;
                 case CardTypeEnum.Monster: card = CreateMonsterCard(UnityEngine.Random.Range(0, config.CardsMonster.Count)); break;
-
-                default: card = null; break;
-
             }
 
             return card;
@@ -60,7 +55,7 @@ namespace Game.Deck.Fabric
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
-                CardName = cardData.CardName,
+                CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
             };
@@ -83,7 +78,7 @@ namespace Game.Deck.Fabric
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
-                CardName = cardData.CardName,
+                CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
             };
@@ -108,7 +103,7 @@ namespace Game.Deck.Fabric
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
-                CardName = cardData.CardName,
+                CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
             };

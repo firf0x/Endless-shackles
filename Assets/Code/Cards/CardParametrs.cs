@@ -9,18 +9,12 @@ namespace Game.Cards
     public abstract class CardParametrs
     {
         [Header("Base Card Info")]
-        [SerializeField] private CardTypeEnum type;
-        [SerializeField] private CardTypeEnum ignoreLayers;
-        [SerializeField] private string name;
-        [SerializeField, TextArea] private string description;
-        [SerializeField] private Sprite icon;
-        [SerializeField] private List<ModifierBase> modifiers;
-
-        public CardTypeEnum Type => type;
-        public CardTypeEnum IgnoreLayers => ignoreLayers;
-        public string CardName => name;
-        public string Description => description;
-        public Sprite Icon => icon;
-        public List<ModifierBase> Modifiers => modifiers;
+        [field:SerializeField] public CardTypeEnum Type { get; private set; }
+        [field:SerializeField] public CardTypeEnum IgnoreLayers { get; private set; }
+        [field:SerializeField] public string Name { get; private set; }
+        [field:SerializeField, TextArea] public string Description { get; private set; }
+        [field:SerializeField] public Sprite Icon { get; private set; }
+        [field:SerializeField] public List<ModifierBase> Modifiers { get; private set; }
+        [field:SerializeField, Range(0, 100)] public int Weight { get; private set; } = 1;
     }
 }

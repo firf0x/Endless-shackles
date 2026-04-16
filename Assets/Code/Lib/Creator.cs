@@ -3,7 +3,7 @@ namespace Game.Lib
     public abstract class Creator<T>
     {
         public abstract T Create();
-        public virtual T CreateAttackCard() => default;
-        public virtual T CreateDefenceCard() => default;
+        public virtual T CreateAttackCard() => default; //TODO: Убрать это при релизе
+        public virtual T CreateDefenceCard() => default;//TODO: Убрать это при релизе
     }
 }

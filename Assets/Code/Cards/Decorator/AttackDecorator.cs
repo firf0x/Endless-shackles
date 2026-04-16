@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using Game.Cards.Strategy;
 using Game.GameSystem;
 using Game.Lib;
-using NUnit.Framework;
 using UnityEngine;
 
 namespace Game.Cards
@@ -13,21 +11,20 @@ namespace Game.Cards
         public ReactiveProperty<int> currentDamage { get; private set; } = new();
         private IDeck<CardData> defenceDeck;
         private StrategyHandler<IAttackStrategy> strategyHandle;
-        // private IAttackStrategy strategy;
 
         public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
             this.defaultDamageValue = damageValue;
-            ChangeDamage(0); // установка для того чтобы defaultDamageValue применился
+            ChangeDamage(defaultDamageValue);
 
             defenceDeck = deck;
-            // this.strategy = strategy;
             strategyHandle = new StrategyHandler<IAttackStrategy>(strategy);
         }
 
         public override void Start()
         {
             base.Start();
+            if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
         }
 
         private void OnStep()
@@ -60,7 +57,7 @@ namespace Game.Cards
         }
         public void ChangeDamage(int value)
         {
-            currentDamage.Value = defaultDamageValue + value;
+            currentDamage.Value = value;
             currentDamage.Value = Mathf.Max(0, currentDamage.Value);
         }
 

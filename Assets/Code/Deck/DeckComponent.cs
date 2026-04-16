@@ -1,5 +1,5 @@
 using Game.Cards;
-using Game.Deck.Fabric;
+using Game.Cards.Fabric;
 using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
@@ -8,7 +8,7 @@ namespace Game.Deck
 {
     public class DeckComponent : MonoBehaviour
     {
-        [SerializeField] private DeckCardsConfig config;
+        [SerializeField] private CardsConfig config;
         [field:SerializeField] public GameObject GameOverWindow { get; private set; } //! ГОВНО КОД
 
         [field:SerializeField] public HandDeck handDeck { get; private set; }
@@ -23,7 +23,7 @@ namespace Game.Deck
             creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck);
         }
 
-        public void CreateNewCard()
+        public void CreateNewCard(Transform transform)
         {
             ICard<CardTypeEnum> card = creator.Create();
             
@@ -90,6 +90,11 @@ namespace Game.Deck
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             card.Start();            
+        }
+
+        public void NextStep()
+        {
+            StepCombatSystem.Instance.StepUpdate();
         }
 
         public void ResetDatas()
