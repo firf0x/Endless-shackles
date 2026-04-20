@@ -6,16 +6,11 @@ namespace Game.Cards.Modifier
     [CreateAssetMenu(fileName = "Poisoning modifier", menuName = "Modifiers/Poisoning")]
     public sealed class ModifierPoisoning : ModifierBase
     {
-        private int stack = 0;
 
-        public override void Apply(ModifierContext context)
-        {
-            stack++;
-        }
-
-        public override void OnUpdate(ModifierContext context)
+        public override void Init(ModifierContext context)
         {
             
         }
+
     }
 }

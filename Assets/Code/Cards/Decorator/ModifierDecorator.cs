@@ -44,7 +44,7 @@ namespace Game.Cards
 
             if (existing != null)
             {
-                if(existing.Modifier.isStack) return;
+                if(!existing.Modifier.isStack) return;
                 existing.Stack += 1;
                 OnChanged?.Invoke(existing);
             }
@@ -66,12 +66,15 @@ namespace Game.Cards
                 existing.Stack -= 1;
                 if (existing.Stack <= 0)
                 {
+                    existing.Modifier.OnRemove(CreateContext(null, existing));
                     modifiers.Remove(existing);
                     OnRemoved?.Invoke(existing);
                 }
                 OnChanged?.Invoke(existing);
             }
         }
+
+        public bool HasModifier(ModifierBase mod) => modifiers.Exists(md => md.Modifier == mod);
 
         public override void Start()
         {
@@ -82,6 +85,16 @@ namespace Game.Cards
             foreach (var modifier in modifiers)
             {
                 modifier.Modifier.Init(CreateContext(null, modifier));
+            }
+        }
+
+        public void Apply(GameObject target)
+        {
+            if(modifiers.Count <= 0) return;
+
+            foreach (var modifier in modifiers.ToArray())
+            {
+                modifier.Modifier.Apply(CreateContext(null, modifier));
             }
         }
 
@@ -186,10 +199,7 @@ namespace Game.Cards
                     if (i < modifiers.Count - 1) sb.Append(", ");
                 }
             }
-            else
-            {
-                sb.Append("Модификаторы отсутствуют.");
-            }
+            else sb.Append("Модификаторы отсутствуют.");
 
             string message = sb.ToString();
             Debug.Log(message);
@@ -198,6 +208,11 @@ namespace Game.Cards
 
         public override void Dispose()
         {
+            foreach (var modifier in modifiers)
+            {
+                modifier.Modifier.OnRemove(CreateContext(null, modifier));
+            }
+
             modifiers.Clear();
             modifiers = null;
             handDeck = null;

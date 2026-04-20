@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Game.Lib
 {
 	/// <summary>
 	/// Обработчик стратегий, предоставляющий механизм для выполнения и переключения между различными стратегиями
 	/// </summary>
-	public class StrategyHandler<TStrategy> : IStrategyHandle<TStrategy> where TStrategy : IAttackStrategy
+	public class StrategyHandler<TStrategy> : IDisposable, IStrategyHandle<TStrategy> where TStrategy : IAttackStrategy
 	{
 		/// <summary>
         /// Текущая стратегия
@@ -30,6 +31,8 @@ namespace Game.Lib
 				Debug.LogError($"Strategy cannot be null. Please provide a valid implementation of {typeof(TStrategy).Name}.");
 				return;
 			}
+
+			if(Strategy != null) Strategy.OnRemove();
 			Strategy = newStrategy;
 			Strategy.Init();
 		}
@@ -52,7 +55,12 @@ namespace Game.Lib
 		/// </summary>
 		/// <returns>Название текущей стратегии</returns>
 		public override string ToString() => $"Current strategy : {Strategy.Name}";
-	}
+
+        public void Dispose()
+        {
+			Strategy.OnRemove();
+        }
+    }
 
 	public interface IStrategyHandle<TStrategy>
 	{

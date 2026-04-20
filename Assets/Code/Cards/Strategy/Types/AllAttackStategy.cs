@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using Game.Cards.Modifier;
 using Game.Deck.Fabric;
 using Game.GameSystem;
 using Game.Lib;
@@ -10,7 +11,7 @@ namespace Game.Cards.Strategy
     #region Standard Attack Strategies
 
     [Serializable]
-    public class StandartAttackStategy : StrategyAttackBase
+    public class Standart : StrategyAttackBase
     {
         public override string Name => "Default Attack";
 
@@ -32,7 +33,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class MonsterAttackStrategy : StrategyAttackBase
+    public class Monster : StrategyAttackBase
     {
         public override string Name => "Monster Attack";
 
@@ -53,10 +54,10 @@ namespace Game.Cards.Strategy
 
     #endregion
 
-    #region Modifier Attack Strategies
+    #region Monster Attack Strategies
 
     [Serializable]
-    public class IgnoreDefenceTypeAttackStategy : StrategyAttackBase
+    public class MonsterIgnoreDefenceType : StrategyAttackBase
     {
         public override string Name => "Ignore defence type attack";
 
@@ -90,7 +91,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class RandomIgnoreDefenceTypeAttackStategy : StrategyAttackBase
+    public class MonsterRandomIgnoreDefenceType : StrategyAttackBase
     {
         public override string Name => "Random ignore defence type";
         
@@ -129,7 +130,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class DeckStrikeAttackRegenerateStrategy : StrategyAttackBase
+    public class MonsterDeckStrikeAttackRegenerate : StrategyAttackBase
     {
         public override string Name => "Deck strike";
         [SerializeField] private int currentHealValue;
@@ -164,7 +165,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class MultiplyDamageStrategy : StrategyAttackBase
+    public class MonsterMultiplyDamage : StrategyAttackBase
     {
         public override string Name => "Multiply damage Attack";
         [SerializeField] private int Multiply = 2;
@@ -182,7 +183,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class RandomMultiplyDamageByTypeStrategy : StrategyAttackBase
+    public class MonsterRandomMultiplyDamageByType : StrategyAttackBase
     {
         public override string Name => "Random multiply by type Attack";
         [SerializeField] private int Multiply = 2;
@@ -217,7 +218,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class CumulativeDamageStrategy : StrategyAttackBase
+    public class MonsterCumulativeDamage : StrategyAttackBase
     {
         public override string Name => "Loop by step Attack";
 
@@ -234,7 +235,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class DoubleStrikeWithCooldownReductionStrategy : StrategyAttackBase
+    public class MonsterDoubleStrikeWithCooldownReduction : StrategyAttackBase
     {
         public override string Name => "Double Strike With Cooldown Reduction";
         [SerializeField] private int count = 1;
@@ -254,7 +255,7 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class SummonOnHitStrategy : StrategyAttackBase
+    public class MonsterSummonOnHit : StrategyAttackBase
     {
         public override string Name => "Summon Card On Hit";
         [SerializeField] private MinionsCreator creator = new MinionsCreator();
@@ -275,14 +276,153 @@ namespace Game.Cards.Strategy
     }
 
     [Serializable]
-    public class FreezeRandomCardStrategy : StrategyAttackBase
+    public class MonsterFreezeRandomCard : StrategyAttackBase
     {
         public override string Name => "Freeze Random Card";
+        // private CardData card;
+        [Header("Здесь нужно указать модификатор на Stanning always")]
+        [SerializeField] private ModifierBase modifier;
+        private ModifierDecorator modifierDecorator;
+
+        // В текщем случаем случае target мы используем только для нанесения урона.
+        public override void Execute(GameObject parent, GameObject target, int damage)
+        {
+            var deck = parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().handDeck;
+            
+            if(modifierDecorator == null && deck.GetCardCount() > 0)
+            {
+                
+                if(deck.cardDatas[UnityEngine.Random.Range(0, deck.GetCardCount())].TryGetCardFeature(out modifierDecorator)) 
+                
+                if(modifier != null)
+                {
+                    modifierDecorator.AddModifier(modifier);
+                    modifierDecorator.Apply(target);
+                }
+            }
+
+            if (target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(damage);
+        }
+
+        public override void OnRemove()
+        {
+            if(modifierDecorator != null)
+            {
+                modifierDecorator.RemoveModifier(modifier);
+                modifierDecorator = null;
+            }
+        }
+    }
+
+    #endregion
+
+    #region Card Attack Strategies
+
+    [Serializable]
+    public class AttackOneshot : StrategyAttackBase
+    {
+        public override string Name => "One Shot";
+        [SerializeField] private int Value;
 
         public override void Execute(GameObject parent, GameObject target, int damage)
         {
+            if (target == null) return;
 
-            if (target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(damage);
+            var data = target.GetComponent<CardData>();
+            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<AttackDecorator>(out var attackDecorator))
+            {
+                // Удаление карты атаки при нанесении урона монстру
+                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) parent.GetComponent<CardData>().decorateCard.Destroy();
+
+                // Если у врага урон меньше, чем у карты то мгновенно убивает врага
+                if(attackDecorator.currentDamage.Value < damage) healthDecorator.TakeDamage(999);
+                else healthDecorator.TakeDamage(damage);
+                
+                StepCombatSystem.Instance.StepUpdate();
+            }
+        }
+    }
+
+    [Serializable]
+    public class AttackThreePronged : StrategyAttackBase
+    {
+        public override string Name => "Three Pronged Attack";
+        [SerializeField] private int Value;
+
+        public override void Execute(GameObject parent, GameObject target, int damage)
+        {
+            if (target == null) return;
+
+            CardData data = target.GetComponent<CardData>();
+            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            {
+                CardData[] monsterCards = modifierDecorator.monsterDeck.cardDatas;
+
+                // Удаление карты атаки при нанесении урона монстру
+                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) parent.GetComponent<CardData>().decorateCard.Destroy();
+
+                if (modifierDecorator.monsterDeck.GetCardCount() > 1)
+                {
+                    int index = Array.IndexOf(monsterCards, data);
+                    
+                    // Центр + бока
+                    if (index >= 1 && index < monsterCards.Length - 1) 
+                    {
+                        for (int i = index - 1; i <= index + 1; i++)
+                        {
+                            CardData targetCard = monsterCards[i];
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(damage);
+                        }
+                    }
+                    else if (index > 0) // Центр + левая
+                    {
+                        for (int i = index - 1; i <= index; i++)
+                        {
+                            CardData targetCard = monsterCards[i];
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(damage);
+                        }
+                    }
+                    else if (index < monsterCards.Length - 1) // Центр + правая
+                    {
+                        for (int i = index; i <= index + 1; i++)
+                        {
+                            CardData targetCard = monsterCards[i];
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(damage);
+                        }
+                    }
+                    else healthDecorator.TakeDamage(damage);
+                }
+                else healthDecorator.TakeDamage(damage);
+
+
+                StepCombatSystem.Instance.StepUpdate();
+            }
+        }
+    }
+
+    [Serializable]
+    public class AttackSetEnemyModifier : StrategyAttackBase
+    {
+        public override string Name => "Set Enemy Modifier";
+        [SerializeField] private ModifierBase modifier;
+
+        public override void Execute(GameObject parent, GameObject target, int damage)
+        {
+            if (target == null) return;
+
+            var data = target.GetComponent<CardData>();
+            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            {
+                // Удаление карты атаки при нанесении урона монстру
+                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) parent.GetComponent<CardData>().decorateCard.Destroy();
+
+                healthDecorator.TakeDamage(damage);
+
+                StepCombatSystem.Instance.StepUpdate();
+
+                // Добавление модификатора на карту монстра                
+                modifierDecorator.AddModifier(modifier);
+            }
         }
     }
 

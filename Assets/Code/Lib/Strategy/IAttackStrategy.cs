@@ -7,5 +7,6 @@ namespace Game.Lib
         string Name { get; }
         void Init();
         void Execute(GameObject parent, GameObject target, int damage);
+        void OnRemove();
     }
 }

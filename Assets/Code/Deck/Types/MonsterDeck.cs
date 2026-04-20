@@ -9,7 +9,7 @@ namespace Game.Deck
 {
     public sealed class MonsterDeck : MonoBehaviour, IDeck<CardData>
     {
-        public MonsterDeck Instance { get; private set; }
+        public MonsterDeck Instance { get; private set; } // ? Я это когда писал?
 
         [SerializeField] private int sizeDeck;
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты монстров

@@ -88,7 +88,8 @@ public class CursorComponent : MonoBehaviour
         if (hit.collider != null && hit.collider.gameObject.layer == 6)
         {
             CardData card;
-            if (hit.collider.TryGetComponent<CardData>(out card))
+            Debug.Log(!hit.collider.GetComponent<CardData>().decorateCard.isLocked);
+            if (hit.collider.TryGetComponent<CardData>(out card) && !hit.collider.GetComponent<CardData>().decorateCard.isLocked)
             {
                 if(card.decorateCard.Type == CardTypeEnum.Monster) return;
                 
@@ -125,8 +126,6 @@ public class CursorComponent : MonoBehaviour
                 currentCard.Execute(hit.collider.gameObject);
                 break;
             }
-
-            // Debug.Log();
 
             if (hit.collider != null && hit.collider.gameObject.layer == 8)
             {

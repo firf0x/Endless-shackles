@@ -2,12 +2,12 @@ using System.Collections.Generic;
 
 namespace Game.Lib
 {
-    public interface IDeck<TDataType>
+    public interface IDeck<DataType>
     {
-        TDataType[] cardDatas { get; }
+        DataType[] cardDatas { get; }
         
-        bool AddCard(TDataType newCard);
-        void RemoveCard(TDataType deletedCard, bool isClearAll);
+        bool AddCard(DataType newCard);
+        void RemoveCard(DataType deletedCard, bool isClearAll);
         public int GetCardCount();
     }
 }

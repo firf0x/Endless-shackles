@@ -3,9 +3,6 @@ using System;
 using Game.Cards;
 using Game.Lib;
 using Unity.Collections;
-using Game.GameSystem;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Game.Deck
 {
@@ -15,7 +12,6 @@ namespace Game.Deck
 
         [SerializeField] private int sizeDeck;
         [SerializeField] private DeckBoard board;
-        [SerializeField] private IDeck<CardData> defendDeck;
         
         [Tooltip("Отступ между картами при распределении")]
         [SerializeField] private float Spacing = 0.1f;

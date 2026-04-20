@@ -10,7 +10,7 @@ namespace Game.Cards.Modifier
             this.Stack = stack;
         }
         
-        public ModifierBase Modifier;
+        public readonly ModifierBase Modifier;
         public int Stack;
     }
 }

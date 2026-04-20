@@ -49,7 +49,7 @@ namespace Game.Cards.Fabric
         {
             var cardsAttack = config.CardsAttacks;
 
-            var cardData = cardsAttack[index];
+            CardAttack cardData = cardsAttack[index];
 
             ICard<CardTypeEnum> baseCard = new DefaultCard()
             {
@@ -72,7 +72,7 @@ namespace Game.Cards.Fabric
         {
             var cardsDefence = config.CardsDefence;
 
-            var cardData = cardsDefence[index];
+            CardDefence cardData = cardsDefence[index];
 
             ICard<CardTypeEnum> baseCard = new DefaultCard()
             {
@@ -97,7 +97,7 @@ namespace Game.Cards.Fabric
         {
             var cardsMonster = config.CardsMonster;
 
-            var cardData = cardsMonster[index];
+            CardMonster cardData = cardsMonster[index];
 
             ICard<CardTypeEnum> baseCard = new DefaultCard()
             {

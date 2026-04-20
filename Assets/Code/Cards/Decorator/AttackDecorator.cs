@@ -27,6 +27,7 @@ namespace Game.Cards
             if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
         }
 
+        // Этот метод нужон только для монстров
         private void OnStep()
         {
             GameObject target = null;
@@ -73,6 +74,7 @@ namespace Game.Cards
         public override void Dispose()
         {
             if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            strategyHandle.Dispose();
             base.Dispose();
         }
     }
