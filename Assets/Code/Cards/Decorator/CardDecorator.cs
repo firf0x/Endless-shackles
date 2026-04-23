@@ -20,11 +20,7 @@ namespace Game.Cards
         public virtual string Description => decoratedCard.Description;
         public virtual bool isLocked => decoratedCard.isLocked;
         public virtual Sprite Icon => decoratedCard.Icon;
-        public virtual GameObject Parent 
-        { 
-            get => decoratedCard.Parent;
-            set => decoratedCard.Parent = value;
-        }
+        public virtual GameObject Parent => decoratedCard.Parent;
 
 
         public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
@@ -35,7 +31,6 @@ namespace Game.Cards
 
         public virtual void Dispose()
         {
-            decoratedCard?.Dispose();
             decoratedCard = null;
         }
 

@@ -86,6 +86,8 @@ namespace Game.Cards
             {
                 modifier.Modifier.Init(CreateContext(null, modifier));
             }
+
+            base.Start();
         }
 
         public void Apply(GameObject target)

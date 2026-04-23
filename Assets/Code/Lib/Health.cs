@@ -8,7 +8,6 @@ namespace Game.Lib
     {
         // PUBLIC
         public ReactiveProperty<int> HealPoints { get; private set; } = new();
-        public event Action OnHealPointsChanged;
         public event Action OnDead;
      
         // PRIVATE
@@ -25,24 +24,24 @@ namespace Game.Lib
         {
             if( amount <= 0 ) return;
 
-            HealPoints.Value -= amount;
+            int current = HealPoints.Value;
 
-            HealPoints.Value = Mathf.Max( HealPoints.Value, 0 );
+            current -= amount;
+
+            HealPoints.Value = Mathf.Max( current, 0 );
             
             if( HealPoints.Value <= 0 )
             {
                 OnDead?.Invoke();
             }
-            else OnHealPointsChanged?.Invoke();
         }
 
         public void Heal(int amount)
         {
-            HealPoints.Value += amount;
+            int current = HealPoints.Value; 
+            current += amount;
         
-            HealPoints.Value = Mathf.Min( HealPoints.Value, maxValue );
-            
-            OnHealPointsChanged?.Invoke();
+            HealPoints.Value = Mathf.Min( current, maxValue );
         }
 
         public void Reset()

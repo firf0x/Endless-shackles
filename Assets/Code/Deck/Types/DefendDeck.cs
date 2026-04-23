@@ -39,6 +39,8 @@ namespace Game.Deck
 
         public bool AddCard(CardData newCard)
         {
+            if(newCard == null) return false;
+
             var key = newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType;
             
             if (cards.ContainsKey(key))

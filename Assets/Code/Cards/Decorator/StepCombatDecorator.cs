@@ -9,12 +9,12 @@ namespace Game.Cards
     {
         public ReactiveProperty<int> currentStep { get; private set; } = new();
         public event Action OnStepInteraction;
-        private readonly int maxStep;
+        public int MaxStep { get; private set; }
         private bool isSpawn = true;
 
         public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {
-            maxStep = step;
+            MaxStep = step;
             currentStep.Value = step;
             StepCombatSystem.Instance.EventUpdate += OnUpdate;
         }
@@ -33,15 +33,22 @@ namespace Game.Cards
             {
                 OnStepInteraction?.Invoke();
 
-                currentStep.Value = maxStep;
+                currentStep.Value = MaxStep;
             }
+        }
+
+        public void ChangeLimits(int value)
+        {
+            value = Mathf.Max(value, 1);
+
+            MaxStep = value;
         }
 
         public override void Dispose()
         {
             OnStepInteraction = null;
             StepCombatSystem.Instance.EventUpdate -= OnUpdate;
-            
+
             base.Dispose();
         }
     }

@@ -37,7 +37,7 @@ namespace Game.Deck.Fabric
             if (eligibleIndices.Count == 0)
             {
                 Debug.LogWarning($"Нет карт с весом > {MinWeight}. Берём первую карту из списка.");
-                return CreateMonsterMinionsCard(0);
+                return CreateMonsterMinionsCard(0, GameObject.Instantiate(config.prefabCardMonster));
             }
 
             int totalWeight = 0;
@@ -60,12 +60,11 @@ namespace Game.Deck.Fabric
 
             int originalIndex = eligibleIndices[selectedIdx];
 
-            var cardMinion = CreateMonsterMinionsCard(originalIndex);
-
             GameObject cardPrefab = GameObject.Instantiate(config.prefabCardMonster);
-            
+
+            var cardMinion = CreateMonsterMinionsCard(originalIndex, cardPrefab);
+
             cardPrefab.GetComponent<CardData>().decorateCard = cardMinion;
-            cardPrefab.GetComponent<CardData>().decorateCard.Parent = cardPrefab;
             cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = cardMinion.Icon;
             cardPrefab.GetComponent<CardData>().currentDeck = monsterDeck;
             
@@ -76,7 +75,7 @@ namespace Game.Deck.Fabric
             return cardMinion;
         }
 
-        private ICard<CardTypeEnum> CreateMonsterMinionsCard(int index)
+        private ICard<CardTypeEnum> CreateMonsterMinionsCard(int index, GameObject parent)
         {
             var cardsMonster = config.CardsMonster;
 
@@ -89,6 +88,7 @@ namespace Game.Deck.Fabric
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
+                Parent = parent
             };
 
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);

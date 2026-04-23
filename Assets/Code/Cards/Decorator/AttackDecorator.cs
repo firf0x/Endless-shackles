@@ -58,8 +58,8 @@ namespace Game.Cards
         }
         public void ChangeDamage(int value)
         {
-            currentDamage.Value = value;
-            currentDamage.Value = Mathf.Max(0, currentDamage.Value);
+            // Debug.Log(Parent.GetInstanceID());
+            currentDamage.Value = Mathf.Max(0, value);
         }
 
         public void ChangeStrategy(StrategyAttackBase newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
@@ -75,6 +75,7 @@ namespace Game.Cards
         {
             if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
             strategyHandle.Dispose();
+
             base.Dispose();
         }
     }

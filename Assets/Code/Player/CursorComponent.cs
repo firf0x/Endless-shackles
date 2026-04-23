@@ -5,6 +5,8 @@ using Game.Lib;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+// TODO: Сделать так чтобы курсор компонент просто вызывал методы у найденого объекта, а не только работал с картами.
+// TODO: это нужно для того, чтобы сделать отображение информации о картах и других приколов.
 public class CursorComponent : MonoBehaviour
 {
     [Header("Raycast Settings")]
@@ -188,8 +190,5 @@ public class CursorComponent : MonoBehaviour
         return isDragging;
     }
 
-    public void GetCard(DeckComponent deck)
-    {
-        deck.CreateNewCard(deck.transform);
-    }
+    public void GetCard(DeckComponent deck) => deck.CreateNewCard();
 }

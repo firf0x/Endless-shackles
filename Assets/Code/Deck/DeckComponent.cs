@@ -23,57 +23,17 @@ namespace Game.Deck
             creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck);
         }
 
-        public void CreateNewCard(Transform transform)
+        public void CreateNewCard()
         {
-            ICard<CardTypeEnum> card = creator.Create();
-            
-            GameObject cardPrefab = null;
-
             StepCombatSystem.Instance.StepUpdate();
-
-            switch (card.Type)
-            {
-                case CardTypeEnum.Attack:
-                    cardPrefab = Instantiate(config.prefabCardAttack, transform);
-                    handDeck.AddCard(cardPrefab.GetComponent<CardData>());
-                    cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
-                    break;
-                
-                case CardTypeEnum.Defence:
-                    cardPrefab = Instantiate(config.prefabCardDefence, transform);
-                    handDeck.AddCard(cardPrefab.GetComponent<CardData>());
-                    cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
-                    break;
-                
-                case CardTypeEnum.Monster:
-                    // if(monsterDeck.is) break;
-                    cardPrefab = Instantiate(config.prefabCardMonster, transform);
-                    monsterDeck.AddCard(cardPrefab.GetComponent<CardData>());
-                    cardPrefab.GetComponent<CardData>().currentDeck = monsterDeck;
-                    break;
-
-                default:
-                    Debug.LogError("Такого типа карты не существует.");
-                    break;
-            }
-
-            card.Parent = cardPrefab;
-            cardPrefab.GetComponent<CardData>().decorateCard = card;
-            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
-
+            
+            ICard<CardTypeEnum> card = creator.Create();
             card.Start();
         }
 
         public void CreateAttackCard()
         {
             ICard<CardTypeEnum> card = creator.CreateAttackCard();
-            GameObject cardPrefab = Instantiate(config.prefabCardAttack, transform);
-            handDeck.AddCard(cardPrefab.GetComponent<CardData>());
-            cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
-
-            card.Parent = cardPrefab;
-            cardPrefab.GetComponent<CardData>().decorateCard = card;
-            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             card.Start();
         }
@@ -81,13 +41,6 @@ namespace Game.Deck
         public void CreateDefenceCard()
         {
             ICard<CardTypeEnum> card = creator.CreateDefenceCard();
-            GameObject cardPrefab = Instantiate(config.prefabCardDefence, transform);
-            handDeck.AddCard(cardPrefab.GetComponent<CardData>());
-            cardPrefab.GetComponent<CardData>().currentDeck = handDeck;
-
-            card.Parent = cardPrefab;
-            cardPrefab.GetComponent<CardData>().decorateCard = card;
-            cardPrefab.GetComponent<CardData>().ObjectRenderer.sprite = card.Icon;
 
             card.Start();            
         }

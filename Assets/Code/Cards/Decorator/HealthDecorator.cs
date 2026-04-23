@@ -29,10 +29,7 @@ namespace Game.Cards
             }
         }
 
-        public void OnDead()
-        {
-            Parent.GetComponent<CardData>().CardDestroy(false);
-        }
+        public void OnDead() => Destroy();
 
         public override string ToString()
         {
@@ -47,7 +44,6 @@ namespace Game.Cards
             if (healthSystem != null)
             {
                 healthSystem.OnDead -= OnDead;
-                healthSystem = null;
             }
          
             base.Dispose();

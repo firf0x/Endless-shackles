@@ -7,13 +7,13 @@ namespace Game.Cards
 {
     public class DefaultCard : ICard<CardTypeEnum>
     {
-        public CardTypeEnum Type { get; set; }  //!При очистке нельзя убирать
-        public CardTypeEnum IgnoreLayers { get; set; } //! При очистке нельзя убирать
+        public CardTypeEnum Type { get; set; }
+        public CardTypeEnum IgnoreLayers { get; set; }
         public string CardName { get; set; }
         public string Description { get; set; }
         public bool isLocked { get; set; }
         public Sprite Icon { get; set; }
-        public GameObject Parent { get; set; }  //! При очистке нельзя убирать
+        public GameObject Parent { get; set; }
 
         public void Start() { }
         public void Use(GameObject target) { }

@@ -77,21 +77,21 @@ namespace Game.Cards
         private void BreakDecoratorChain(ICard<CardTypeEnum> card)
         {
             var currentCard = card;
-            
+
             while (currentCard != null)
             {
                 if (currentCard is CardDecorator decorator)
                 {
                     var nextCard = decorator.GetInnerCard();
                     
-                    // Debug.Log($"Удаление: {currentCard.GetType().Name}");
+                    Debug.Log($"Удаление: {currentCard.GetType().Name}");
 
                     currentCard.Dispose();
                     currentCard = nextCard;
                 }
                 else
                 {
-                    // Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
+                    Debug.Log($"Окончание удаления: {currentCard.GetType().Name}");
                     currentCard.Dispose();
                     break;
                 }
@@ -102,6 +102,7 @@ namespace Game.Cards
         {
             BreakDecoratorChain(decorateCard);
             currentDeck.RemoveCard(this, isClearAll);
+            // decorateCard.Parent = null;
             decorateCard = null;
 
             if (gameObject != null) Destroy(gameObject);
