@@ -19,21 +19,13 @@ namespace Game.Cards.Passive
             healthDecorator = parent.GetComponent<CardData>().GetCardFeature<HealthDecorator>();
             attackDecorator = parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>();
             stepDecorator = parent.GetComponent<CardData>().GetCardFeature<StepCombatDecorator>();
-            
-            // healthDecorator.healthSystem.HealPoints.OnChanged += UpdateStats;
-            Debug.Log(parent.GetComponent<CardData>().decorateCard.CardName);
         }
 
-        public override void OnRemove()
-        {
-            // if(healthDecorator != null & healthDecorator.healthSystem != null) healthDecorator.healthSystem.HealPoints.OnChanged -= UpdateStats;
-        }
+        public override void OnUpdate(GameObject parent) => UpdateStats(healthDecorator.healthSystem.HealPoints.Value);
 
         public void UpdateStats(int hp)
         {
             int bonus = hp / multiplicity;
-
-            // Debug.Log(attackDecorator.Parent.transform.position + " : pos объекта");
 
             attackDecorator.ChangeDamage(bonus);
             stepDecorator.ChangeLimits(bonus);
