@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 840a0c530679099498e0d4886e39e5ee, type: 3}
-  m_Name: Staning Always modifier
-  m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierStunningAlways
+  m_Name: ModifierLockAlways
+  m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierLockAlways
   <modifierName>k__BackingField: 
   <modifierDescription>k__BackingField: 
   <modifierType>k__BackingField: 0
-  <icon>k__BackingField: {fileID: -226937454840353100, guid: e55f200c25f113449be39c5c7c39ab03, type: 3}
-  <isStack>k__BackingField: 1
+  <icon>k__BackingField: {fileID: 0}
+  <isStack>k__BackingField: 0
+  <isIgnoring>k__BackingField: 0

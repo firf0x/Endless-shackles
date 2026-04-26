@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Cards.Strategy
 {
-    public abstract class StrategyModifierBase : ScriptableObject
+    public abstract class ModifierStrategyBase : ScriptableObject
     {
         public abstract string Name { get; }
 

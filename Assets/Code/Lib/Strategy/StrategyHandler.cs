@@ -3,71 +3,74 @@ using UnityEngine;
 
 namespace Game.Lib
 {
-	/// <summary>
-	/// Обработчик стратегий, предоставляющий механизм для выполнения и переключения между различными стратегиями
-	/// </summary>
-	public class StrategyHandler<TStrategy> : IDisposable, IStrategyHandle<TStrategy> where TStrategy : IAttackStrategy
-	{
-		/// <summary>
-        /// Текущая стратегия
-        /// </summary>
-		public TStrategy Strategy { get; private set; }
+    /// <summary>
+    /// Обработчик стратегий, работающий с любым типом стратегии и аргументов.
+    /// </summary>
+    /// <typeparam name="TStrategy">Тип стратегии, должен реализовывать IStrategy&lt;TArgs&gt;.</typeparam>
+    /// <typeparam name="TArgs">Тип аргументов для выполнения.</typeparam>
+    public class StrategyHandler<TStrategy, TArgs> : IDisposable, IStrategyHandle<TStrategy, TArgs> where TStrategy : IStrategy<TArgs>
+    {
+        public TStrategy Strategy { get; private set; }
 
-        /// <summary>
-        /// Создает экземпляр StrategyHandler с первоначальной стратегией
-        /// </summary>
-        /// <param name="startStrategy">Стратегия, которая будет установлена по умолчанию. Не может быть null</param>
-        /// <exception cref="ArgumentNullException">Выбрасывается, если StartStrategy равен null</exception>
-        public StrategyHandler(TStrategy startStrategy) => ChangeStrategy(startStrategy);
+        /// <param name="startStrategy">Начальная стратегия. Не может быть null.</param>
+        /// <exception cref="ArgumentNullException">Если startStrategy == null.</exception>
+        public StrategyHandler(TStrategy startStrategy)
+        {
+            if (startStrategy == null)
+                throw new ArgumentNullException(nameof(startStrategy));
+            ChangeStrategy(startStrategy);
+        }
 
-        /// <summary>
-        /// Изменяет текущую стратегию на указанную
-        /// </summary>
-        /// <param name="newStrategy">Новая стратегия для установки</param>
         public void ChangeStrategy(TStrategy newStrategy)
-		{
-			if (newStrategy == null)
-			{
-				Debug.LogError($"Strategy cannot be null. Please provide a valid implementation of {typeof(TStrategy).Name}.");
-				return;
-			}
+        {
+            if (newStrategy == null)
+            {
+                Debug.LogError($"Strategy cannot be null. Provide a valid implementation of {typeof(TStrategy).Name}.");
+                return;
+            }
 
-			if(Strategy != null) Strategy.OnRemove();
-			Strategy = newStrategy;
-			Strategy.Init();
-		}
+            Strategy?.OnRemove();
+            Strategy = newStrategy;
+            Strategy.Init();
+        }
 
-		/// <summary>
-		/// Выполняет текущую установленную стратегию
-		/// </summary>
-		public void ExecuteStrategy(GameObject parent, GameObject target, int damage)
-		{
-			if (Strategy == null)
-			{
-				Debug.LogError($"Strategy cannot be null. Please provide a valid implementation of {typeof(TStrategy).Name}.");
-				return;
-			}
-			Strategy.Execute(parent, target, damage);
-		}
+        public void ExecuteStrategy(TArgs args)
+        {
+            if (Strategy == null)
+            {
+                Debug.LogError($"Strategy cannot be null. Expected {typeof(TStrategy).Name}.");
+                return;
+            }
+            Strategy.Execute(args);
+        }
 
-		/// <summary>
-		/// Возвращает строковое представление текущей стратегии
-		/// </summary>
-		/// <returns>Название текущей стратегии</returns>
-		public override string ToString() => $"Current strategy : {Strategy.Name}";
+        public override string ToString() => $"Current strategy : {Strategy?.Name ?? "null"}";
 
         public void Dispose()
         {
-			Strategy.OnRemove();
+            Strategy?.OnRemove();
         }
     }
 
-	public interface IStrategyHandle<TStrategy>
-	{
-		/// <summary>
-		/// Выполняет текущую установленную стратегию
-		/// </summary>
-		void ExecuteStrategy(GameObject parent, GameObject target, int damage);
-		void ChangeStrategy(TStrategy newStrategy);
-	}
+    /// <summary>
+    /// Контракт для обработчика стратегий.
+    /// </summary>
+    public interface IStrategyHandle<TStrategy, in TArgs>
+        where TStrategy : IStrategy<TArgs>
+    {
+        void ExecuteStrategy(TArgs args);
+        void ChangeStrategy(TStrategy newStrategy);
+    }
+
+	/// <summary>
+    /// Базовый интерфейс стратегии с поддержкой инициализации, удаления и выполнения.
+    /// </summary>
+    /// <typeparam name="TArgs">Тип аргументов, передаваемых в Execute.</typeparam>
+    public interface IStrategy<in TArgs>
+    {
+        string Name { get; }
+        void Init();
+        void OnRemove();
+        void Execute(TArgs args);
+    }
 }

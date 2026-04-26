@@ -10,7 +10,7 @@ namespace Game.Cards
         public readonly int defaultDamageValue;
         public ReactiveProperty<int> currentDamage { get; private set; } = new();
         private IDeck<CardData> defenceDeck;
-        private StrategyHandler<IAttackStrategy> strategyHandle;
+        private StrategyHandler<IAttackStrategy, CombatArgs> strategyHandle;
 
         public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
         {
@@ -18,7 +18,7 @@ namespace Game.Cards
             ChangeDamage(defaultDamageValue);
 
             defenceDeck = deck;
-            strategyHandle = new StrategyHandler<IAttackStrategy>(strategy);
+            strategyHandle = new StrategyHandler<IAttackStrategy, CombatArgs>(strategy);
         }
 
         public override void Start()
@@ -30,6 +30,12 @@ namespace Game.Cards
         // Этот метод нужон только для монстров
         private void OnStep()
         {
+            if (defenceDeck.GetCardCount() == 0)
+            {
+                PlayerSystem.Instance.Kill();
+                return;
+            }
+
             GameObject target = null;
 
             // Ищем первую карту в defenceDeck, у которой есть HealthDecorator
@@ -42,27 +48,21 @@ namespace Game.Cards
                 }
             }
 
-            if (defenceDeck.GetCardCount() == 0)
-            {
-                PlayerSystem.Instance.Kill();
-                return;
-            }
-
             Use(target);
         }
 
         public override void Use(GameObject target)
         {
             base.Use(target);
-            strategyHandle.ExecuteStrategy(Parent, target, currentDamage.Value);
+            strategyHandle.ExecuteStrategy(new CombatArgs(Parent, target, currentDamage.Value));
         }
         public void ChangeDamage(int value)
         {
-            // Debug.Log(Parent.GetInstanceID());
+            if(currentDamage.Value == value) return;
             currentDamage.Value = Mathf.Max(0, value);
         }
 
-        public void ChangeStrategy(StrategyAttackBase newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
+        public void ChangeStrategy(IAttackStrategy newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
 
         public override string ToString()
         {

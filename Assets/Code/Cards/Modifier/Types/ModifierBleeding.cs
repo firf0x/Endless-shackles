@@ -1,15 +1,16 @@
+using System;
 using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "Bleeding modifier", menuName = "Modifiers/Bleeding")]
+    [CreateAssetMenu(fileName = "ModifierBleeding", menuName = "Modifier/ModifierBleeding", order = 0)]
     public sealed class ModifierBleeding : ModifierBase
     {
         [SerializeField] private int MaxStack;
         [SerializeField] private int Damage;
 
-        public override void Apply(ModifierContext context)
+        public override void OnUpdate(ModifierContext context)
         {
             var decorator = context.SourceCardData.GetCardFeature<HealthDecorator>();
             decorator.TakeDamage(Damage * context.CurrentStackModifier);

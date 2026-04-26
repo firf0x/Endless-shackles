@@ -28,6 +28,7 @@ namespace Game.Deck
             StepCombatSystem.Instance.StepUpdate();
             
             ICard<CardTypeEnum> card = creator.Create();
+            
             card.Start();
         }
 

@@ -1,9 +1,10 @@
+using System;
 using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "Poisoning modifier", menuName = "Modifiers/Poisoning")]
+    [CreateAssetMenu(fileName = "ModifierPoisoning", menuName = "Modifier/ModifierPoisoning", order = 0)]
     public sealed class ModifierPoisoning : ModifierBase
     {
 

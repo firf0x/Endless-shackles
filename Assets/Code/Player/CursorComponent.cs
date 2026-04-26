@@ -1,12 +1,10 @@
 using DG.Tweening;
 using Game.Cards;
 using Game.Deck;
-using Game.Lib;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// TODO: Сделать так чтобы курсор компонент просто вызывал методы у найденого объекта, а не только работал с картами.
-// TODO: это нужно для того, чтобы сделать отображение информации о картах и других приколов.
+// TODO: По хорошему нужно переделать, но мне в падлу
 public class CursorComponent : MonoBehaviour
 {
     [Header("Raycast Settings")]

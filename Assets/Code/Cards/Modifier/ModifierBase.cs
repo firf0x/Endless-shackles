@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Game.Lib
 {    
+    [Serializable]
     public abstract class ModifierBase : ScriptableObject
     {
         [field:SerializeField] public string modifierName { get; private set; }
@@ -11,9 +12,12 @@ namespace Game.Lib
         [field:SerializeField] public ModifierTypeEnum modifierType { get; private set; }
         [field:SerializeField] public Sprite icon { get; private set; }
         [field:SerializeField] public bool isStack { get; private set; }
+        [field:SerializeField] public bool isIgnoring { get; private set; }
+
+        public void SetIgnoring(bool active) => isIgnoring = active;
 
         public virtual void Init(ModifierContext context) { }
-        public virtual void Apply(ModifierContext context) { }
+        public virtual void OnGeneralUpdate(ModifierContext context) { }
         public virtual void OnUpdate(ModifierContext context) { }
         public virtual void OnRemove(ModifierContext context) { }
         public virtual void OnCallBack(ModifierContext context) { }

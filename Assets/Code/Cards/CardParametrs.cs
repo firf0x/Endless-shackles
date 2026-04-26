@@ -15,8 +15,8 @@ namespace Game.Cards
         [field:SerializeField] public string Name { get; private set; }
         [field:SerializeField, TextArea, Space(10f)] public string Description { get; private set; }
         [field:SerializeField, Space(10f)] public Sprite Icon { get; private set; }
-        [field:SerializeField, Space(10f)] public List<ModifierBase> Modifiers { get; private set; }        
-        [field:SerializeReference, SubclassSelector, Space(20f)] public List<PassivesBase> strategyPassive { get; private set; }
+        [field:SerializeField] public List<ModifierBase> Modifiers { get; private set; }
+        [field:SerializeReference, SubclassSelector] public List<PassivesBase> Passives { get; private set; }
         [field:SerializeField, Range(0, 100), Space(25f)] public int Weight { get; private set; } = 1;
     }
 }

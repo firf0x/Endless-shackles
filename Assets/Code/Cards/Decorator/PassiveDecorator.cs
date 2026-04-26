@@ -7,43 +7,81 @@ using Game.GameSystem;
 
 namespace Game.Cards
 {
-    public class PassiveDecorator : CardDecorator
+    public class PassiveDecorator : CardDecorator, ICallbackReceiver
     {
         private List<PassivesBase> passives;
+
+        private IDeck<CardData> handDeck;
+        private IDeck<CardData> defendDeck;
+        private IDeck<CardData> monsterDeck;
 
         public PassiveDecorator(List<PassivesBase> passives, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card) : base(card)
         {
             this.passives = passives;
-            StepCombatSystem.Instance.EventUpdate += OnStep;
-        }
+            this.handDeck = handDeck;
+            this.defendDeck = defendDeck;
+            this.monsterDeck = monsterDeck;
 
-        public void OnStep()
-        {
-            if(passives.Count <= 0) return;
-
-            foreach (var passive in passives)
-            {
-                passive.OnUpdate(Parent);
-            }
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
+            StepCombatSystem.Instance.EventUpdate += GeneralUpdate;
         }
 
         public override void Start()
         {
-            if(passives.Count <= 0) return;
+            base.Start();
+
+            if(passives == null || passives.Count <= 0) return;
 
             foreach (var passive in passives)
             {
-                passive.Init(Parent);
+                passive.Init(CreateContext(null));
             }
+        }
 
-            base.Start();
+        private void GeneralUpdate()
+        {
+            if(passives == null || passives.Count <= 0 || isLocked) return;
+
+            foreach (var passive in passives)
+            {
+                passive.OnGeneralUpdate(CreateContext(null));
+            }
+        }
+
+        public void OnStep()
+        {
+            if(passives == null || passives.Count <= 0 || isLocked) return;
+
+            foreach (var passive in passives)
+            {
+                passive.OnUpdate(CreateContext(null));
+            }
+        }
+
+        public void OnCallbackReceived(GameObject target)
+        {
+            if(passives == null || passives.Count <= 0 || isLocked) return;
+            
+            foreach (var passive in passives)
+            {
+                passive.OnCallBack(CreateContext(target));
+            }
+        }
+
+        private PassiveContext CreateContext(GameObject target)
+        {
+            return new PassiveContext(handDeck, defendDeck, monsterDeck)
+            {
+                Parent = Parent,
+                Target = target
+            };
         }
 
         public override void Dispose()
         {
-            StepCombatSystem.Instance.EventUpdate -= OnStep;
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
 
-            if(passives.Count > 0) foreach (var passive in passives) passive.OnRemove();
+            if(passives.Count > 0) foreach (var passive in passives) passive.OnRemove(CreateContext(null));
             passives.Clear();
             passives = null;
 

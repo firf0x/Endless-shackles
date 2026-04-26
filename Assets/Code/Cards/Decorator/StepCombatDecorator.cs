@@ -12,6 +12,11 @@ namespace Game.Cards
         public int MaxStep { get; private set; }
         private bool isSpawn = true;
 
+        /// <summary>
+        /// Показывает активен ли текущий декоратор
+        /// </summary>
+        public bool IsActive { get; private set; } = true;
+
         public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
         {
             MaxStep = step;
@@ -27,6 +32,8 @@ namespace Game.Cards
                 return;
             }
             
+            if(!IsActive || isLocked) return;
+            
             currentStep.Value--;
 
             if(currentStep.Value <= 0)
@@ -36,6 +43,12 @@ namespace Game.Cards
                 currentStep.Value = MaxStep;
             }
         }
+
+        /// <summary>
+        /// Метод позволяющий отключать счётчик ходов.
+        /// </summary>
+        /// <param name="isActive">Если задать true, то тогда будет false</param>
+        public void Stop(bool isActive) => IsActive = !isActive;
 
         public void ChangeLimits(int value)
         {

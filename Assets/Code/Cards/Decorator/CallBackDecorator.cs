@@ -14,12 +14,17 @@ namespace Game.Cards
         /// <param name="target">Карта являющейся инициатором вызова</param>
         public void Call(GameObject target)
         {
-            // Debug.Log(target.name + " : Карта которая была инициатором вызова");
-            // Debug.Log(Parent.name + " : Карта которая была провзаимодействованой");
+            Debug.Log(target.name + " : Карта которая была инициатором вызова");
+            Debug.Log(Parent.name + " : Карта которая была провзаимодействованой");
             // Debug.Log(Parent.GetComponent<CardData>());
             // Debug.Log(Parent.GetComponent<CardData>().TryGetCardFeature<ModifierDecorator>(out var decorator));
             // Debug.Log(target);
-            if (target != null) Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
+            if (target != null)
+            {
+                Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
+                
+                if(Parent.GetComponent<CardData>().TryGetCardFeature<PassiveDecorator>(out var decorator)) decorator.OnCallbackReceived(target);
+            }
         }
     }
 }

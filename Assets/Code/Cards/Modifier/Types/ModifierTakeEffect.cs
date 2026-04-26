@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "Take Effect modifier", menuName = "Modifiers/TakeEffect")]
+    [CreateAssetMenu(fileName = "ModifierTakeEffect", menuName = "Modifier/ModifierTakeEffect", order = 0)]
     public sealed class ModifierTakeEffect : ModifierBase
     {
         [SerializeField] private bool isRandom;
@@ -15,7 +16,7 @@ namespace Game.Cards.Modifier
             {
                 if(AdditionalModifiers.Count == 0) return;
 
-                int randomIndex = Random.Range(0, AdditionalModifiers.Count);
+                int randomIndex = UnityEngine.Random.Range(0, AdditionalModifiers.Count);
                 ModifierBase selected = AdditionalModifiers[randomIndex];
                 
                 if(context.TargetCardData.TryGetCardFeature<ModifierDecorator>(out var decorator)) decorator.AddModifier(selected);

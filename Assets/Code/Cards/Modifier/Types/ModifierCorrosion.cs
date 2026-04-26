@@ -1,9 +1,10 @@
+using System;
 using Game.Lib;
 using UnityEngine;
 
 namespace Game.Cards.Modifier
 {
-    [CreateAssetMenu(fileName = "Corrosion modifier", menuName = "Modifiers/Corrosion")]
+    [CreateAssetMenu(fileName = "ModifierCorrosion", menuName = "Modifier/ModifierCorrosion", order = 0)]
     public sealed class ModifierCorrosion : ModifierBase
     {
         public override void OnCallBack(ModifierContext context)

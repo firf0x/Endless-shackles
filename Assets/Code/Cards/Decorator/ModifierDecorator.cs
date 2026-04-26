@@ -78,75 +78,76 @@ namespace Game.Cards
 
         public override void Start()
         {
-            if(modifiers.Count == 0) return;
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var a)) StepCombatSystem.Instance.EventUpdate += OnStep;
+            // if(modifiers.Count <= 0 || isLocked) return;
+            base.Start();
+
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepInteraction += OnStep;
+            StepCombatSystem.Instance.EventUpdate += GeneralUpdate;
 
             // Первичная инициализация модификаторов
             foreach (var modifier in modifiers)
             {
                 modifier.Modifier.Init(CreateContext(null, modifier));
             }
-
-            base.Start();
         }
 
-        public void Apply(GameObject target)
+        private void GeneralUpdate()
         {
-            if(modifiers.Count <= 0) return;
+            // if ( Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator) && !stepDecorator.IsActive) Debug.Log(!stepDecorator.IsActive);
+            if ( modifiers == null || modifiers.Count <= 0 || isLocked ) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
-                modifier.Modifier.Apply(CreateContext(null, modifier));
+                if(!modifier.Modifier.isIgnoring) modifier.Modifier.OnGeneralUpdate(CreateContext(null, modifier));
             }
         }
 
         public void OnStep()
         {
-            if(modifiers.Count <= 0) return;
+            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
-                modifier.Modifier.Apply(CreateContext(null, modifier));
+                if(!modifier.Modifier.isIgnoring) modifier.Modifier.OnUpdate(CreateContext(null, modifier));
             }
         }
 
         public override void Use(GameObject target)
         {
-            Debug.Log($"{Parent.name}");
-            Debug.Log($"{target.name}");
+            if(modifiers == null || modifiers.Count <= 0 || isLocked)
+            {
+                base.Use(target);
+                return;
+            }
+
+            // Debug.Log($"{Parent.name}");
+            // Debug.Log($"{target.name}");
 
             UpdateModifiers(target);
-
+         
             CardData cardData = target.GetComponent<CardData>();
-
-            if(!cardData.decorateCard.IgnoreLayers.HasFlag(CardTypeEnum.Attack))
-            {
-                cardData.GetCardFeature<ModifierDecorator>().UpdateModifiers(target);
-            }
-            else
-            {
-                // Нужен для отправки данных о карте взаимодействующей с текущей
-                Debug.Log("Отправка обратной связи");
-                cardData.GetCardFeature<CallBackDecorator>().Call(Parent);
-                Debug.Log("Конец обратной связи");
-            }
+            
+            // Нужен для отправки данных о карте взаимодействующей с текущей
+            Debug.Log("Отправка обратной связи");
+            cardData.GetCardFeature<CallBackDecorator>().Call(Parent);
+            Debug.Log("Конец обратной связи");
 
             base.Use(target);
         }
 
         public void UpdateModifiers(GameObject target)
         {
-            if(modifiers.Count == 0) return;
+            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
-                modifier.Modifier.OnUpdate(CreateContext(target, modifier));
+                if(!modifier.Modifier.isIgnoring) modifier.Modifier.OnUpdate(CreateContext(target, modifier));
             }
         }
 
         public void OnCallbackReceived(GameObject target)
         {
-            if(modifiers.Count == 0) return;
+            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
@@ -213,6 +214,7 @@ namespace Game.Cards
             foreach (var modifier in modifiers)
             {
                 modifier.Modifier.OnRemove(CreateContext(null, modifier));
+                ScriptableObject.DestroyImmediate(modifier.Modifier);
             }
 
             modifiers.Clear();
@@ -226,7 +228,8 @@ namespace Game.Cards
             OnChanged = null;
             OnCleared = null;
 
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<AttackDecorator>(out var a)) StepCombatSystem.Instance.EventUpdate -= OnStep;
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepInteraction -= OnStep;
+            StepCombatSystem.Instance.EventUpdate -= GeneralUpdate;
 
             base.Dispose();
         }

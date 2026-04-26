@@ -15,23 +15,23 @@ MonoBehaviour:
   cardsAttack:
   - <Type>k__BackingField: 1
     <IgnoreLayers>k__BackingField: 3
-    <Name>k__BackingField: Sword
+    <Name>k__BackingField: 
     <Description>k__BackingField: 
-    <Icon>k__BackingField: {fileID: -2515083631556325034, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
+    <Icon>k__BackingField: {fileID: 4990998494108432572, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
     <Modifiers>k__BackingField: []
-    <strategyPassive>k__BackingField: []
+    <Passives>k__BackingField: []
     <Weight>k__BackingField: 100
     DamageValue: 10
     strategyAttack:
-      rid: 2688252580914528335
+      rid: 2688252651177771084
   cardsDefence:
   - <Type>k__BackingField: 2
     <IgnoreLayers>k__BackingField: 2
-    <Name>k__BackingField: Helmet
-    <Description>k__BackingField: 123
-    <Icon>k__BackingField: {fileID: 21300000, guid: e6ad51f34a0b31b499e07c794880cae5, type: 2}
+    <Name>k__BackingField: 
+    <Description>k__BackingField: 
+    <Icon>k__BackingField: {fileID: 953453553154238808, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
     <Modifiers>k__BackingField: []
-    <strategyPassive>k__BackingField: []
+    <Passives>k__BackingField: []
     <Weight>k__BackingField: 100
     HealthValue: 15
     DefenceType: 0
@@ -42,14 +42,13 @@ MonoBehaviour:
     <Description>k__BackingField: 
     <Icon>k__BackingField: {fileID: 21300000, guid: 1c75912d695c46e40933ad11c9598af8, type: 3}
     <Modifiers>k__BackingField: []
-    <strategyPassive>k__BackingField:
-    - rid: 2688252584648245331
+    <Passives>k__BackingField: []
     <Weight>k__BackingField: 40
     DamageValue: 1
-    HealthValue: 36
-    StepValue: 12
+    HealthValue: 20
+    StepValue: 2
     strategyAttack:
-      rid: 2688252580914528340
+      rid: 2688252651177771085
   <prefabCardAttack>k__BackingField: {fileID: 3465050260203635359, guid: 90126a11e0a12a242bf0bc801e8ad95b, type: 3}
   <prefabCardDefence>k__BackingField: {fileID: 406906183301028158, guid: 21e3b906692dced45a93162711329d4d, type: 3}
   <prefabCardMonster>k__BackingField: {fileID: 1119248145784775390, guid: e44005c0e513f784ba90ccebfb7806a7, type: 3}
@@ -57,13 +56,9 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2688252580914528335
+    - rid: 2688252651177771084
       type: {class: Standart, ns: Game.Cards.Strategy, asm: Game.Cards}
       data: 
-    - rid: 2688252580914528340
+    - rid: 2688252651177771085
       type: {class: Monster, ns: Game.Cards.Strategy, asm: Game.Cards}
       data: 
-    - rid: 2688252584648245331
-      type: {class: MonsterHpToAttackAndCoolDown, ns: Game.Cards.Passive, asm: Game.Cards}
-      data:
-        multiplicity: 3

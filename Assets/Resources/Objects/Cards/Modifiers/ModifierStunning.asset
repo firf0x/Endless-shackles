@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f44c31999192d4c8321650088b3e8e, type: 3}
-  m_Name: Corrosion modifier
-  m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierCorrosion
+  m_Script: {fileID: 11500000, guid: a0621f46284da8f41aed9ebca8359c8d, type: 3}
+  m_Name: ModifierStunning
+  m_EditorClassIdentifier: Game.Cards::Game.Cards.Modifier.ModifierStunning
   <modifierName>k__BackingField: 
   <modifierDescription>k__BackingField: 
   <modifierType>k__BackingField: 0
-  <icon>k__BackingField: {fileID: 4816394182449337448, guid: e55f200c25f113449be39c5c7c39ab03, type: 3}
+  <icon>k__BackingField: {fileID: 384771527755328561, guid: e55f200c25f113449be39c5c7c39ab03, type: 3}
   <isStack>k__BackingField: 0
+  <isIgnoring>k__BackingField: 0
+  CountStep: 3

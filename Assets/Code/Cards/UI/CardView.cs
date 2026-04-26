@@ -44,7 +44,7 @@ namespace Game.Cards.UI
         
         private void OnDisable()
         {
-            StepCombatSystem.Instance.EventUpdate -= UpdateView;
+            if(StepCombatSystem.Instance != null) StepCombatSystem.Instance.EventUpdate -= UpdateView;
             viewModel.UpdateUI -= UpdateView;
 
             if (viewModel != null)
