@@ -2,17 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace Game.Lib
+namespace Game.Cards
 {
-    public interface ICard<TEnum> : IDisposable where TEnum : Enum
+    public interface ICard : IDisposable
     {
-        TEnum Type { get; }
-        TEnum IgnoreLayers { get; }
+        CardTypeEnum Type { get; }
+        CardTypeEnum IgnoreLayers { get; }
         string CardName { get; }
         string Description { get; }
         bool isLocked { get; }
         Sprite Icon { get; }
         GameObject Parent { get; }
+        CardData CardData { get; }
 
         void Start();
         void Use(GameObject target);

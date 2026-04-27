@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Cards.Fabric
 {
-    public class CardCreator : Creator<ICard<CardTypeEnum>>
+    public class CardCreator : Creator<ICard>
     {
         private readonly CardsConfig config;
         private readonly IDeck<CardData> handDeck;
@@ -21,7 +21,7 @@ namespace Game.Cards.Fabric
             this.monsterDeck = monsterDeck;
         }
 
-        public override ICard<CardTypeEnum> Create()
+        public override ICard Create()
         {
             int p = UnityEngine.Random.Range(0, 3);
             CardTypeEnum cardType = (CardTypeEnum)(1 << p);
@@ -29,13 +29,13 @@ namespace Game.Cards.Fabric
             return CreateRandomCard(cardType);
         }
 
-        public override ICard<CardTypeEnum> CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count));
-        public override ICard<CardTypeEnum> CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count));
+        public override ICard CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count));
+        public override ICard CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count));
 
 
-        private ICard<CardTypeEnum> CreateRandomCard(CardTypeEnum typeEnum)
+        private ICard CreateRandomCard(CardTypeEnum typeEnum)
         {
-            ICard<CardTypeEnum> card = null;
+            ICard card = null;
 
             switch (typeEnum)
             {
@@ -47,20 +47,23 @@ namespace Game.Cards.Fabric
             return card;
         }
 
-        private ICard<CardTypeEnum> CreateAttackCard(int index)
+        private ICard CreateAttackCard(int index)
         {
             var cardsAttack = config.CardsAttacks;
 
             CardAttack cardData = cardsAttack[index];
 
-            ICard<CardTypeEnum> baseCard = new DefaultCard()
+            GameObject gameObject = GameObject.Instantiate(config.prefabCardAttack);
+
+            ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Parent = GameObject.Instantiate(config.prefabCardAttack)
+                Parent = gameObject,
+                CardData = gameObject.GetComponent<CardData>()
             };
             
             // Инициализация Monobehaviour
@@ -76,10 +79,10 @@ namespace Game.Cards.Fabric
 
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
-            ICard<CardTypeEnum> passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
-            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(passivesCard);
-            ICard<CardTypeEnum> attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
+            ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
+            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
+            ICard callBackCard = new CallBackDecorator(passivesCard);
+            ICard attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
 
             baseCard.Parent.GetComponent<CardData>().decorateCard = attackCard;
             handDeck.AddCard(baseCard.Parent.GetComponent<CardData>());
@@ -87,20 +90,23 @@ namespace Game.Cards.Fabric
             return attackCard;
         }
 
-        private ICard<CardTypeEnum> CreateDefenceCard(int index)
+        private ICard CreateDefenceCard(int index)
         {
             var cardsDefence = config.CardsDefence;
 
             CardDefence cardData = cardsDefence[index];
 
-            ICard<CardTypeEnum> baseCard = new DefaultCard()
+            GameObject gameObject = GameObject.Instantiate(config.prefabCardDefence);
+
+            ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Parent = GameObject.Instantiate(config.prefabCardDefence)
+                Parent = gameObject,
+                CardData = gameObject.GetComponent<CardData>()
             };
             
             // Инициализация Monobehaviour
@@ -110,11 +116,11 @@ namespace Game.Cards.Fabric
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
-            ICard<CardTypeEnum> passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
-            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(passivesCard);
-            ICard<CardTypeEnum> defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, callBackCard);
-            ICard<CardTypeEnum> healthCard = new HealthDecorator(cardData.HealthValue, defenceType);
+            ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
+            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
+            ICard callBackCard = new CallBackDecorator(passivesCard);
+            ICard defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, callBackCard);
+            ICard healthCard = new HealthDecorator(cardData.HealthValue, defenceType);
 
             baseCard.Parent.GetComponent<CardData>().decorateCard = healthCard;
             handDeck.AddCard(baseCard.Parent.GetComponent<CardData>());
@@ -122,20 +128,23 @@ namespace Game.Cards.Fabric
             return healthCard;
         }
 
-        private ICard<CardTypeEnum> CreateMonsterCard(int index)
+        private ICard CreateMonsterCard(int index)
         {
             var cardsMonster = config.CardsMonster;
 
             CardMonster cardData = cardsMonster[index];
 
-            ICard<CardTypeEnum> baseCard = new DefaultCard()
+            GameObject gameObject = GameObject.Instantiate(config.prefabCardMonster);
+
+            ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
-                Parent = GameObject.Instantiate(config.prefabCardMonster)
+                Parent = gameObject,
+                CardData = gameObject.GetComponent<CardData>()
             };
             
             // Инициализация Monobehaviour
@@ -145,12 +154,12 @@ namespace Game.Cards.Fabric
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
-            ICard<CardTypeEnum> passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
-            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(passivesCard);
-            ICard<CardTypeEnum> attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
-            ICard<CardTypeEnum> stepCard = new StepCombatDecorator(cardData.StepValue, attackCard);
-            ICard<CardTypeEnum> healthCard = new HealthDecorator(cardData.HealthValue, stepCard);
+            ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
+            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
+            ICard callBackCard = new CallBackDecorator(passivesCard);
+            ICard attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
+            ICard stepCard = new StepCombatDecorator(cardData.StepValue, attackCard);
+            ICard healthCard = new HealthDecorator(cardData.HealthValue, stepCard);
             
             baseCard.Parent.GetComponent<CardData>().decorateCard = healthCard;
             monsterDeck.AddCard(baseCard.Parent.GetComponent<CardData>());

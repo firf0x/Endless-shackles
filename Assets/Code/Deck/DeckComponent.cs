@@ -15,7 +15,7 @@ namespace Game.Deck
         [field:SerializeField] public DefendDeck defenceDeck { get; private set; }
         [field:SerializeField] public MonsterDeck monsterDeck { get; private set; }
 
-        private Creator<ICard<CardTypeEnum>> creator;
+        private Creator<ICard> creator;
         [SerializeField] private PlayerSystem playerSystem = new();
 
         private void Awake()
@@ -27,21 +27,21 @@ namespace Game.Deck
         {
             StepCombatSystem.Instance.StepUpdate();
             
-            ICard<CardTypeEnum> card = creator.Create();
+            ICard card = creator.Create();
             
             card.Start();
         }
 
         public void CreateAttackCard()
         {
-            ICard<CardTypeEnum> card = creator.CreateAttackCard();
+            ICard card = creator.CreateAttackCard();
 
             card.Start();
         }
 
         public void CreateDefenceCard()
         {
-            ICard<CardTypeEnum> card = creator.CreateDefenceCard();
+            ICard card = creator.CreateDefenceCard();
 
             card.Start();            
         }

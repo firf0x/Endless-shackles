@@ -8,11 +8,14 @@ using UnityEngine;
 namespace Game.Cards
 {
     [Serializable]
-    public abstract class CardDecorator : ICard<CardTypeEnum>
+    public abstract class CardDecorator : ICard
     {
-        protected ICard<CardTypeEnum> decoratedCard;
+        protected ICard decoratedCard;
 
-        public CardDecorator(ICard<CardTypeEnum> card) => decoratedCard = card;
+        public CardDecorator(ICard card)
+        {
+            decoratedCard = card;
+        }
 
         public virtual CardTypeEnum Type => decoratedCard.Type;
         public virtual CardTypeEnum IgnoreLayers => decoratedCard.IgnoreLayers;
@@ -21,9 +24,10 @@ namespace Game.Cards
         public virtual bool isLocked => decoratedCard.isLocked;
         public virtual Sprite Icon => decoratedCard.Icon;
         public virtual GameObject Parent => decoratedCard.Parent;
+        public CardData CardData => decoratedCard.CardData;
 
 
-        public ICard<CardTypeEnum> GetInnerCard() => decoratedCard;
+        public ICard GetInnerCard() => decoratedCard;
         public virtual void Start() => decoratedCard.Start();
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
         public void SetLock(bool enabled) => decoratedCard.SetLock(enabled);

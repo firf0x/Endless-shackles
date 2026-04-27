@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.GameSystem;
 using Game.Lib;
 using UnityEngine;
@@ -86,6 +87,21 @@ namespace Game.Cards.Passive
 
     }
 
+    [Serializable]
+    public sealed class MonsterTakeNegativeModifier : PassivesBase
+    {
+        [SerializeField] private List<ModifierBase> NegativeModifiers;
+
+        public override void OnCallBack(PassiveContext context)
+        {
+            if(NegativeModifiers.Count > 0)
+            {
+                ModifierBase resModifier = NegativeModifiers[UnityEngine.Random.Range(0, NegativeModifiers.Count)];
+                context.DefenceDeck.cardDatas[UnityEngine.Random.Range(0, context.DefenceDeck.GetCardCount())].GetCardFeature<ModifierDecorator>().AddModifier(resModifier);
+            }
+        }
+    }
+
     #endregion
 
     #region Other
@@ -99,10 +115,10 @@ namespace Game.Cards.Passive
         {
             var cardData = context.Parent.GetComponent<CardData>();
 
-            if (cardData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator) && modifierDecorator.HasModifier(selectedModifier)) modifierDecorator.RemoveModifier(selectedModifier);
+            if (cardData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator) && modifierDecorator.HasModifier(selectedModifier)) cardData.GetCardFeature<StepCombatDecorator>();
         }
 
-        public override void OnUpdate(PassiveContext context)
+        public override void OnGeneralUpdate(PassiveContext context)
         {
             var cardData = context.Parent.GetComponent<CardData>();
             

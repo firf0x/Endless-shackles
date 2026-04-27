@@ -17,11 +17,12 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            var data = args.Target.GetComponent<CardData>();
-            if (data.TryGetCardFeature<HealthDecorator>(out var feature))
+            var targetData = args.Target;
+            if (targetData.TryGetCardFeature<HealthDecorator>(out var feature))
             {
                 // Удаление карты атаки при нанесении урона монстру
-                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.GetComponent<CardData>().decorateCard.Destroy();
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+                    args.Parent.decorateCard.Destroy();
 
                 feature.TakeDamage(args.Damage);
                 StepCombatSystem.Instance.StepUpdate();
@@ -36,7 +37,7 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            if (args.Target.TryGetComponent<CardData>(out var card) && card.TryGetCardFeature<HealthDecorator>(out var health))
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var health))
             {
                 health.TakeDamage(args.Damage);
             }
@@ -57,11 +58,11 @@ namespace Game.Cards.Strategy
         public override void Execute(CombatArgs args)
         {
             CardData defenceItem = null;
-            var cardData = args.Target.GetComponent<CardData>();
+            var cardData = args.Target;
 
             foreach (var card in cardData.currentDeck.cardDatas)
             {
-                if(card == null) continue;
+                if (card == null) continue;
 
                 if (card.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType != type)
                 {
@@ -71,7 +72,7 @@ namespace Game.Cards.Strategy
                 else defenceItem = card;
             }
 
-            if(defenceItem != null) PlayerSystem.Instance.Kill();
+            if (defenceItem != null) PlayerSystem.Instance.Kill();
         }
     }
 
@@ -90,11 +91,11 @@ namespace Game.Cards.Strategy
         public override void Execute(CombatArgs args)
         {
             CardData defenceItem = null;
-            var cardData = args.Target.GetComponent<CardData>();
+            var cardData = args.Target;
 
             foreach (var card in cardData.currentDeck.cardDatas)
             {
-                if(card == null) continue;
+                if (card == null) continue;
 
                 if (card.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType != type)
                 {
@@ -104,7 +105,7 @@ namespace Game.Cards.Strategy
                 else defenceItem = card;
             }
 
-            if(defenceItem != null) PlayerSystem.Instance.Kill();
+            if (defenceItem != null) PlayerSystem.Instance.Kill();
         }
     }
 
@@ -116,16 +117,16 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            var cardData = args.Target.GetComponent<CardData>();
+            var cardData = args.Target;
 
-            if(cardData.currentDeck.GetCardCount() > 0 )
+            if (cardData.currentDeck.GetCardCount() > 0)
             {
                 int multiply = 0;
 
                 foreach (var card in cardData.currentDeck.cardDatas)
                 {
-                    if(card == null || card.decorateCard == null) continue;
-                    if(card.TryGetCardFeature<HealthDecorator>(out var decorator))
+                    if (card == null || card.decorateCard == null) continue;
+                    if (card.TryGetCardFeature<HealthDecorator>(out var decorator))
                     {
                         multiply++;
                         decorator.TakeDamage(args.Damage);
@@ -133,9 +134,9 @@ namespace Game.Cards.Strategy
                     }
                 }
 
-                foreach (var card in args.Parent.GetComponent<CardData>().currentDeck.cardDatas)
+                foreach (var card in args.Parent.currentDeck.cardDatas)
                 {
-                    if(card == null || args.Parent == card.gameObject || !card.TryGetCardFeature<HealthDecorator>(out var decorator)) continue;
+                    if (card == null || args.Parent == card || !card.TryGetCardFeature<HealthDecorator>(out var decorator)) continue;
                     decorator.Heal(currentHealValue * multiply);
                 }
             }
@@ -150,7 +151,8 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            if (args.Target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(args.Damage * Multiply);
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var decorator))
+                decorator.TakeDamage(args.Damage * Multiply);
         }
     }
 
@@ -165,7 +167,7 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            var cardData = args.Target.GetComponent<CardData>();
+            var cardData = args.Target;
 
             if (!cardData.TryGetCardFeature<HealthDecorator>(out var health)) return;
 
@@ -188,10 +190,10 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            if (args.Target.TryGetComponent<CardData>(out var card) && card.TryGetCardFeature<HealthDecorator>(out var health))
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var health))
             {
                 health.TakeDamage(args.Damage);
-                args.Parent.GetComponent<CardData>().GetCardFeature<AttackDecorator>().ChangeDamage(args.Damage * 2);
+                args.Parent.GetCardFeature<AttackDecorator>().ChangeDamage(args.Damage * 2);
             }
         }
     }
@@ -202,17 +204,18 @@ namespace Game.Cards.Strategy
         public override string Name => "Double Strike With Cooldown Reduction";
         [SerializeField] private int count = 1;
 
-
         public override void Execute(CombatArgs args)
         {
-            args.Target.TryGetComponent<CardData>(out var card);
+            var target = args.Target;
             
             for (int i = 0; i < count; i++)
             {
-                if (card.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(args.Damage);
+                if (target.TryGetCardFeature<HealthDecorator>(out var health))
+                    health.TakeDamage(args.Damage);
             }
 
-            if(card.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnUpdate();            
+            if (target.TryGetCardFeature<StepCombatDecorator>(out var decorator))
+                decorator.OnUpdate();
         }
     }
 
@@ -224,8 +227,7 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            //TODO: Говно-код, это связано с тем что в init я не могу указать данные
-            var cardInfo = args.Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>();
+            var cardInfo = args.Parent.GetCardFeature<ModifierDecorator>();
 
             creator.handDeck = cardInfo.handDeck;
             creator.defenceDeck = cardInfo.defendDeck;
@@ -233,7 +235,8 @@ namespace Game.Cards.Strategy
 
             creator.Create();
 
-            if (args.Target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(args.Damage);
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var decorator))
+                decorator.TakeDamage(args.Damage);
         }
     }
 
@@ -246,28 +249,28 @@ namespace Game.Cards.Strategy
         [SerializeField] private ModifierBase modifier;
         private ModifierDecorator modifierDecorator;
 
-        // В текущем случае target мы используем только для нанесения урона.
         public override void Execute(CombatArgs args)
         {
-            var deck = args.Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().handDeck;
+            var deck = args.Parent.GetCardFeature<ModifierDecorator>().handDeck;
             
-            if(modifierDecorator == null && deck.GetCardCount() > 0)
+            if (modifierDecorator == null && deck.GetCardCount() > 0)
             {
-                
-                if(deck.cardDatas[UnityEngine.Random.Range(0, deck.GetCardCount())].TryGetCardFeature(out modifierDecorator)) 
-                
-                if(modifier != null)
+                if (deck.cardDatas[UnityEngine.Random.Range(0, deck.GetCardCount())].TryGetCardFeature(out modifierDecorator))
                 {
-                    modifierDecorator.AddModifier(modifier);
+                    if (modifier != null)
+                    {
+                        modifierDecorator.AddModifier(modifier);
+                    }
                 }
             }
 
-            if (args.Target.GetComponent<CardData>().TryGetCardFeature<HealthDecorator>(out var decorator)) decorator.TakeDamage(args.Damage);
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var decorator))
+                decorator.TakeDamage(args.Damage);
         }
 
         public override void OnRemove()
         {
-            if(modifierDecorator != null)
+            if (modifierDecorator != null)
             {
                 modifierDecorator.RemoveModifier(modifier);
                 modifierDecorator = null;
@@ -285,7 +288,7 @@ namespace Game.Cards.Strategy
         {
             for (int i = 0; i < Repeat; i++)
             {
-                args.Target.GetComponent<CardData>().GetCardFeature<HealthDecorator>().TakeDamage(args.Damage);
+                args.Target.GetCardFeature<HealthDecorator>().TakeDamage(args.Damage);
             }
         }
     }
@@ -304,15 +307,19 @@ namespace Game.Cards.Strategy
         {
             if (args.Target == null) return;
 
-            var data = args.Target.GetComponent<CardData>();
-            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<AttackDecorator>(out var attackDecorator))
+            var targetData = args.Target;
+            if (targetData.TryGetCardFeature<HealthDecorator>(out var healthDecorator) &&
+                targetData.TryGetCardFeature<AttackDecorator>(out var attackDecorator))
             {
                 // Удаление карты атаки при нанесении урона монстру
-                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.GetComponent<CardData>().decorateCard.Destroy();
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+                    args.Parent.decorateCard.Destroy();
 
                 // Если у врага урон меньше, чем у карты то мгновенно убивает врага
-                if(attackDecorator.currentDamage.Value < args.Damage) healthDecorator.TakeDamage(999);
-                else healthDecorator.TakeDamage(args.Damage);
+                if (attackDecorator.currentDamage.Value < args.Damage)
+                    healthDecorator.TakeDamage(999);
+                else
+                    healthDecorator.TakeDamage(args.Damage);
                 
                 StepCombatSystem.Instance.StepUpdate();
             }
@@ -329,25 +336,28 @@ namespace Game.Cards.Strategy
         {
             if (args.Target == null) return;
 
-            CardData data = args.Target.GetComponent<CardData>();
-            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            var targetData = args.Target;
+            if (targetData.TryGetCardFeature<HealthDecorator>(out var healthDecorator) &&
+                targetData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
             {
                 CardData[] monsterCards = modifierDecorator.monsterDeck.cardDatas;
 
                 // Удаление карты атаки при нанесении урона монстру
-                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.GetComponent<CardData>().decorateCard.Destroy();
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+                    args.Parent.decorateCard.Destroy();
 
                 if (modifierDecorator.monsterDeck.GetCardCount() > 1)
                 {
-                    int index = Array.IndexOf(monsterCards, data);
+                    int index = Array.IndexOf(monsterCards, targetData);
                     
                     // Центр + бока
-                    if (index >= 1 && index < monsterCards.Length - 1) 
+                    if (index >= 1 && index < monsterCards.Length - 1)
                     {
                         for (int i = index - 1; i <= index + 1; i++)
                         {
                             CardData targetCard = monsterCards[i];
-                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(args.Damage);
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health))
+                                health.TakeDamage(args.Damage);
                         }
                     }
                     else if (index > 0) // Центр + левая
@@ -355,7 +365,8 @@ namespace Game.Cards.Strategy
                         for (int i = index - 1; i <= index; i++)
                         {
                             CardData targetCard = monsterCards[i];
-                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(args.Damage);
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health))
+                                health.TakeDamage(args.Damage);
                         }
                     }
                     else if (index < monsterCards.Length - 1) // Центр + правая
@@ -363,13 +374,13 @@ namespace Game.Cards.Strategy
                         for (int i = index; i <= index + 1; i++)
                         {
                             CardData targetCard = monsterCards[i];
-                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health)) health.TakeDamage(args.Damage);
+                            if (targetCard != null && targetCard.TryGetCardFeature<HealthDecorator>(out var health))
+                                health.TakeDamage(args.Damage);
                         }
                     }
                     else healthDecorator.TakeDamage(args.Damage);
                 }
                 else healthDecorator.TakeDamage(args.Damage);
-
 
                 StepCombatSystem.Instance.StepUpdate();
             }
@@ -386,17 +397,19 @@ namespace Game.Cards.Strategy
         {
             if (args.Target == null) return;
 
-            var data = args.Target.GetComponent<CardData>();
-            if (data.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && data.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            var targetData = args.Target;
+            if (targetData.TryGetCardFeature<HealthDecorator>(out var healthDecorator) &&
+                targetData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
             {
                 // Удаление карты атаки при нанесении урона монстру
-                if (data.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.GetComponent<CardData>().decorateCard.Destroy();
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
+                    args.Parent.decorateCard.Destroy();
 
                 healthDecorator.TakeDamage(args.Damage);
 
                 StepCombatSystem.Instance.StepUpdate();
 
-                // Добавление модификатора на карту монстра                
+                // Добавление модификатора на карту монстра
                 modifierDecorator.AddModifier(modifier);
             }
         }

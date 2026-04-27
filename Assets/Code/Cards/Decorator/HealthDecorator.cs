@@ -7,7 +7,7 @@ namespace Game.Cards
     {
         public Health healthSystem { get; private set; }
 
-        public HealthDecorator(int hp, ICard<CardTypeEnum> card) : base(card)
+        public HealthDecorator(int hp, ICard card) : base(card)
         {
             this.healthSystem = new Health(hp);
             this.healthSystem.OnDead += OnDead;

@@ -17,7 +17,7 @@ namespace Game.Cards
         /// </summary>
         public bool IsActive { get; private set; } = true;
 
-        public StepCombatDecorator(int step, ICard<CardTypeEnum> card) : base(card)
+        public StepCombatDecorator(int step, ICard card) : base(card)
         {
             MaxStep = step;
             currentStep.Value = step;

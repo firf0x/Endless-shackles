@@ -12,7 +12,7 @@ namespace Game.Cards
         private IDeck<CardData> defenceDeck;
         private StrategyHandler<IAttackStrategy, CombatArgs> strategyHandle;
 
-        public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard<CardTypeEnum> card) : base(card)
+        public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard card) : base(card)
         {
             this.defaultDamageValue = damageValue;
             ChangeDamage(defaultDamageValue);
@@ -24,7 +24,7 @@ namespace Game.Cards
         public override void Start()
         {
             base.Start();
-            if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
+            if (CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
         }
 
         // Этот метод нужон только для монстров
@@ -54,7 +54,7 @@ namespace Game.Cards
         public override void Use(GameObject target)
         {
             base.Use(target);
-            strategyHandle.ExecuteStrategy(new CombatArgs(Parent, target, currentDamage.Value));
+            strategyHandle.ExecuteStrategy(new CombatArgs(CardData, target.GetComponent<CardData>(), currentDamage.Value));
         }
         public void ChangeDamage(int value)
         {
@@ -73,7 +73,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            if (Parent.TryGetComponent<CardData>(out var data) && data.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            if (CardData != null && CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
             strategyHandle.Dispose();
 
             base.Dispose();

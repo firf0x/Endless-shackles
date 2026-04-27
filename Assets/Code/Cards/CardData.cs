@@ -7,7 +7,7 @@ namespace Game.Cards
     {
         [SerializeField] public SpriteRenderer ObjectRenderer;
         public IDeck<CardData> currentDeck;
-        public ICard<CardTypeEnum> decorateCard;
+        public ICard decorateCard;
 
         public void Execute(GameObject target)
         {
@@ -74,7 +74,7 @@ namespace Game.Cards
 
         // TODO: Нужно подумать о пуле объектов, так как я полностью очищаю декораторы и их связи. Что позволит мне задавать информацию полностью с нуля.
 
-        private void BreakDecoratorChain(ICard<CardTypeEnum> card)
+        private void BreakDecoratorChain(ICard card)
         {
             var currentCard = card;
 

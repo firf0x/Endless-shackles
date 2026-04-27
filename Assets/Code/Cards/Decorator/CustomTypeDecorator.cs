@@ -8,7 +8,7 @@ namespace Game.Cards
     {
         public readonly TEnum CustomType;
 
-        public CustomTypeDecorator(TEnum type, ICard<CardTypeEnum> card) : base(card)
+        public CustomTypeDecorator(TEnum type, ICard card) : base(card)
         {
             CustomType = type;
         }

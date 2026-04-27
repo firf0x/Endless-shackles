@@ -6,7 +6,7 @@ namespace Game.Cards
 {
     public class CallBackDecorator : CardDecorator
     {
-        public CallBackDecorator(ICard<CardTypeEnum> card) : base(card) { }
+        public CallBackDecorator(ICard card) : base(card) { }
         
         /// <summary>
         /// Отправляет текущий объект в ModifierDecorator другой карты. Для ответных реакций карты с другой кратой.
@@ -21,9 +21,9 @@ namespace Game.Cards
             // Debug.Log(target);
             if (target != null)
             {
-                Parent.GetComponent<CardData>().GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
+                CardData.GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
                 
-                if(Parent.GetComponent<CardData>().TryGetCardFeature<PassiveDecorator>(out var decorator)) decorator.OnCallbackReceived(target);
+                if(CardData.TryGetCardFeature<PassiveDecorator>(out var decorator)) decorator.OnCallbackReceived(target);
             }
         }
     }

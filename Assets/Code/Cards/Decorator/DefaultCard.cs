@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Cards
 {
-    public class DefaultCard : ICard<CardTypeEnum>
+    public class DefaultCard : ICard
     {
         public CardTypeEnum Type { get; set; }
         public CardTypeEnum IgnoreLayers { get; set; }
@@ -14,6 +14,7 @@ namespace Game.Cards
         public bool isLocked { get; set; }
         public Sprite Icon { get; set; }
         public GameObject Parent { get; set; }
+        public CardData CardData { get; set; }
 
         public void Start() { }
         public void Use(GameObject target) { }

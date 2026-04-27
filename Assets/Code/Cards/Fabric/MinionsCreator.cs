@@ -9,7 +9,7 @@ namespace Game.Deck.Fabric
 {
     // Для карт со стратегией по созданию миньонов
     [Serializable]
-    public class MinionsCreator : Creator<ICard<CardTypeEnum>>
+    public class MinionsCreator : Creator<ICard>
     {
         [SerializeField] private CardsConfig config;
         [SerializeField] private int MinWeight;
@@ -18,7 +18,7 @@ namespace Game.Deck.Fabric
         [HideInInspector] public IDeck<CardData> defenceDeck;
         [HideInInspector] public IDeck<CardData> monsterDeck;
 
-        public override ICard<CardTypeEnum> Create()
+        public override ICard Create()
         {
             var eligibleIndices = new List<int>();
             var eligibleWeights = new List<int>();
@@ -75,13 +75,13 @@ namespace Game.Deck.Fabric
             return cardMinion;
         }
 
-        private ICard<CardTypeEnum> CreateMonsterMinionsCard(int index, GameObject parent)
+        private ICard CreateMonsterMinionsCard(int index, GameObject parent)
         {
             var cardsMonster = config.CardsMonster;
 
             var cardData = cardsMonster[index];
 
-            ICard<CardTypeEnum> baseCard = new DefaultCard()
+            ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
                 IgnoreLayers = cardData.IgnoreLayers,
@@ -93,10 +93,10 @@ namespace Game.Deck.Fabric
 
             List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
 
-            ICard<CardTypeEnum> modifierCard = new ModifierDecorator(modifiers, handDeck, defenceDeck, monsterDeck, baseCard);
-            ICard<CardTypeEnum> callBackCard = new CallBackDecorator(modifierCard);
-            ICard<CardTypeEnum> cardWithAttack = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defenceDeck, callBackCard);
-            ICard<CardTypeEnum> cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
+            ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defenceDeck, monsterDeck, baseCard);
+            ICard callBackCard = new CallBackDecorator(modifierCard);
+            ICard cardWithAttack = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defenceDeck, callBackCard);
+            ICard cardWithHealth = new HealthDecorator(cardData.HealthValue, cardWithAttack);
 
             return new StepCombatDecorator(cardData.StepValue, cardWithHealth);
         }

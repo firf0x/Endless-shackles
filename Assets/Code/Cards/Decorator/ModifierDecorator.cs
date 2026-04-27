@@ -22,7 +22,7 @@ namespace Game.Cards
 
         private List<ModifierData> modifiers;
 
-        public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card) : base(card)
+        public ModifierDecorator(List<ModifierBase> modifiers, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard card) : base(card)
         {
             this.handDeck = handDeck;
             this.defendDeck = defendDeck;
@@ -78,7 +78,6 @@ namespace Game.Cards
 
         public override void Start()
         {
-            // if(modifiers.Count <= 0 || isLocked) return;
             base.Start();
 
             if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepInteraction += OnStep;
@@ -147,7 +146,7 @@ namespace Game.Cards
 
         public void OnCallbackReceived(GameObject target)
         {
-            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
+            if(modifiers == null || modifiers.Count <= 0 || isLocked || !CardData.GetCardFeature<StepCombatDecorator>().IsActive) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
@@ -159,29 +158,27 @@ namespace Game.Cards
         {
             if(target == null) return new ModifierContext
             {
-                //TODO: я так подумал и считаю, что CardData должена быть закеширована в сам ICard, это сократит количество вызовов getcomponent
                 SourceCard = this,
                 SourceGameObject = Parent,
-                SourceCardData = Parent.GetComponent<CardData>(),
+                SourceCardData = CardData,
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
-                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
+                DamageValue = CardData?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
                 CurrentStackModifier = modifierData.Stack
             };
             else return new ModifierContext
             {
-                //TODO: я так подумал и считаю, что CardData должена быть закеширована в сам ICard, это сократит количество вызовов getcomponent
                 SourceCard = this,
                 SourceGameObject = Parent,
-                SourceCardData = Parent.GetComponent<CardData>(),
+                SourceCardData = CardData,
                 TargetCard = target?.GetComponent<CardData>()?.decorateCard,
                 TargetGameObject = target,
                 TargetCardData = target.GetComponent<CardData>(),
                 HandDeck = handDeck,
                 DefendDeck = defendDeck,
                 MonsterDeck = monsterDeck,
-                DamageValue = Parent.GetComponent<CardData>()?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
+                DamageValue = CardData?.GetCardFeature<AttackDecorator>()?.currentDamage?.Value ?? 0,
                 CurrentStackModifier = modifierData.Stack
             };
         }

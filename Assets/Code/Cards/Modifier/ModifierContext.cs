@@ -6,8 +6,8 @@ namespace Game.Cards.Modifier
 {
     public class ModifierContext
     {
-        public ICard<CardTypeEnum> SourceCard { get; set; }         // Карта-источник модификатора
-        public ICard<CardTypeEnum> TargetCard { get; set; }         // Целевая карта
+        public ICard SourceCard { get; set; }         // Карта-источник модификатора
+        public ICard TargetCard { get; set; }         // Целевая карта
         public CardData SourceCardData { get; set; }
         public CardData TargetCardData { get; set; }
         public GameObject SourceGameObject { get; set; }            // Истоник игрового объекта

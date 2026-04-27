@@ -15,14 +15,14 @@ namespace Game.Cards
         private IDeck<CardData> defendDeck;
         private IDeck<CardData> monsterDeck;
 
-        public PassiveDecorator(List<PassivesBase> passives, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard<CardTypeEnum> card) : base(card)
+        public PassiveDecorator(List<PassivesBase> passives, IDeck<CardData> handDeck, IDeck<CardData> defendDeck, IDeck<CardData> monsterDeck, ICard card) : base(card)
         {
             this.passives = passives;
             this.handDeck = handDeck;
             this.defendDeck = defendDeck;
             this.monsterDeck = monsterDeck;
 
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
+            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
             StepCombatSystem.Instance.EventUpdate += GeneralUpdate;
         }
 
@@ -79,7 +79,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
 
             if(passives.Count > 0) foreach (var passive in passives) passive.OnRemove(CreateContext(null));
             passives.Clear();
