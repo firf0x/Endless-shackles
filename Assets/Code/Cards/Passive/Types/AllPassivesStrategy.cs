@@ -107,7 +107,7 @@ namespace Game.Cards.Passive
     #region Other
 
     [Serializable]
-    public sealed class IgnoringCertainModifier : PassivesBase
+    public sealed class RemoveAlwaysCertainModifier : PassivesBase
     {
         [SerializeField] private ModifierBase selectedModifier;
 
@@ -115,7 +115,7 @@ namespace Game.Cards.Passive
         {
             var cardData = context.Parent.GetComponent<CardData>();
 
-            if (cardData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator) && modifierDecorator.HasModifier(selectedModifier)) cardData.GetCardFeature<StepCombatDecorator>();
+            if (cardData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator) && modifierDecorator.HasModifier(selectedModifier)) modifierDecorator.RemoveModifier(selectedModifier);
         }
 
         public override void OnGeneralUpdate(PassiveContext context)

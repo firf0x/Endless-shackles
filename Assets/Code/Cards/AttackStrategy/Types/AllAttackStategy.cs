@@ -293,6 +293,31 @@ namespace Game.Cards.Strategy
         }
     }
 
+    [Serializable]
+    public class MonsterDestroyerCardInHand : AttackStrategyBase
+    {
+        public override string Name => "Destroyer card in hand";
+        [SerializeField] private int MaxCountOnDestroy;
+
+        public override void Execute(CombatArgs args)
+        {
+            var cardsHand = args.Parent.GetCardFeature<ModifierDecorator>().handDeck;
+
+            int lengthDestroy = UnityEngine.Random.Range(0, MaxCountOnDestroy);
+
+            for (int i = 0; i < lengthDestroy; i++)
+            {
+                if(cardsHand.GetCardCount() < 0) break;
+
+                CardData card = cardsHand.cardDatas[UnityEngine.Random.Range(0, cardsHand.GetCardCount())];
+            
+                if(card != null) card.CardDestroy(true);
+            }
+
+            args.Target.GetCardFeature<HealthDecorator>().TakeDamage(args.Damage);
+        }
+    }
+
     #endregion
 
     #region Card Attack Strategies

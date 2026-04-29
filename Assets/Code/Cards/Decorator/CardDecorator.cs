@@ -26,7 +26,6 @@ namespace Game.Cards
         public virtual GameObject Parent => decoratedCard.Parent;
         public CardData CardData => decoratedCard.CardData;
 
-
         public ICard GetInnerCard() => decoratedCard;
         public virtual void Start() => decoratedCard.Start();
         public virtual void Use(GameObject target) => decoratedCard.Use(target);

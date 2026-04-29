@@ -19,11 +19,12 @@ namespace Game.Cards
         public void Start() { }
         public void Use(GameObject target) { }
         public void SetLock(bool enabled) => isLocked = enabled;
-        public void Destroy() => Parent.GetComponent<CardData>().CardDestroy(false);
+        public void Destroy() => CardData.CardDestroy(true);
 
         public void Dispose()
         {
             Parent = null;
+            // CardData = null;
         }
     }
 }

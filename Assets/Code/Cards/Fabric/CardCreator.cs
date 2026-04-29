@@ -67,14 +67,18 @@ namespace Game.Cards.Fabric
             };
             
             // Инициализация Monobehaviour
-            baseCard.Parent.GetComponent<CardData>().currentDeck = handDeck;
-            baseCard.Parent.GetComponent<CardData>().ObjectRenderer.sprite = baseCard.Icon;
+            baseCard.CardData.currentDeck = handDeck;
+            baseCard.CardData.ObjectRenderer.sprite = baseCard.Icon;
 
             List<ModifierBase> modifiers = new List<ModifierBase>();
 
             foreach (var modifier in cardData.Modifiers)
             {
-                modifiers.Add(ScriptableObject.Instantiate(modifier));
+                if(modifier != null)
+                {
+                    var obj = ScriptableObject.Instantiate(modifier);
+                    modifiers.Add(obj);
+                }
             }
 
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
@@ -110,16 +114,26 @@ namespace Game.Cards.Fabric
             };
             
             // Инициализация Monobehaviour
-            baseCard.Parent.GetComponent<CardData>().currentDeck = handDeck;
-            baseCard.Parent.GetComponent<CardData>().ObjectRenderer.sprite = baseCard.Icon;
+            baseCard.CardData.currentDeck = handDeck;
+            baseCard.CardData.ObjectRenderer.sprite = baseCard.Icon;
             
-            List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
+            List<ModifierBase> modifiers = new List<ModifierBase>();
+
+            foreach (var modifier in cardData.Modifiers)
+            {
+                if(modifier != null)
+                {
+                    modifiers.Add(ScriptableObject.Instantiate(modifier));
+                    Debug.Log(modifier.name);
+                }
+            }
+
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
 
             ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
-            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
-            ICard callBackCard = new CallBackDecorator(passivesCard);
-            ICard defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, callBackCard);
+            ICard callBackCard = new CallBackDecorator(modifierCard);
+            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, callBackCard);
+            ICard defenceType = new CustomTypeDecorator<DefenceType>(cardData.DefenceType, passivesCard);
             ICard healthCard = new HealthDecorator(cardData.HealthValue, defenceType);
 
             baseCard.Parent.GetComponent<CardData>().decorateCard = healthCard;
@@ -148,16 +162,26 @@ namespace Game.Cards.Fabric
             };
             
             // Инициализация Monobehaviour
-            baseCard.Parent.GetComponent<CardData>().currentDeck = monsterDeck;
-            baseCard.Parent.GetComponent<CardData>().ObjectRenderer.sprite = baseCard.Icon;
+            baseCard.CardData.currentDeck = monsterDeck;
+            baseCard.CardData.ObjectRenderer.sprite = baseCard.Icon;
 
-            List<ModifierBase> modifiers = new List<ModifierBase>(cardData.Modifiers);
+            List<ModifierBase> modifiers = new List<ModifierBase>();
+            
+            foreach (var modifier in cardData.Modifiers)
+            {
+                if(modifier != null)
+                {
+                    var obj = ScriptableObject.Instantiate(modifier);
+                    modifiers.Add(obj);
+                }
+            }
+            
             List<PassivesBase> passives = new List<PassivesBase>(cardData.Passives);
 
             ICard modifierCard = new ModifierDecorator(modifiers, handDeck, defendDeck, monsterDeck, baseCard);
-            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, modifierCard);
-            ICard callBackCard = new CallBackDecorator(passivesCard);
-            ICard attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, callBackCard);
+            ICard callBackCard = new CallBackDecorator(modifierCard);
+            ICard passivesCard = new PassiveDecorator(passives, handDeck, defendDeck, monsterDeck, callBackCard);
+            ICard attackCard = new AttackDecorator(cardData.DamageValue, cardData.strategyAttack, defendDeck, passivesCard);
             ICard stepCard = new StepCombatDecorator(cardData.StepValue, attackCard);
             ICard healthCard = new HealthDecorator(cardData.HealthValue, stepCard);
             

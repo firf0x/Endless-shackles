@@ -68,13 +68,27 @@ namespace Game.Cards
                 {
                     existing.Modifier.OnRemove(CreateContext(null, existing));
                     modifiers.Remove(existing);
+                    
                     OnRemoved?.Invoke(existing);
+                    OnChanged?.Invoke(existing);
+                    
+                    ScriptableObject.Destroy(existing.Modifier, 2f);
+                    return;
                 }
                 OnChanged?.Invoke(existing);
             }
         }
 
         public bool HasModifier(ModifierBase mod) => modifiers.Exists(md => md.Modifier == mod);
+
+        public ModifierBase GetModifier(ModifierBase modifier)
+        {
+            foreach (var modifierData in modifiers)
+            {
+                if (modifierData.Modifier == modifier) return modifierData.Modifier;
+            }
+            return null;
+        }
 
         public override void Start()
         {
@@ -103,7 +117,7 @@ namespace Game.Cards
 
         public void OnStep()
         {
-            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
+            if(isLocked) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
@@ -115,6 +129,8 @@ namespace Game.Cards
         {
             if(modifiers == null || modifiers.Count <= 0 || isLocked)
             {
+                target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
+
                 base.Use(target);
                 return;
             }
@@ -124,11 +140,9 @@ namespace Game.Cards
 
             UpdateModifiers(target);
          
-            CardData cardData = target.GetComponent<CardData>();
-            
             // Нужен для отправки данных о карте взаимодействующей с текущей
             Debug.Log("Отправка обратной связи");
-            cardData.GetCardFeature<CallBackDecorator>().Call(Parent);
+            target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
             Debug.Log("Конец обратной связи");
 
             base.Use(target);
@@ -146,7 +160,7 @@ namespace Game.Cards
 
         public void OnCallbackReceived(GameObject target)
         {
-            if(modifiers == null || modifiers.Count <= 0 || isLocked || !CardData.GetCardFeature<StepCombatDecorator>().IsActive) return;
+            if(modifiers == null || modifiers.Count <= 0 || isLocked) return;
 
             foreach (var modifier in modifiers.ToArray())
             {
@@ -211,7 +225,7 @@ namespace Game.Cards
             foreach (var modifier in modifiers)
             {
                 modifier.Modifier.OnRemove(CreateContext(null, modifier));
-                ScriptableObject.DestroyImmediate(modifier.Modifier);
+                if(modifier.Modifier != null) ScriptableObject.Destroy(modifier.Modifier, 2f);
             }
 
             modifiers.Clear();

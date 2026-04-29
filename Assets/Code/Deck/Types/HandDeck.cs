@@ -146,7 +146,7 @@ namespace Game.Deck
         /// <summary>
         /// Удаляет карту по индексу
         /// </summary>
-        public void RemoveCard(CardData deletedCard, bool isClearAll)
+        public void RemoveCard(CardData deletedCard, bool updateAllPosition)
         {
             for (int i = 0; i < cardDatas.Length; i++)
             {
@@ -157,7 +157,7 @@ namespace Game.Deck
                 }
             }
 
-            if(!isClearAll) UpdateAllCardsPosition();
+            if(updateAllPosition) UpdateAllCardsPosition();
         }
         
         /// <summary>
@@ -185,7 +185,7 @@ namespace Game.Deck
             {
                 if(card != null)
                 {
-                    card.CardDestroy(true);
+                    card.CardDestroy(false);
                 }
             }
         }

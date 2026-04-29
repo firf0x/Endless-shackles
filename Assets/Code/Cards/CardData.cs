@@ -98,10 +98,10 @@ namespace Game.Cards
             }
         }
 
-        public void CardDestroy(bool isClearAll)
+        public void CardDestroy(bool updateAllPosition)
         {
             BreakDecoratorChain(decorateCard);
-            currentDeck.RemoveCard(this, isClearAll);
+            currentDeck.RemoveCard(this, updateAllPosition);
             // decorateCard.Parent = null;
             decorateCard = null;
 

@@ -37,6 +37,12 @@ namespace Game.Deck
             sizeDeck = Mathf.Max(sizeDeck, 0);
         }
 
+        private void OnDestroy()
+        {
+            cards.Clear();
+            cards = null;
+        }
+
         public bool AddCard(CardData newCard)
         {
             if(newCard == null) return false;
@@ -69,24 +75,20 @@ namespace Game.Deck
             }
         }
 
-        public void RemoveCard(CardData deletedCard, bool isClearAll)
+        public void RemoveCard(CardData deletedCard, bool updateAllPosition)
         {
-            if (isClearAll) cards.Clear();
-            else
+            // Ищем ключ по значению
+            DefenceType? keyToRemove = null;
+            foreach (var card in cards)
             {
-                // Ищем ключ по значению
-                DefenceType? keyToRemove = null;
-                foreach (var card in cards)
+                if (card.Value == deletedCard)
                 {
-                    if (card.Value == deletedCard)
-                    {
-                        keyToRemove = card.Key;
-                        break;
-                    }
+                    keyToRemove = card.Key;
+                    break;
                 }
-                
-                if (keyToRemove.HasValue) cards.Remove(keyToRemove.Value);
             }
+            
+            if (keyToRemove.HasValue) cards.Remove(keyToRemove.Value);
         }
 
         /// <summary>
@@ -105,9 +107,10 @@ namespace Game.Deck
             {
                 if(card != null)
                 {
-                    card.CardDestroy(true);
+                    card.CardDestroy(false);
                 }
             }
+
         }
 
         public bool ContainsCard(DefenceType defenceType)
@@ -115,7 +118,7 @@ namespace Game.Deck
             return cards != null && cards.ContainsKey(defenceType);
         }
 
-        //! Update data!!! обновляется список возможных карт которым можно нанести урон.
+        //! В текущем состоянии ему не надо обновлять все позиции
         public void UpdateAllCardsPosition()
         {
         }

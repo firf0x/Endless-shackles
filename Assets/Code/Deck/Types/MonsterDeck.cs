@@ -34,6 +34,11 @@ namespace Game.Deck
             sizeDeck = Mathf.Max(sizeDeck, 0);
         }
 
+        private void OnDestroy()
+        {
+            cardDatas = null;
+        }
+
         public bool AddCard(CardData newCard)
         {
             // Ищем первую свободную ячейку
@@ -63,7 +68,7 @@ namespace Game.Deck
             }
         }
 
-        public void RemoveCard(CardData deletedCard, bool isClearAll)
+        public void RemoveCard(CardData deletedCard, bool updateAllPosition)
         {
             for (int i = 0; i < cardDatas.Length; i++)
             {
@@ -74,7 +79,7 @@ namespace Game.Deck
                 }
             }
 
-            if(!isClearAll) UpdateAllCardsPosition();
+            if(updateAllPosition) UpdateAllCardsPosition();
         }
 
         /// <summary>
@@ -169,7 +174,7 @@ namespace Game.Deck
             {
                 if(card != null)
                 {
-                    card.CardDestroy(true);
+                    card.CardDestroy(false);
                 }
             }
         }

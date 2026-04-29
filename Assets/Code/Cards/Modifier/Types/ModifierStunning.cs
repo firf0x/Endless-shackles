@@ -14,13 +14,11 @@ namespace Game.Cards.Modifier
         {
             step = CountStep;
 
-            if(context.SourceCardData.TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.Stop(true);
+            if(context.SourceCardData.TryGetCardFeature<StepCombatDecorator>(out var stepDecorator) && !isIgnoring) stepDecorator.Stop(true);
         }
 
         public override void OnGeneralUpdate(ModifierContext context)
         {
-            Debug.Log(step);
-
             if(step > 0)
             {
                 step--;
