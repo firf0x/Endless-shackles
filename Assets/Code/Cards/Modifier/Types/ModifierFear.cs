@@ -7,7 +7,7 @@ namespace Game.Cards.Modifier
     [CreateAssetMenu(fileName = "ModifierFear", menuName = "Modifier/ModifierFear", order = 0)]
     public sealed class ModifierFear : ModifierBase
     {
-        public override void Init(ModifierContext context)
+        public override void OnGeneralUpdate(ModifierContext context)
         {
             context.SourceCardData.GetCardFeature<HealthDecorator>().isTarget = false;
         }

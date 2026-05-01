@@ -318,6 +318,30 @@ namespace Game.Cards.Strategy
         }
     }
 
+
+    [Serializable]
+    public class MonsterSetYourselfModifier : AttackStrategyBase
+    {
+        public override string Name => "Set Yourself Modifier";
+        [SerializeField] private ModifierBase modifier;
+
+        public override void Execute(CombatArgs args)
+        {
+            if (args.Target == null) return;
+
+            var healthDecorator = args.Target.GetCardFeature<HealthDecorator>();
+            if (args.Parent.TryGetCardFeature<AttackDecorator>(out var attackDecorator) && args.Parent.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            {
+                healthDecorator.TakeDamage(args.Damage);
+
+                // StepCombatSystem.Instance.StepUpdate();
+
+                // Добавление модификатора на карту монстра
+                modifierDecorator.AddModifier(modifier);
+            }
+        }
+    }
+
     #endregion
 
     #region Card Attack Strategies
@@ -423,12 +447,9 @@ namespace Game.Cards.Strategy
             if (args.Target == null) return;
 
             var targetData = args.Target;
-            if (targetData.TryGetCardFeature<HealthDecorator>(out var healthDecorator) &&
-                targetData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
+            if (targetData.TryGetCardFeature<HealthDecorator>(out var healthDecorator) && targetData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator))
             {
-                // Удаление карты атаки при нанесении урона монстру
-                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
-                    args.Parent.decorateCard.Destroy();
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.decorateCard.Destroy();
 
                 healthDecorator.TakeDamage(args.Damage);
 
