@@ -7,6 +7,8 @@ namespace Game.Cards.Modifier
     [CreateAssetMenu(fileName = "ModifierLockAlways", menuName = "Modifier/ModifierLockAlways", order = 0)]
     public sealed class ModifierLockAlways : ModifierBase
     {
+        [SerializeField] private Sprite LockImage;
+
         // Примечание: Этот эффект нужен для постоянного стана карты в руке до удаления самого модификатора
         public override void OnGeneralUpdate(ModifierContext context)
         {

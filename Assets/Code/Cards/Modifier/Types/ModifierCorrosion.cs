@@ -11,14 +11,15 @@ namespace Game.Cards.Modifier
         {            
             if (context.SourceCardData.TryGetCardFeature<HealthDecorator>(out var decorator))
             {
-                var attackDecorator = context.TargetGameObject.GetComponent<CardData>().GetCardFeature<AttackDecorator>();
+                var attackDecorator = context.TargetCardData.GetCardFeature<AttackDecorator>();
                 int currentDamage = attackDecorator.currentDamage.Value;
-                decorator.TakeDamage(currentDamage);
+                
+                attackDecorator.ChangeDamage(currentDamage + currentDamage);
+                decorator.TakeDamage(attackDecorator.currentDamage.Value);
+                attackDecorator.ChangeDamage(currentDamage);
 
                 if(context.SourceCardData.TryGetCardFeature<ModifierDecorator>(out var modifierDecorator)) modifierDecorator.RemoveModifier(this);
             }
         }
-
-        public override string ToString() => "Modifier corrosion";
     }
 }

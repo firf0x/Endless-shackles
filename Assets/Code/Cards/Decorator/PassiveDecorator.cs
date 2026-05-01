@@ -22,7 +22,7 @@ namespace Game.Cards
             this.defendDeck = defendDeck;
             this.monsterDeck = monsterDeck;
 
-            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
+            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepStartUpdate += OnStep;
             StepCombatSystem.Instance.EventUpdate += GeneralUpdate;
         }
 
@@ -79,7 +79,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            if(CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepStartUpdate -= OnStep;
 
             if(passives.Count > 0) foreach (var passive in passives) passive.OnRemove(CreateContext(null));
             passives.Clear();

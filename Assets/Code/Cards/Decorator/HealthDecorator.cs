@@ -6,6 +6,11 @@ namespace Game.Cards
     public class HealthDecorator : CardDecorator, IDamageble
     {
         public Health healthSystem { get; private set; }
+        
+        /// <summary>
+        /// Переменная отвечающая за то можно ли выбирать эту карту
+        /// </summary>
+        public bool isTarget = true;
 
         public HealthDecorator(int hp, ICard card) : base(card)
         {
@@ -30,13 +35,6 @@ namespace Game.Cards
         }
 
         public void OnDead() => Destroy();
-
-        public override string ToString()
-        {
-            string message = $"Health: текущее количество {healthSystem.HealPoints.Value} здоровья.";
-            Debug.Log(message);
-            return message;
-        }
 
         public override void Dispose()
         {

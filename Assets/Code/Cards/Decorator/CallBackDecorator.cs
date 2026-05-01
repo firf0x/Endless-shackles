@@ -16,8 +16,8 @@ namespace Game.Cards
         {
             if (target == null) return;
             
-            Debug.Log(target.name + " : Карта которая была инициатором вызова");
-            Debug.Log(Parent?.name + " : Карта которая была провзаимодействованой");
+            // Debug.Log(target.name + " : Карта которая была инициатором вызова");
+            // Debug.Log(Parent?.name + " : Карта которая была провзаимодействованой");
             
             CardData.GetCardFeature<ModifierDecorator>().OnCallbackReceived(target);
             

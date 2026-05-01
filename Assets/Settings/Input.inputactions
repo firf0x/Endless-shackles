@@ -7,7 +7,7 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "Mouse",
+                    "name": "Mouse_position",
                     "type": "Value",
                     "id": "c7bbc2fa-857a-49c8-b50e-d3d8e53e2678",
                     "expectedControlType": "Vector2",
@@ -33,7 +33,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Mouse",
+                    "action": "Mouse_position",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -8,7 +8,8 @@ namespace Game.Cards
     public class StepCombatDecorator : CardDecorator, IStepTick
     {
         public ReactiveProperty<int> currentStep { get; private set; } = new();
-        public event Action OnStepInteraction;
+        public event Action OnStepStartUpdate;
+        public event Action OnStepEndUpdate;
         public int MaxStep { get; private set; }
         private bool isSpawn = true;
 
@@ -26,21 +27,23 @@ namespace Game.Cards
 
         public void OnUpdate()
         {
-            if(isSpawn)
-            {
-                isSpawn = false;
-                return;
-            }
+            // if(isSpawn)
+            // {
+            //     isSpawn = false;
+            //     return;
+            // }
             
-            if(!IsActive || isLocked) return;
+            if(!IsActive || decoratedCard == null || isLocked) return;
             
             currentStep.Value--;
 
             if(currentStep.Value <= 0)
             {
-                OnStepInteraction?.Invoke();
+                OnStepStartUpdate?.Invoke();
 
                 currentStep.Value = MaxStep;
+
+                OnStepEndUpdate?.Invoke();
             }
         }
 
@@ -59,7 +62,7 @@ namespace Game.Cards
 
         public override void Dispose()
         {
-            OnStepInteraction = null;
+            OnStepStartUpdate = null;
             StepCombatSystem.Instance.EventUpdate -= OnUpdate;
 
             base.Dispose();

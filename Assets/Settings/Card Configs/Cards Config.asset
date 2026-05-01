@@ -30,8 +30,7 @@ MonoBehaviour:
     <Name>k__BackingField: 
     <Description>k__BackingField: 
     <Icon>k__BackingField: {fileID: -3989634738409259495, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
-    <Modifiers>k__BackingField:
-    - {fileID: 11400000, guid: ebe7077b6fb18c542b6efc40b390995e, type: 2}
+    <Modifiers>k__BackingField: []
     <Passives>k__BackingField: []
     <Weight>k__BackingField: 0
     HealthValue: 20

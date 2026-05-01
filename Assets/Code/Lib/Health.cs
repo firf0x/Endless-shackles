@@ -6,6 +6,8 @@ namespace Game.Lib
     [Serializable]
     public class Health : IDamageble
     {
+        //! ВЫЗЫВАТЬ МЕТОДЫ НА ПРЯМУЮ СТРОГО ЗАПРЕЩАЕТСЯ!
+
         // PUBLIC
         public ReactiveProperty<int> HealPoints { get; private set; } = new();
         public event Action OnDead;

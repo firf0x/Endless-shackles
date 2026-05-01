@@ -11,7 +11,7 @@ namespace Game.Lib
         [field:SerializeField] public string modifierDescription { get; private set; }
         [field:SerializeField] public ModifierTypeEnum modifierType { get; private set; }
         [field:SerializeField] public Sprite icon { get; private set; }
-        [field:SerializeField] public bool isStack { get; private set; }
+        [field:SerializeField] public bool isStack { get; private set; } = true;
         [field:SerializeField] public bool isIgnoring { get; private set; }
 
         public void SetIgnoring(bool active) => isIgnoring = active;

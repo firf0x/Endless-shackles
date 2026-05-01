@@ -4,7 +4,7 @@ using Game.Deck;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// TODO: По хорошему нужно переделать, но мне в падлу
+// В скором времени будет заменён
 public class CursorComponent : MonoBehaviour
 {
     [Header("Raycast Settings")]
@@ -31,7 +31,7 @@ public class CursorComponent : MonoBehaviour
         var playerActionMap = inputAction.FindActionMap("Player");
 
         interactAction = playerActionMap.FindAction("Interact");
-        positionAction = playerActionMap.FindAction("Mouse");
+        positionAction = playerActionMap.FindAction("Mouse_position");
 
         interactAction.performed += OnInteractPerformed;
         interactAction.canceled += OnInteractCanceled;
@@ -88,7 +88,7 @@ public class CursorComponent : MonoBehaviour
         if (hit.collider != null && hit.collider.gameObject.layer == 6)
         {
             CardData card;
-            Debug.Log(!hit.collider.GetComponent<CardData>().decorateCard.isLocked);
+            // Debug.Log(!hit.collider.GetComponent<CardData>().decorateCard.isLocked);
             if (hit.collider.TryGetComponent<CardData>(out card) && !hit.collider.GetComponent<CardData>().decorateCard.isLocked)
             {
                 if(card.decorateCard.Type == CardTypeEnum.Monster) return;

@@ -14,7 +14,7 @@ namespace Game.Cards
         public event Action<ModifierData> OnAdded;
         public event Action<ModifierData> OnRemoved;
         public event Action<ModifierData> OnChanged;
-        public event Action<ModifierData> OnCleared;
+        // public event Action<ModifierData> OnCleared;
         
         public IDeck<CardData> handDeck { get; private set; }
         public IDeck<CardData> defendDeck { get; private set; }
@@ -44,7 +44,7 @@ namespace Game.Cards
 
             if (existing != null)
             {
-                if(!existing.Modifier.isStack) return;
+                if(!existing.Modifier.isStack || existing.Stack >= 99) return;
                 existing.Stack += 1;
                 OnChanged?.Invoke(existing);
             }
@@ -52,6 +52,9 @@ namespace Game.Cards
             {
                 ModifierData d = new ModifierData(modifier, 1);
                 modifiers.Add(d);
+
+                d.Modifier.Init(CreateContext(null, d));
+                
                 OnAdded?.Invoke(d);
             }
         }
@@ -60,11 +63,11 @@ namespace Game.Cards
         {
             if (modifier == null) return;
 
-            var existing = modifiers.Find(m => m.Modifier == modifier);
+            ModifierData existing = modifiers.Find(m => m.Modifier == modifier);
             if (existing != null)
             {
                 existing.Stack -= 1;
-                if (existing.Stack <= 0)
+                if (existing.Stack <= 0 || !existing.Modifier.isStack)
                 {
                     existing.Modifier.OnRemove(CreateContext(null, existing));
                     modifiers.Remove(existing);
@@ -94,17 +97,17 @@ namespace Game.Cards
         {
             base.Start();
 
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepInteraction += OnStep;
-            StepCombatSystem.Instance.EventUpdate += GeneralUpdate;
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepEndUpdate += OnUpdate;
+            StepCombatSystem.Instance.EventUpdate += OnGeneralUpdate;
 
             // Первичная инициализация модификаторов
-            foreach (var modifier in modifiers)
-            {
-                modifier.Modifier.Init(CreateContext(null, modifier));
-            }
+            // foreach (var modifier in modifiers)
+            // {
+            //     modifier.Modifier.Init(CreateContext(null, modifier));
+            // }
         }
 
-        private void GeneralUpdate()
+        private void OnGeneralUpdate()
         {
             // if ( Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator) && !stepDecorator.IsActive) Debug.Log(!stepDecorator.IsActive);
             if ( modifiers == null || modifiers.Count <= 0 || isLocked ) return;
@@ -115,7 +118,7 @@ namespace Game.Cards
             }
         }
 
-        public void OnStep()
+        private void OnUpdate()
         {
             if(isLocked) return;
 
@@ -141,9 +144,9 @@ namespace Game.Cards
             UpdateModifiers(target);
          
             // Нужен для отправки данных о карте взаимодействующей с текущей
-            Debug.Log("Отправка обратной связи");
+            // Debug.Log("Отправка обратной связи");
             target.GetComponent<CardData>().GetCardFeature<CallBackDecorator>().Call(Parent);
-            Debug.Log("Конец обратной связи");
+            // Debug.Log("Конец обратной связи");
 
             base.Use(target);
         }
@@ -237,10 +240,10 @@ namespace Game.Cards
             OnAdded = null;
             OnRemoved = null;
             OnChanged = null;
-            OnCleared = null;
+            // OnCleared = null;
 
-            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepInteraction -= OnStep;
-            StepCombatSystem.Instance.EventUpdate -= GeneralUpdate;
+            if(Parent.GetComponent<CardData>().TryGetCardFeature<StepCombatDecorator>(out var stepDecorator)) stepDecorator.OnStepEndUpdate -= OnUpdate;
+            StepCombatSystem.Instance.EventUpdate -= OnGeneralUpdate;
 
             base.Dispose();
         }

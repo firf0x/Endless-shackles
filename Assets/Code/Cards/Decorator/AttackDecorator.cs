@@ -12,6 +12,8 @@ namespace Game.Cards
         private IDeck<CardData> defenceDeck;
         private StrategyHandler<IAttackStrategy, CombatArgs> strategyHandle;
 
+        private GameObject currentTarget = null;
+
         public AttackDecorator(int damageValue, IAttackStrategy strategy, IDeck<CardData> deck, ICard card) : base(card)
         {
             this.defaultDamageValue = damageValue;
@@ -24,7 +26,11 @@ namespace Game.Cards
         public override void Start()
         {
             base.Start();
-            if (CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction += OnStep;
+            if (!Type.HasFlag(CardTypeEnum.Attack) && CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator))
+            {
+                decorator.OnStepStartUpdate += OnStep;
+                decorator.OnStepEndUpdate += Attack;
+            }
         }
 
         // Этот метод нужон только для монстров
@@ -36,44 +42,54 @@ namespace Game.Cards
                 return;
             }
 
-            GameObject target = null;
-
             // Ищем первую карту в defenceDeck, у которой есть HealthDecorator
             foreach (var card in defenceDeck.cardDatas)
             {
-                if (card != null && card.TryGetCardFeature<HealthDecorator>(out _))
+                if (card != null && card.GetCardFeature<HealthDecorator>().isTarget)
                 {
-                    target = card.gameObject;
+                    currentTarget = card.gameObject;
                     break;
                 }
             }
-
-            Use(target);
         }
 
+        // Нужен для карт атаки и только они могут вызвать его нормально
         public override void Use(GameObject target)
         {
             base.Use(target);
-            strategyHandle.ExecuteStrategy(new CombatArgs(CardData, target.GetComponent<CardData>(), currentDamage.Value));
+
+            if(Type.HasFlag(CardTypeEnum.Attack) )
+            {
+                strategyHandle.ExecuteStrategy(new CombatArgs(CardData, target.GetComponent<CardData>(), currentDamage.Value));
+            }
         }
+
+        // Этот метод нужон только для монстров
+        private void Attack()
+        {
+            if(currentTarget != null) strategyHandle.ExecuteStrategy(new CombatArgs(CardData, currentTarget.GetComponent<CardData>(), currentDamage.Value));
+        }
+
         public void ChangeDamage(int value)
         {
             if(currentDamage.Value == value) return;
             currentDamage.Value = Mathf.Max(0, value);
         }
 
-        public void ChangeStrategy(IAttackStrategy newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
-
-        public override string ToString()
+        public void ChangeTarget(GameObject target)
         {
-            string message = $"Attack: было нанесено {currentDamage.Value} урона.";
-            Debug.Log(message);
-            return message;
+            currentTarget = target;
         }
+
+        public void ChangeStrategy(IAttackStrategy newStrategy) => strategyHandle.ChangeStrategy(newStrategy);
 
         public override void Dispose()
         {
-            if (CardData != null && CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator)) decorator.OnStepInteraction -= OnStep;
+            if (CardData != null && CardData.TryGetCardFeature<StepCombatDecorator>(out var decorator))
+            {
+                decorator.OnStepStartUpdate -= OnStep;
+                decorator.OnStepEndUpdate -= Attack;
+            }
             strategyHandle.Dispose();
 
             base.Dispose();
