@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1322943341272800534, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_Size.y
+      value: 2.867892
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322943341272800534, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0039459467
+      objectReference: {fileID: 0}
     - target: {fileID: 3287999758095561040, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -50,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5159407358427220356, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: m_Name
-      value: Card Monster Variant
+      value: Card Monster
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

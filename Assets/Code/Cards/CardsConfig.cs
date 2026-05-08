@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Cards
 {
-    [CreateAssetMenu(fileName = "Cards Config", menuName = "Game/Cards Config", order = 0)]
+    [CreateAssetMenu(fileName = "AllCards", menuName = "Game/Configs/AllCards", order = 0)]
     public class CardsConfig : ScriptableObject
     {
         // * Здесь информация о игроке
@@ -21,7 +21,7 @@ namespace Game.Cards
         [field: SerializeField, Space(10)] public GameObject prefabCardAttack { get; private set; }
         [field: SerializeField] public GameObject prefabCardDefence { get; private set; }
         [field: SerializeField] public GameObject prefabCardMonster { get; private set; }
-        [field: SerializeField] public GameObject prefabCardPlayer { get; private set; }
+        // [field: SerializeField] public GameObject prefabCardPlayer { get; private set; }
 
         public int CountCards => cardsAttack.Count + cardsDefence.Count + cardsMonster.Count;
 

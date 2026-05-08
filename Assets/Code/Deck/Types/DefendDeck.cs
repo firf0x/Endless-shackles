@@ -56,12 +56,15 @@ namespace Game.Deck
                 {
                     cards[key] = newCard;
                     newCard.currentDeck = this;
+                    HandDeck.Instance.UpdateAllCardsPosition();
                     
+
                     Debug.Log($"Ключ {key} существовал с null, перезаписан");
                     return true;
                 }
                 else 
                 {
+                    // добавить логику замены
                     Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
                     return false;
                 }
@@ -70,6 +73,10 @@ namespace Game.Deck
             {
                 cards.Add(key, newCard);
                 newCard.currentDeck = this;
+                newCard.DeckPosition.Value = cards[key].transform.position;
+                newCard.decorateCard.SetDragActive(false);
+                HandDeck.Instance.UpdateAllCardsPosition();
+
                 Debug.Log($"Добавлена новая карта");
                 return true;
             }

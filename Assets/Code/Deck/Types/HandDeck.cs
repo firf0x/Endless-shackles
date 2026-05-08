@@ -17,7 +17,6 @@ namespace Game.Deck
         [SerializeField] private float Spacing = 0.1f;
 
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
-        private Transform[] cardPos;
 
         private void Start()
         {
@@ -29,7 +28,6 @@ namespace Game.Deck
             
             Instance = this;
 
-            cardPos = new Transform[sizeDeck];
             cardDatas = new CardData[sizeDeck];
         }
 
@@ -49,10 +47,10 @@ namespace Game.Deck
         /// </summary>
         private Vector3 GetCardPosition(int index)
         {
-            float startX = transform.position.x - board.Left;
+            float startX = transform.position.x - board.Left + 1f;
             
             float posX = startX + (index * Spacing);
-            float posY = transform.position.y;
+            float posY = ((board.Up - board.Down) / 2f) + transform.position.y; 
             float posZ = transform.position.z;
             
             return new Vector3(posX, posY, posZ);
@@ -80,7 +78,9 @@ namespace Game.Deck
                     
                     // Устанавливаем позицию карты
                     Vector3 newPosition = GetCardPosition(insertPosition);
-                    cardDatas[insertPosition].transform.position = newPosition;
+                    if(cardDatas[insertPosition].DeckPosition == null) cardDatas[insertPosition].DeckPosition = new() { Value = newPosition };
+                    else cardDatas[insertPosition].DeckPosition.Value = newPosition;
+                    
                     insertPosition++;
                 }
             }

@@ -52,8 +52,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card Defence
       objectReference: {fileID: 0}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.<InputActions>k__BackingField
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.<PlayerCardConfig>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c90a7bdad110f304ca9cedf1faef6b65, type: 2}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.<PlayerCardComponents>k__BackingField.Parent
+      value: 
+      objectReference: {fileID: 406906183301028158}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.<PlayerCardComponents>k__BackingField.CardInfo
+      value: 
+      objectReference: {fileID: 5213860680341553949}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+--- !u!1 &406906183301028158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5159407358427220356, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+  m_PrefabInstance: {fileID: 4772824587245588666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5213860680341553949 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 749603075574240167, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+  m_PrefabInstance: {fileID: 4772824587245588666}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406906183301028158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ce545fb31aca9408ef6cfdad939530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

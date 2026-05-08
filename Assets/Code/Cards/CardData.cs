@@ -9,6 +9,8 @@ namespace Game.Cards
         public IDeck<CardData> currentDeck;
         public ICard decorateCard;
 
+        public ReactiveProperty<Vector3> DeckPosition;
+
         public void Execute(GameObject target)
         {
             decorateCard?.Use(target);

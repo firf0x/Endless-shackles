@@ -22,14 +22,17 @@ namespace Game.Cards
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
         public virtual bool isLocked => decoratedCard.isLocked;
+        public bool isDrag => decoratedCard.isDrag;
         public virtual Sprite Icon => decoratedCard.Icon;
         public virtual GameObject Parent => decoratedCard.Parent;
         public CardData CardData => decoratedCard.CardData;
+
 
         public ICard GetInnerCard() => decoratedCard;
         public virtual void Start() => decoratedCard.Start();
         public virtual void Use(GameObject target) => decoratedCard.Use(target);
         public void SetLock(bool enabled) => decoratedCard.SetLock(enabled);
+        public void SetDragActive(bool enabled) => decoratedCard.SetDragActive(enabled);
         public void Destroy() => decoratedCard.Destroy();
 
         public virtual void Dispose()

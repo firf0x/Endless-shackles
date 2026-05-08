@@ -4,19 +4,22 @@ using TMPro;
 using Game.GameSystem;
 using Game.Cards.Modifier;
 using System.Collections.Generic;
+using Game.Lib;
 
 namespace Game.Cards.UI
 {
     public class CardView : MonoBehaviour
     {
-        private CardViewModel viewModel;
+        [SerializeField] private CardViewModel viewModel;
         
         // Текстовые поля для отображения информации
+        [Header("Ссылки на текстовые поля")]
         [SerializeField] private TMP_Text healthText;
         [SerializeField] private TMP_Text damageText;
         [SerializeField] private TMP_Text stepText;
         
         // Контейнеры для включения/отключения в зависимости от наличия декораторов
+        [Header("Ссылки на контейнеры"), Space(20f)]
         [SerializeField] private GameObject healthContainer;
         [SerializeField] private GameObject damageContainer;
         [SerializeField] private GameObject stepContainer;
@@ -41,7 +44,12 @@ namespace Game.Cards.UI
             StepCombatSystem.Instance.EventUpdate += UpdateView;
             viewModel.UpdateUI += UpdateView;
         }
-        
+
+        private void Update()
+        {
+            //TODO: Сделать наведение из statemachine
+        }
+
         private void OnDisable()
         {
             if(StepCombatSystem.Instance != null) StepCombatSystem.Instance.EventUpdate -= UpdateView;

@@ -88,7 +88,7 @@ public class CursorComponent : MonoBehaviour
         if (hit.collider != null && hit.collider.gameObject.layer == 6)
         {
             CardData card;
-            // Debug.Log(!hit.collider.GetComponent<CardData>().decorateCard.isLocked);
+            
             if (hit.collider.TryGetComponent<CardData>(out card) && !hit.collider.GetComponent<CardData>().decorateCard.isLocked)
             {
                 if(card.decorateCard.Type == CardTypeEnum.Monster) return;

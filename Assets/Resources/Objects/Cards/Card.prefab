@@ -1014,8 +1014,8 @@ GameObject:
   - component: {fileID: 3287999758095561040}
   - component: {fileID: 749603075574240167}
   - component: {fileID: 6397602306664145192}
-  - component: {fileID: 7175746683227308877}
   - component: {fileID: 1322943341272800534}
+  - component: {fileID: 7175746683227308877}
   m_Layer: 6
   m_Name: Card
   m_TagString: Untagged
@@ -1057,6 +1057,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectRenderer: {fileID: 3991140729120771031}
+  DeckPosition: {x: 0, y: 0, z: 0}
 --- !u!212 &6397602306664145192
 SpriteRenderer:
   serializedVersion: 2
@@ -1116,29 +1117,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &7175746683227308877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5159407358427220356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92a8294fe2c662c4cbe54e241b3e3e63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthText: {fileID: 5953577705499591517}
-  damageText: {fileID: 5475985028026668248}
-  stepText: {fileID: 3140839731144158459}
-  healthContainer: {fileID: 712168921202896250}
-  damageContainer: {fileID: 6585514801102558323}
-  stepContainer: {fileID: 9072419520729073486}
-  modifierPrefab:
-  - {fileID: 6999638444884428321}
-  - {fileID: 1997876363440823430}
-  - {fileID: 7597054201753624350}
-  - {fileID: 7241049428206815591}
 --- !u!61 &1322943341272800534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1173,7 +1151,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.28294408}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1183,8 +1161,31 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9, y: 2.86}
+  m_Size: {x: 1.9, y: 3.4258883}
   m_EdgeRadius: 0
+--- !u!114 &7175746683227308877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5159407358427220356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92a8294fe2c662c4cbe54e241b3e3e63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthText: {fileID: 5953577705499591517}
+  damageText: {fileID: 5475985028026668248}
+  stepText: {fileID: 3140839731144158459}
+  healthContainer: {fileID: 712168921202896250}
+  damageContainer: {fileID: 6585514801102558323}
+  stepContainer: {fileID: 9072419520729073486}
+  modifierPrefab:
+  - {fileID: 6999638444884428321}
+  - {fileID: 1997876363440823430}
+  - {fileID: 7597054201753624350}
+  - {fileID: 7241049428206815591}
 --- !u!1 &5182332231891797999
 GameObject:
   m_ObjectHideFlags: 0

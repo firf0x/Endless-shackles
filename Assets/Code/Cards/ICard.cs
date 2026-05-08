@@ -11,6 +11,7 @@ namespace Game.Cards
         string CardName { get; }
         string Description { get; }
         bool isLocked { get; }
+        bool isDrag { get; }
         Sprite Icon { get; }
         GameObject Parent { get; }
         CardData CardData { get; }
@@ -18,6 +19,7 @@ namespace Game.Cards
         void Start();
         void Use(GameObject target);
         void SetLock(bool enabled);
+        void SetDragActive(bool enabled);
         void Destroy();
     }
 }
