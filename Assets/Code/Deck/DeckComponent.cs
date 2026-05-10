@@ -23,11 +23,11 @@ namespace Game.Deck
             creator = new CardCreator(config, handDeck, defenceDeck, monsterDeck);
         }
 
-        public void CreateNewCard()
+        public void CreateNewCard(Transform transform)
         {
             StepCombatSystem.Instance.StepUpdate();
             
-            ICard card = creator.Create();
+            ICard card = creator.Create(transform);
             
             card.Start();
         }

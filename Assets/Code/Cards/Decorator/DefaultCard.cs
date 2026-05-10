@@ -8,7 +8,7 @@ namespace Game.Cards
     public class DefaultCard : ICard
     {
         public CardTypeEnum Type { get; set; }
-        public CardTypeEnum IgnoreLayers { get; set; }
+        public CardTypeEnum InteractionLayers { get; set; }
         public string CardName { get; set; }
         public string Description { get; set; }
         public bool isLocked { get; set; }

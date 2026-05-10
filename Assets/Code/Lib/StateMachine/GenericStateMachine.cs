@@ -10,6 +10,7 @@ namespace Game.Lib
 	public interface GenericStateMachine<out State, in TEnum> where TEnum : Enum
 	{
 		State currentState { get; }
+		event Action<State, State> OnChangeState;
 
 		void ProcessEvent( TEnum stateType );
 	}
@@ -19,13 +20,18 @@ namespace Game.Lib
 		void OnEnter();
 		void OnUpdate();
 		void OnExit();
-		void OnClear();
 	}
 
 	public interface GenericInteractionState
 	{
 		void OnClick(InputAction.CallbackContext context);
 		void OnRealise(InputAction.CallbackContext context);
+	}
 
+	public interface GenericHoverState
+	{
+        void OnHoverEnter();
+        
+        void OnHoverExit();
 	}
 }

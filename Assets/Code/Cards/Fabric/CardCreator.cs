@@ -26,39 +26,48 @@ namespace Game.Cards.Fabric
             int p = UnityEngine.Random.Range(0, 3);
             CardTypeEnum cardType = (CardTypeEnum)(1 << p);
 
-            return CreateRandomCard(cardType);
+            return CreateRandomCard(cardType, null);
         }
 
-        public override ICard CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count));
-        public override ICard CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count));
+        public override ICard Create(Transform transform)
+        {
+            int p = UnityEngine.Random.Range(0, 3);
+            CardTypeEnum cardType = (CardTypeEnum)(1 << p);
+
+            return CreateRandomCard(cardType, transform);
+        }
+
+        public override ICard CreateAttackCard() => CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count), null);
+        public override ICard CreateDefenceCard() => CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count), null);
 
 
-        private ICard CreateRandomCard(CardTypeEnum typeEnum)
+        private ICard CreateRandomCard(CardTypeEnum typeEnum, Transform transform)
         {
             ICard card = null;
 
             switch (typeEnum)
             {
-                case CardTypeEnum.Attack: card = CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count)); break;
-                case CardTypeEnum.Defence: card = CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count)); break;
-                case CardTypeEnum.Monster: card = CreateMonsterCard(UnityEngine.Random.Range(0, config.CardsMonster.Count)); break;
+                case CardTypeEnum.Attack: card = CreateAttackCard(UnityEngine.Random.Range(0, config.CardsAttacks.Count), transform); break;
+                case CardTypeEnum.Defence: card = CreateDefenceCard(UnityEngine.Random.Range(0, config.CardsDefence.Count), transform); break;
+                case CardTypeEnum.Monster: card = CreateMonsterCard(UnityEngine.Random.Range(0, config.CardsMonster.Count), transform); break;
             }
 
             return card;
         }
 
-        private ICard CreateAttackCard(int index)
+        private ICard CreateAttackCard(int index, Transform transform)
         {
             var cardsAttack = config.CardsAttacks;
 
             CardAttack cardData = cardsAttack[index];
 
             GameObject gameObject = GameObject.Instantiate(config.prefabCardAttack);
+            if(transform != null) gameObject.transform.position = transform.position;
 
             ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
-                IgnoreLayers = cardData.IgnoreLayers,
+                InteractionLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
@@ -94,18 +103,19 @@ namespace Game.Cards.Fabric
             return attackCard;
         }
 
-        private ICard CreateDefenceCard(int index)
+        private ICard CreateDefenceCard(int index, Transform transform)
         {
             var cardsDefence = config.CardsDefence;
 
             CardDefence cardData = cardsDefence[index];
 
             GameObject gameObject = GameObject.Instantiate(config.prefabCardDefence);
+            if(transform != null) gameObject.transform.position = transform.position;
 
             ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
-                IgnoreLayers = cardData.IgnoreLayers,
+                InteractionLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,
@@ -142,18 +152,19 @@ namespace Game.Cards.Fabric
             return healthCard;
         }
 
-        private ICard CreateMonsterCard(int index)
+        private ICard CreateMonsterCard(int index, Transform transform)
         {
             var cardsMonster = config.CardsMonster;
 
             CardMonster cardData = cardsMonster[index];
 
             GameObject gameObject = GameObject.Instantiate(config.prefabCardMonster);
+            if(transform != null) gameObject.transform.position = transform.position;
 
             ICard baseCard = new DefaultCard()
             {
                 Type = cardData.Type,
-                IgnoreLayers = cardData.IgnoreLayers,
+                InteractionLayers = cardData.IgnoreLayers,
                 CardName = cardData.Name,
                 Description = cardData.Description,
                 Icon = cardData.Icon,

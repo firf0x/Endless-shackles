@@ -5,12 +5,13 @@ using Game.GameSystem;
 using Game.Cards.Modifier;
 using System.Collections.Generic;
 using Game.Lib;
+using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI
 {
     public class CardView : MonoBehaviour
     {
-        [SerializeField] private CardViewModel viewModel;
+        private CardViewModel viewModel;
         
         // Текстовые поля для отображения информации
         [Header("Ссылки на текстовые поля")]
@@ -19,17 +20,20 @@ namespace Game.Cards.UI
         [SerializeField] private TMP_Text stepText;
         
         // Контейнеры для включения/отключения в зависимости от наличия декораторов
-        [Header("Ссылки на контейнеры"), Space(20f)]
+        [Header("Ссылки на контейнеры"), Space(10f)]
         [SerializeField] private GameObject healthContainer;
         [SerializeField] private GameObject damageContainer;
         [SerializeField] private GameObject stepContainer;
         [SerializeField] private List<GameObject> modifierPrefab;
 
+        [SerializeField] private CardAnimationConfig animationConfig;
+        [SerializeField] private InputActionAsset inputAction;
+
         private Dictionary<ModifierData, ModifierView> modifierViews = new Dictionary<ModifierData, ModifierView>();
         
         private void Start()
         {
-            viewModel = new CardViewModel(GetComponent<CardData>());
+            viewModel = new CardViewModel(GetComponent<CardData>(), this, animationConfig, inputAction);
 
             InitializeView();
             UpdateView();
@@ -47,7 +51,27 @@ namespace Game.Cards.UI
 
         private void Update()
         {
-            //TODO: Сделать наведение из statemachine
+            if(viewModel != null) viewModel.StateMachineUpdate();
+        }
+
+        public void OnInteractPerformed(InputAction.CallbackContext context)
+        {
+            if(viewModel != null) viewModel.OnInteractPerformed(context);
+        }
+
+        public void OnInteractCanceled(InputAction.CallbackContext context)
+        {
+            if(viewModel != null) viewModel.OnInteractCanceled(context);
+        }
+
+        public void OnHoverEnter()
+        {
+            if(viewModel != null) viewModel.OnHoverEnter();
+        }
+
+        public void OnHoverExit()
+        {
+            if(viewModel != null) viewModel.OnHoverExit();
         }
 
         private void OnDisable()

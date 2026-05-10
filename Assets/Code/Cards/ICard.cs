@@ -7,7 +7,7 @@ namespace Game.Cards
     public interface ICard : IDisposable
     {
         CardTypeEnum Type { get; }
-        CardTypeEnum IgnoreLayers { get; }
+        CardTypeEnum InteractionLayers { get; }
         string CardName { get; }
         string Description { get; }
         bool isLocked { get; }

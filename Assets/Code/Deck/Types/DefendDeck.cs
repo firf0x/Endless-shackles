@@ -64,7 +64,7 @@ namespace Game.Deck
                 }
                 else 
                 {
-                    // добавить логику замены
+                    //TODO: добавить логику замены
                     Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
                     return false;
                 }
@@ -73,7 +73,6 @@ namespace Game.Deck
             {
                 cards.Add(key, newCard);
                 newCard.currentDeck = this;
-                newCard.DeckPosition.Value = cards[key].transform.position;
                 newCard.decorateCard.SetDragActive(false);
                 HandDeck.Instance.UpdateAllCardsPosition();
 
@@ -84,7 +83,6 @@ namespace Game.Deck
 
         public void RemoveCard(CardData deletedCard, bool updateAllPosition)
         {
-            // Ищем ключ по значению
             DefenceType? keyToRemove = null;
             foreach (var card in cards)
             {

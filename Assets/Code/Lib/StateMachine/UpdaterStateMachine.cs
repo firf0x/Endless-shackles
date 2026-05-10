@@ -10,7 +10,9 @@ namespace Game.Lib
 		private Dictionary<TEnum, State> states { get; set; } = new Dictionary<TEnum, State>();
 		protected IReadOnlyDictionary<TEnum, State> States => states;
 
-		public abstract void ProcessEvent( TEnum stateType );
+        public event Action<State, State> OnChangeState;
+
+        public abstract void ProcessEvent( TEnum stateType );
 
 		// Стандартные методы
 		public abstract void Update();
@@ -34,9 +36,13 @@ namespace Game.Lib
 
 			if ( currentState.Equals( newState ) ) return;
 
-			currentState?.OnExit();
+			var oldState = currentState;
+
+			oldState?.OnExit();
 			currentState = newState;
 			currentState?.OnEnter();
+			
+			OnChangeState?.Invoke(oldState, currentState);
 		}
 
 		public void Dispose()

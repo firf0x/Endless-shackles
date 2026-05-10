@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Game.Lib
 {
@@ -10,13 +12,15 @@ namespace Game.Lib
 		private Dictionary<TEnum, State> states { get; set; } = new Dictionary<TEnum, State>();
 		protected IReadOnlyDictionary<TEnum, State> States => states;
 
+		public event Action<State, State> OnChangeState;
+
 		public abstract void ProcessEvent( TEnum stateType );
 
 		public abstract void OnHoverEnter();
 		public abstract void OnHoverExit();
 
-		public abstract void OnInteractPerformed();
-		public abstract void OnInteractCanceled();
+		public abstract void OnInteractPerformed(InputAction.CallbackContext context);
+		public abstract void OnInteractCanceled(InputAction.CallbackContext context);
 
 		// Стандартные методы
 		public abstract void Update();
@@ -29,7 +33,7 @@ namespace Game.Lib
 
 		protected void ChangeState( State newState )
 		{
-			if ( !states.ContainsValue(newState) || newState == null ) return;
+			if ( !states.ContainsValue(newState) ) return;
 
 			if( currentState == null )
             {
@@ -40,9 +44,13 @@ namespace Game.Lib
 
 			if ( currentState.Equals( newState ) ) return;
 
-			currentState?.OnExit();
+			var oldState = currentState;
+
+			oldState?.OnExit();
 			currentState = newState;
 			currentState?.OnEnter();
+
+			OnChangeState?.Invoke(oldState, currentState);
 		}
 
 		public void Dispose()

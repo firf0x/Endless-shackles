@@ -1,4 +1,5 @@
 using Game.Cards;
+using Game.Cards.UI;
 using Game.Deck;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,21 +14,24 @@ namespace Game.Utils
         private InputAction interactAction;
         private InputAction positionAction;
 
-        // private InteractionHandler currentHandler;
-        // private InteractionHandler activeHandler;
-
         private CardData currentCard;
+        private CardData hoveredCard;
 
+        private InteractionHandler currentInteractionHandler;
+        private InteractionHandler hoveredInteractionHandler;
+
+        private Camera mainCamera;
 
         private void Awake()
         {
-            var playerActionMap = inputAction.FindActionMap("Player");
+            mainCamera = Camera.main;
 
+            var playerActionMap = inputAction.FindActionMap("Player");
             interactAction = playerActionMap.FindAction("Interact");
             positionAction = playerActionMap.FindAction("Mouse_position");
 
-            // interactAction.performed += OnInteractPerformed;
-            // interactAction.canceled += OnInteractCanceled;
+            interactAction.performed += OnInteractPerformed;
+            interactAction.canceled += OnInteractCanceled;
         }
 
         private void OnEnable()
@@ -44,115 +48,119 @@ namespace Game.Utils
 
         private void OnDestroy()
         {
-            // interactAction.performed -= OnInteractPerformed;
-            // interactAction.canceled -= OnInteractCanceled;
+            interactAction.performed -= OnInteractPerformed;
+            interactAction.canceled -= OnInteractCanceled;
         }
 
-        // private void Update()
-        // {
-        //     CheckHover();
-        // }
+        private void Update()
+        {
+            Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
+            Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, mainCamera.nearClipPlane));
 
-        // private void CheckHover()
-        // {
-        //     Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
-        //     Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 50f, interactableLayer);
+            GameObject hitObject = hit.collider != null ? hit.collider.gameObject : null;
+            CardData newHoveredCard = hit.collider != null ? hit.collider.GetComponent<CardData>() : null;
+            InteractionHandler newHoveredHandler = hitObject != null ? hitObject.GetComponent<InteractionHandler>() : null;
 
-        //     RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 25f, interactableLayer);
-            
-        //     InteractionHandler newHandler = null;
+            if (newHoveredCard != hoveredCard)
+            {
+                if (hoveredCard != null)
+                {
+                    CardView prevStateMachine = GetStateMachineFromCard(hoveredCard);
+                    prevStateMachine?.OnHoverExit();
+                }
 
-        //     foreach (var hit in hits)
-        //     {
-        //         var handler = hit.collider.GetComponent<InteractionHandler>();
-        //         if (handler != null)
-        //         {
-        //             newHandler = handler;
-        //             break;
-        //         }
-        //     }
+                hoveredCard = newHoveredCard;
+                if (hoveredCard != null)
+                {
+                    CardView newStateMachine = GetStateMachineFromCard(hoveredCard);
+                    newStateMachine?.OnHoverEnter();
+                }
+            }
 
-        //     if (currentHandler != newHandler)
-        //     {
-        //         if (currentHandler != null)
-        //         {
-        //             currentHandler.OnExit();
-        //             currentHandler.isTarget(false);
-        //         }
-        //         currentHandler = newHandler;
-        //         if (currentHandler != null)
-        //         {
-        //             currentHandler.isTarget(true);
-        //             currentHandler.OnEnter();
-        //         }
-        //     }
-        // }
+            if (newHoveredHandler != hoveredInteractionHandler)
+            {
+                hoveredInteractionHandler = newHoveredHandler;
+            }
+        }
 
-        // private void OnInteractPerformed(InputAction.CallbackContext context)
-        // {
-        //     Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
-        //     Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+        private void OnInteractPerformed(InputAction.CallbackContext context)
+        {
+            Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
+            Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, mainCamera.nearClipPlane));
 
-        //     RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 10f, interactableLayer);
+            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero, 50f, interactableLayer);
+            GameObject hitObject = hit.collider != null ? hit.collider.gameObject : null;
 
-        //     if (hit.collider != null && ((1 << hit.collider.gameObject.layer) & interactableLayer) != 0)
-        //     {
-        //         CardData card;
-                
-        //         if (hit.collider.TryGetComponent<CardData>(out card) && !hit.collider.GetComponent<CardData>().decorateCard.isLocked)
-        //         {
-        //             if(card.decorateCard.Type == CardTypeEnum.Monster) return;
-                    
-        //             currentCard = card;
-        //         }
-        //     }
+            CardData card = hitObject != null ? hitObject.GetComponent<CardData>() : null;
+            if (card != null)
+            {
+                currentCard = card;
+                CardView view = GetStateMachineFromCard(currentCard);
+                view?.OnInteractPerformed(context);
+                return;
+            }
 
-        //     if (currentHandler != null)
-        //     {       
-        //         activeHandler = currentHandler;
-        //         activeHandler.InteractionPressed(context);
-        //     }
-        // }
+            InteractionHandler handler = hitObject != null ? hitObject.GetComponent<InteractionHandler>() : null;
+            if (handler != null)
+            {
+                currentInteractionHandler = handler;
+                handler.InteractionPressed(context);
+            }
+        }
 
-        // private void OnInteractCanceled(InputAction.CallbackContext context)
-        // {
-        //     Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
-        //     Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Camera.main.nearClipPlane));
+        private void OnInteractCanceled(InputAction.CallbackContext context)
+        {
+            if (currentCard != null)
+            {
+                Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
+                Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, mainCamera.nearClipPlane));
+                RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 25f, interactableLayer);
 
-        //     RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 25f, interactableLayer);
+                foreach (RaycastHit2D hit in hits)
+                {
+                    if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
+                    {
+                        currentCard.Execute(hit.collider.gameObject);
+                        break;
+                    }
 
-        //     if (currentCard != null)
-        //     {
-        //         foreach (RaycastHit2D hit in hits)
-        //         {
-        //             if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
-        //             {
-        //                 currentCard.Execute(hit.collider.gameObject);
-        //                 break;
-        //             }
+                    if (hit.collider != null && hit.collider.gameObject.layer == 8)
+                    {
+                        string zoneTypeName = hit.collider.gameObject.name;
 
-        //             if (hit.collider != null && hit.collider.gameObject.layer == 8)
-        //             {
-        //                 string zoneTypeName = hit.collider.gameObject.name;
+                        if (currentCard.TryGetCardFeature<CustomTypeDecorator<DefenceType>>(out var decorator))
+                        {
+                            if (zoneTypeName == decorator.CustomType.ToString())
+                            {
+                                DefendDeck.Instance.AddCard(currentCard);
+                                currentCard.DeckPosition.Value = hit.collider.gameObject.transform.position;
+                                HandDeck.Instance.RemoveCard(currentCard, false);
+                                break;
+                            }
+                        }
+                    }
+                }
 
-        //                 if (currentCard.TryGetCardFeature<CustomTypeDecorator<DefenceType>>(out var decorator))
-        //                 {
-        //                     if (zoneTypeName == decorator.CustomType.ToString())
-        //                     {
-        //                         DefendDeck.Instance.AddCard(currentCard);
-        //                         HandDeck.Instance.RemoveCard(currentCard, false);
-        //                         break;
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
+                CardView view = GetStateMachineFromCard(currentCard);
+                view?.OnInteractCanceled(context);
 
-        //     if(activeHandler != null)
-        //     {
-        //         activeHandler.InteractionReleased(context);
-        //         activeHandler = null;
-        //     }
-        // }
+                currentCard = null;
+                return;
+            }
+
+            if (currentInteractionHandler != null)
+            {
+                currentInteractionHandler.InteractionReleased(context);
+                currentInteractionHandler = null;
+            }
+        }
+
+        private CardView GetStateMachineFromCard(CardData card)
+        {
+            if (card == null) return null;
+            CardView viewModel = card.GetComponent<CardView>();
+            return viewModel != null ? viewModel : null;
+        }
     }
 }

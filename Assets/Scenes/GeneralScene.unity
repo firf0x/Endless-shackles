@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &314196656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1612,7 +1612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1083605848
 SpriteRenderer:
   serializedVersion: 2
@@ -2400,8 +2400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sizeDeck: 15
   board:
-    Up: 1.3
-    Down: 1
+    Up: 2.3
+    Down: 0.6
     Left: 9.3
     Right: 8
   Spacing: 2
@@ -2811,15 +2811,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc68f656280d6c42b689390287cf4f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Game.Player::Game.Utils.InteractionHandler
-  cardAnimation:
-  - rid: 9083234977727905910
+  interaction:
+    rid: 9083235095753785454
   references:
     version: 2
     RefIds:
-    - rid: 9083234977727905910
-      type: {class: DeckStrategy, ns: Game.Utils, asm: Game.Player}
+    - rid: 9083235095753785454
+      type: {class: InteractionSpawnStrategy, ns: Game.Utils, asm: Game.Player}
       data:
-        target: 0
         deck: {fileID: 1632894973}
 --- !u!1 &1649064995
 GameObject:

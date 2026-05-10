@@ -78,8 +78,7 @@ namespace Game.Deck
                     
                     // Устанавливаем позицию карты
                     Vector3 newPosition = GetCardPosition(insertPosition);
-                    if(cardDatas[insertPosition].DeckPosition == null) cardDatas[insertPosition].DeckPosition = new() { Value = newPosition };
-                    else cardDatas[insertPosition].DeckPosition.Value = newPosition;
+                    cardDatas[insertPosition].DeckPosition.Value = newPosition;
                     
                     insertPosition++;
                 }

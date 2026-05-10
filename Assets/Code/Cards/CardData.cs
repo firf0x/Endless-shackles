@@ -9,7 +9,7 @@ namespace Game.Cards
         public IDeck<CardData> currentDeck;
         public ICard decorateCard;
 
-        public ReactiveProperty<Vector3> DeckPosition;
+        public ReactiveProperty<Vector3> DeckPosition = new ReactiveProperty<Vector3>();
 
         public void Execute(GameObject target)
         {

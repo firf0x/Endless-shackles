@@ -53,13 +53,37 @@ PrefabInstance:
       value: Card Defence
       objectReference: {fileID: 0}
     - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: PlayerCardConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: c90a7bdad110f304ca9cedf1faef6b65, type: 2}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.InputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.PlayerCardConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: c90a7bdad110f304ca9cedf1faef6b65, type: 2}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.PlayerCardComponents.Parent
+      value: 
+      objectReference: {fileID: 406906183301028158}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: viewModel.<InputActions>k__BackingField
       value: 
       objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
     - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.PlayerCardComponents.CardInfo
+      value: 
+      objectReference: {fileID: 5213860680341553949}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: viewModel.<PlayerCardConfig>k__BackingField
       value: 
       objectReference: {fileID: 11400000, guid: c90a7bdad110f304ca9cedf1faef6b65, type: 2}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.PlayerCardComponents.InputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
     - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: viewModel.<PlayerCardComponents>k__BackingField.Parent
       value: 
@@ -68,6 +92,10 @@ PrefabInstance:
       propertyPath: viewModel.<PlayerCardComponents>k__BackingField.CardInfo
       value: 
       objectReference: {fileID: 5213860680341553949}
+    - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: viewModel.<PlayerCardComponents>k__BackingField.InputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

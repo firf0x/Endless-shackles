@@ -18,7 +18,7 @@ namespace Game.Cards
         }
 
         public virtual CardTypeEnum Type => decoratedCard.Type;
-        public virtual CardTypeEnum IgnoreLayers => decoratedCard.IgnoreLayers;
+        public virtual CardTypeEnum InteractionLayers => decoratedCard.InteractionLayers;
         public virtual string CardName => decoratedCard.CardName;
         public virtual string Description => decoratedCard.Description;
         public virtual bool isLocked => decoratedCard.isLocked;
