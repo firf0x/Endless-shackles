@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Game.Cards.Modifier;
+using Game.Cards.UI;
 using Game.Lib;
 using UnityEngine;
 
@@ -17,12 +19,16 @@ namespace Game.Cards
         public GameObject Parent { get; set; }
         public CardData CardData { get; set; }
 
+        public event Action OnDestroy;
 
         public void Start() { }
         public void Use(GameObject target) { }
         public void SetLock(bool enabled) => isLocked = enabled;
         public void SetDragActive(bool enabled) => isDrag = enabled;
-        public void Destroy() => CardData.CardDestroy(true);
+        public void Destroy()
+        {
+            OnDestroy?.Invoke();
+        }
 
         public void Dispose()
         {

@@ -35,6 +35,7 @@ namespace Game.Lib
             if( HealPoints.Value <= 0 )
             {
                 OnDead?.Invoke();
+                Debug.Log("Отправлен");
             }
         }
 

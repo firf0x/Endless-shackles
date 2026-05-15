@@ -27,6 +27,11 @@ namespace Game.Cards
         public virtual GameObject Parent => decoratedCard.Parent;
         public CardData CardData => decoratedCard.CardData;
 
+        public event Action OnDestroy
+        {
+            add => GetInnerCard().OnDestroy += value;
+            remove => GetInnerCard().OnDestroy -= value;
+        }
 
         public ICard GetInnerCard() => decoratedCard;
         public virtual void Start() => decoratedCard.Start();

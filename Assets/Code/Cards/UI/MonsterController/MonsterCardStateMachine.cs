@@ -15,9 +15,12 @@ namespace Game.Cards.UI
             this.components = components;
             this.config = config;
 
+            components.CardInfo.decorateCard.OnDestroy += OnDead;
+
             AddState(MonsterCardStateEnum.Idle, new MonsterCardIdle(components, config));
             AddState(MonsterCardStateEnum.Hover, new MonsterCardHover(components, config));
             AddState(MonsterCardStateEnum.Return, new MonsterCardReturn(components, config));
+            AddState(MonsterCardStateEnum.Dead, new MonsterCardDead(components, config));
             
             // ChangeState(States[MonsterCardStateEnum.Return]);
         }
@@ -58,6 +61,12 @@ namespace Game.Cards.UI
         public override void OnInteractCanceled(InputAction.CallbackContext context)
         {
             currentState?.OnRealise(context);
+        }
+
+        private void OnDead()
+        {
+            ProcessEvent(MonsterCardStateEnum.Dead);
+            components.CardInfo.decorateCard.OnDestroy -= OnDead;
         }
     }
 }

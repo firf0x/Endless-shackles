@@ -20,10 +20,9 @@ namespace Game.Cards.Strategy
             var targetData = args.Target;
             if (targetData.TryGetCardFeature<HealthDecorator>(out var feature))
             {
+                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.decorateCard.Destroy(); // TODO: замена
+                
                 // Удаление карты атаки при нанесении урона монстру
-                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
-                    args.Parent.decorateCard.Destroy();
-
                 feature.TakeDamage(args.Damage);
                 StepCombatSystem.Instance.StepUpdate();
             }

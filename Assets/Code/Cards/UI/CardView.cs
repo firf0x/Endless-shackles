@@ -28,7 +28,6 @@ namespace Game.Cards.UI
 
         [SerializeField] private CardAnimationConfig animationConfig;
         [SerializeField] private InputActionAsset inputAction;
-
         private Dictionary<ModifierData, ModifierView> modifierViews = new Dictionary<ModifierData, ModifierView>();
         
         private void Start()

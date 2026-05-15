@@ -19,6 +19,8 @@ namespace Game.Cards.UI.State
             startLocalPosition = renderTransform.localPosition;
             startLocalRotation = renderTransform.localRotation;
 
+            components.CardInfo.currentDeck.OnChanged += EarlyChangeState;
+
             StartVerticalMovement();
             StartRotationMovement();
         }
@@ -33,9 +35,16 @@ namespace Game.Cards.UI.State
             components.StateMachine.ProcessEvent(MonsterCardStateEnum.Hover);
         }
 
+        public void EarlyChangeState()
+        {
+            components.StateMachine.ProcessEvent(MonsterCardStateEnum.Return);
+        }
+
         public override void OnExit()
         {
             KillCurrentTweens();
+
+            components.CardInfo.currentDeck.OnChanged -= EarlyChangeState;
 
             renderTransform.localPosition = startLocalPosition;
             renderTransform.localRotation = startLocalRotation;

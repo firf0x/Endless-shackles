@@ -15,10 +15,15 @@ namespace Game.Cards.UI
             this.components = components;
             this.config = config;
 
+            components.CardInfo.decorateCard.OnDestroy += OnDead;
+
             AddState(HandCardStateEnum.Idle, new HandCardIdle(components, config));
             AddState(HandCardStateEnum.Hover, new HandCardHover(components, config));
             AddState(HandCardStateEnum.Drag, new HandCardDrag(components, config));
+            // State Hit
+            // State Damage
             AddState(HandCardStateEnum.Return, new HandCardReturn(components, config));
+            AddState(HandCardStateEnum.Dead, new HandCardDead(components, config));
             
             ChangeState(States[HandCardStateEnum.Return]);
         }
@@ -59,6 +64,12 @@ namespace Game.Cards.UI
         public override void OnInteractCanceled(InputAction.CallbackContext context)
         {
             currentState?.OnRealise(context);
+        }
+
+        private void OnDead()
+        {
+            ProcessEvent(HandCardStateEnum.Dead);
+            components.CardInfo.decorateCard.OnDestroy -= OnDead;
         }
     }
 }

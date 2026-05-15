@@ -8,14 +8,14 @@ namespace Game.Cards
         public Health healthSystem { get; private set; }
         
         /// <summary>
-        /// Переменная отвечающая за то можно ли выбирать эту карту
+        /// Переменная отвечающая за то можно ли выбирать эту карту противниками
         /// </summary>
         public bool isTarget = true;
 
         public HealthDecorator(int hp, ICard card) : base(card)
         {
             this.healthSystem = new Health(hp);
-            this.healthSystem.OnDead += OnDead;
+            healthSystem.OnDead += OnDead;
         }
 
         public void TakeDamage(int amount)
@@ -26,6 +26,12 @@ namespace Game.Cards
             }
         }
 
+        public void OnDead()
+        {
+            Destroy();
+            Debug.Log("Уничножен окончательно");
+        }
+
         public void Heal(int amount)
         {
             if(!isLocked)
@@ -34,16 +40,9 @@ namespace Game.Cards
             }
         }
 
-        public void OnDead() => Destroy();
-
         public override void Dispose()
         {
-
-            if (healthSystem != null)
-            {
-                healthSystem.OnDead -= OnDead;
-            }
-         
+            healthSystem.OnDead -= OnDead;
             base.Dispose();
         }
     }

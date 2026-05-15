@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Cards;
@@ -19,6 +20,8 @@ namespace Game.Deck
                 return cards.Values.ToArray();
             }
         }
+
+        public event Action OnChanged;
 
         private void Awake()
         {
@@ -57,7 +60,6 @@ namespace Game.Deck
                     cards[key] = newCard;
                     newCard.currentDeck = this;
                     HandDeck.Instance.UpdateAllCardsPosition();
-                    
 
                     Debug.Log($"Ключ {key} существовал с null, перезаписан");
                     return true;
@@ -77,6 +79,7 @@ namespace Game.Deck
                 HandDeck.Instance.UpdateAllCardsPosition();
 
                 Debug.Log($"Добавлена новая карта");
+                OnChanged?.Invoke();
                 return true;
             }
         }

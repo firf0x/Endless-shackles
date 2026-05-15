@@ -19,6 +19,10 @@ namespace Game.Cards.UI.State
                 {
                     components.StateMachine.ProcessEvent(HandCardStateEnum.Idle);
                 });
+
+            _rotateTween = components.RenderObject.transform
+                .DOLocalRotate(Vector3.zero, config.ReturnAnimationDuration, RotateMode.Fast);
+
         }
 
         public override void OnExit()

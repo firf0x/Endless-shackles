@@ -21,6 +21,11 @@ MonoBehaviour:
   <IdleRotationAngle>k__BackingField: 1
   <IdleRotationMinDuration>k__BackingField: 5
   <IdleRotationMaxDuration>k__BackingField: 5.2
-  <FollowSmoothTime>k__BackingField: 0.2
-  <ReturnAnimationDuration>k__BackingField: 1.5
-  <ReturnEase>k__BackingField: 6
+  <DragFollowSmoothTime>k__BackingField: 0.2
+  <DragRotationAnimationDuration>k__BackingField: 0
+  <DragRotationAngle>k__BackingField: 60
+  <DragRotationFactor>k__BackingField: 2
+  <DragScale>k__BackingField: 1.2
+  <DragScaleAnimationDuration>k__BackingField: 0.3
+  <ReturnAnimationDuration>k__BackingField: 1.2
+  <ReturnEase>k__BackingField: 16

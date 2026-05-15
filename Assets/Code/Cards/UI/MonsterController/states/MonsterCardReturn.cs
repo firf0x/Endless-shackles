@@ -12,9 +12,6 @@ namespace Game.Cards.UI.State
 
         public override void OnEnter()
         {
-            Debug.Log("Start moveTween");
-            Debug.Log($"{components.CardInfo}");
-            Debug.Log($"{components.CardInfo.DeckPosition == null}");
             _moveTween = components.Parent.transform
                 .DOLocalMove(components.CardInfo.DeckPosition.Value, config.ReturnAnimationDuration)
                 .SetEase(config.ReturnEase)

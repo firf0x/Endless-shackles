@@ -15,6 +15,7 @@ namespace Game.Cards
         Sprite Icon { get; }
         GameObject Parent { get; }
         CardData CardData { get; }
+        event Action OnDestroy;
 
         void Start();
         void Use(GameObject target);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game.Cards;
@@ -17,6 +18,8 @@ namespace Game.Deck
         [Tooltip("Отступ между картами при распределении")]
         [SerializeField] private float Spacing = 0.1f;
         [SerializeField] private DeckBoard board;
+
+        public event Action OnChanged;
 
         private void Awake()
         {
@@ -59,6 +62,7 @@ namespace Game.Deck
                 newCard.currentDeck = this;
                 
                 UpdateAllCardsPosition();
+                OnChanged?.Invoke();
                 return true;
             }
             else
@@ -80,6 +84,7 @@ namespace Game.Deck
             }
 
             if(updateAllPosition) UpdateAllCardsPosition();
+            OnChanged?.Invoke();
         }
 
         /// <summary>

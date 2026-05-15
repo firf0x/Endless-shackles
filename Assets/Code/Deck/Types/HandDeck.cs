@@ -17,6 +17,7 @@ namespace Game.Deck
         [SerializeField] private float Spacing = 0.1f;
 
         [field:SerializeField, ReadOnly] public CardData[] cardDatas { get; private set; } // Только карты защиты
+        public event Action OnChanged;
 
         private void Start()
         {
@@ -79,7 +80,6 @@ namespace Game.Deck
                     // Устанавливаем позицию карты
                     Vector3 newPosition = GetCardPosition(insertPosition);
                     cardDatas[insertPosition].DeckPosition.Value = newPosition;
-                    
                     insertPosition++;
                 }
             }
@@ -88,7 +88,7 @@ namespace Game.Deck
             {
                 cardDatas[i] = null;
             }
-            
+
             // Debug.Log($"Сдвиг завершён. Активных карт: {insertPosition}");
         }
 
@@ -133,6 +133,7 @@ namespace Game.Deck
                 newCard.currentDeck = this;
 
                 UpdateAllCardsPosition();
+                OnChanged?.Invoke();
                 return true;
             }
             else
@@ -156,7 +157,8 @@ namespace Game.Deck
                 }
             }
 
-            if(updateAllPosition) UpdateAllCardsPosition();
+            UpdateAllCardsPosition();
+            OnChanged?.Invoke();
         }
         
         /// <summary>
