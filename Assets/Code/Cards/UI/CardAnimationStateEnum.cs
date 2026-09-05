@@ -1,9 +1,11 @@
 namespace Game.Cards.UI
 {
-    public enum MonsterCardStateEnum
+    public enum CardAnimationStateEnum
     {
+        Spawn,
         Idle,
         Hover,
+        Drag,
         Return,
         Dead
     }

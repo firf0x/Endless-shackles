@@ -5,27 +5,27 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI
 {
-    public class MonsterCardStateMachine : InteractionStateMachine<MonsterCardState, MonsterCardStateEnum>
+    public class MonsterCardStateMachine : InteractionStateMachine<AnimationCardState, CardAnimationStateEnum>
     {
-        private CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> components;
+        private CardAnimationComponents components;
         private CardAnimationConfig config;
 
-        public MonsterCardStateMachine(CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> components, CardAnimationConfig config)
+        public MonsterCardStateMachine(CardAnimationComponents components, CardAnimationConfig config)
         {
             this.components = components;
             this.config = config;
 
             components.CardInfo.decorateCard.OnDestroy += OnDead;
 
-            AddState(MonsterCardStateEnum.Idle, new MonsterCardIdle(components, config));
-            AddState(MonsterCardStateEnum.Hover, new MonsterCardHover(components, config));
-            AddState(MonsterCardStateEnum.Return, new MonsterCardReturn(components, config));
-            AddState(MonsterCardStateEnum.Dead, new MonsterCardDead(components, config));
+            AddState(CardAnimationStateEnum.Idle, new MonsterCardIdle(components, config));
+            AddState(CardAnimationStateEnum.Hover, new MonsterCardHover(components, config));
+            AddState(CardAnimationStateEnum.Return, new MonsterCardReturn(components, config));
+            AddState(CardAnimationStateEnum.Dead, new MonsterCardDead(components, config));
             
             // ChangeState(States[MonsterCardStateEnum.Return]);
         }
 
-        public override void ProcessEvent(MonsterCardStateEnum stateType)
+        public override void ProcessEvent(CardAnimationStateEnum stateType)
         {
             if( States.TryGetValue(stateType, out var state) )
             {
@@ -65,7 +65,7 @@ namespace Game.Cards.UI
 
         private void OnDead()
         {
-            ProcessEvent(MonsterCardStateEnum.Dead);
+            ProcessEvent(CardAnimationStateEnum.Dead);
             components.CardInfo.decorateCard.OnDestroy -= OnDead;
         }
     }

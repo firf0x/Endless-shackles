@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Game.Cards.UI.State
 {
-    public class MonsterCardReturn : MonsterCardState
+    public class MonsterCardReturn : AnimationCardState
     {
         private Tween _moveTween;
         private Tween _rotateTween;
 
-        public MonsterCardReturn(CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public MonsterCardReturn(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnEnter()
         {
@@ -17,7 +17,7 @@ namespace Game.Cards.UI.State
                 .SetEase(config.ReturnEase)
                 .OnComplete(() =>
                 {
-                    components.StateMachine.ProcessEvent(MonsterCardStateEnum.Idle);
+                    components.StateMachine.ProcessEvent(CardAnimationStateEnum.Idle);
                 });
         }
 

@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 namespace Game.Cards.UI
 {
     [Serializable]
-    public sealed class CardAnimationComponents<TState, TEnum> where TState : GenericState where TEnum : Enum
+    public sealed class CardAnimationComponents
     {
         public GameObject Parent;
         public GameObject RenderObject;
         public CardData CardInfo;
         public CardView View;
-        public InteractionStateMachine<TState, TEnum> StateMachine;
+        public InteractionStateMachine<AnimationCardState, CardAnimationStateEnum> StateMachine;
         public InputActionAsset InputAction;
     }
 }

@@ -66,14 +66,14 @@ namespace Game.Utils
             {
                 if (hoveredCard != null)
                 {
-                    CardView prevStateMachine = GetStateMachineFromCard(hoveredCard);
+                    CardView prevStateMachine = GetStateViewFromCard(hoveredCard);
                     prevStateMachine?.OnHoverExit();
                 }
 
                 hoveredCard = newHoveredCard;
                 if (hoveredCard != null)
                 {
-                    CardView newStateMachine = GetStateMachineFromCard(hoveredCard);
+                    CardView newStateMachine = GetStateViewFromCard(hoveredCard);
                     newStateMachine?.OnHoverEnter();
                 }
             }
@@ -96,7 +96,8 @@ namespace Game.Utils
             if (card != null)
             {
                 currentCard = card;
-                CardView view = GetStateMachineFromCard(currentCard);
+                CardView view = GetStateViewFromCard(currentCard);
+                
                 view?.OnInteractPerformed(context);
                 return;
             }
@@ -142,7 +143,7 @@ namespace Game.Utils
                     }
                 }
 
-                CardView view = GetStateMachineFromCard(currentCard);
+                CardView view = GetStateViewFromCard(currentCard);
                 view?.OnInteractCanceled(context);
 
                 currentCard = null;
@@ -156,7 +157,7 @@ namespace Game.Utils
             }
         }
 
-        private CardView GetStateMachineFromCard(CardData card)
+        private CardView GetStateViewFromCard(CardData card)
         {
             if (card == null) return null;
             CardView viewModel = card.GetComponent<CardView>();

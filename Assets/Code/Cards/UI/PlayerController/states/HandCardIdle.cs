@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Cards.UI.State
 {
-    public class HandCardIdle : HandCardState
+    public class HandCardIdle : AnimationCardState
     {
         private Transform renderTransform;
         private Vector3 startLocalPosition;
@@ -11,7 +11,7 @@ namespace Game.Cards.UI.State
         private Tween currentVerticalTween;
         private Tween currentRotationTween;
 
-        public HandCardIdle(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public HandCardIdle(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnEnter()
         {
@@ -32,12 +32,12 @@ namespace Game.Cards.UI.State
             // renderTransform.DOLocalMove(startLocalPosition, 0.2f).SetEase(Ease.OutQuad);
             // renderTransform.DOLocalRotateQuaternion(startLocalRotation, 0.2f).SetEase(Ease.OutQuad);
 
-            components.StateMachine.ProcessEvent(HandCardStateEnum.Hover);
+            components.StateMachine.ProcessEvent(CardAnimationStateEnum.Hover);
         }
 
         public void EarlyChangeState()
         {
-            components.StateMachine.ProcessEvent(HandCardStateEnum.Return);
+            components.StateMachine.ProcessEvent(CardAnimationStateEnum.Return);
         }
 
         public override void OnExit()

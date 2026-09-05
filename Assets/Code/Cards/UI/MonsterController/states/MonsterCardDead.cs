@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI.State
 {
-    public class MonsterCardDead : MonsterCardState
+    public class MonsterCardDead : AnimationCardState
     {
         private SpriteRenderer renderer;
         private MaterialPropertyBlock propertyBlock;
         private float burnProgress = 0f;
         private float animationDuration = 1.0f;
-        public MonsterCardDead(CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> components, CardAnimationConfig config) : base(components, config)
+        public MonsterCardDead(CardAnimationComponents components, CardAnimationConfig config) : base(components, config)
         {
             renderer = components.CardInfo.transform.GetChild(0).GetComponent<SpriteRenderer>();
 

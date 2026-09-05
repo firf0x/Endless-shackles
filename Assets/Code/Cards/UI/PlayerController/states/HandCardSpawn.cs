@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI.State
 {
-    public class HandCardSpawn : HandCardState
+    public class HandCardSpawn : AnimationCardState
     {
         private GameObject backFace;
         private GameObject forwardFace;
 
-        public HandCardSpawn(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public HandCardSpawn(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnEnter()
         {

@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI.State
 {
-    public class MonsterCardHover : MonsterCardState
+    public class MonsterCardHover : AnimationCardState
     {
-        public MonsterCardHover(CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public MonsterCardHover(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnHoverExit()
         {
-            components.StateMachine.ProcessEvent(MonsterCardStateEnum.Idle);
+            components.StateMachine.ProcessEvent(CardAnimationStateEnum.Idle);
         }
     }
 }

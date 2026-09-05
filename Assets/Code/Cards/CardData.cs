@@ -103,6 +103,7 @@ namespace Game.Cards
 
         public void CardDestroy(bool updateAllPosition)
         {
+            Debug.Log($"Атака Уничтожение карты {decorateCard.CardName}");
             BreakDecoratorChain(decorateCard);
             currentDeck.RemoveCard(this, updateAllPosition);
             // decorateCard.Parent = null;

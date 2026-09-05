@@ -3,12 +3,12 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI
 {
-    public abstract class HandCardState : GenericState, GenericInteractionState, GenericHoverState
+    public abstract class AnimationCardState : ICardState
     {
-        protected CardAnimationComponents<HandCardState, HandCardStateEnum> components;
+        protected CardAnimationComponents components;
         protected CardAnimationConfig config;
 
-        public HandCardState(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config)
+        public AnimationCardState(CardAnimationComponents components, CardAnimationConfig config)
         {
             this.components = components;
             this.config = config;
