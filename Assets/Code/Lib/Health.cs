@@ -6,13 +6,10 @@ namespace Game.Lib
     [Serializable]
     public class Health : IDamageble
     {
-        //! ВЫЗЫВАТЬ МЕТОДЫ НА ПРЯМУЮ СТРОГО ЗАПРЕЩАЕТСЯ!
-
-        // PUBLIC
         public ReactiveProperty<int> HealPoints { get; private set; } = new();
         public event Action OnDead;
-     
-        // PRIVATE
+        public bool isDead { get; private set; } = false;
+
         private int maxValue;
 
         public Health(int healthValue)
@@ -34,6 +31,7 @@ namespace Game.Lib
             
             if( HealPoints.Value <= 0 )
             {
+                isDead = true;
                 OnDead?.Invoke();
                 Debug.Log("Отправлен");
             }
@@ -50,6 +48,7 @@ namespace Game.Lib
         public void Reset()
         {
             HealPoints.Value = maxValue;
+            isDead = false;
         }
     }
 

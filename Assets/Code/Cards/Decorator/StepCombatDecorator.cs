@@ -33,7 +33,7 @@ namespace Game.Cards
             //     return;
             // }
             
-            if(!IsActive || decoratedCard == null || isLocked) return;
+            if(!IsActive || decoratedCard == null || CardData.GetCardFeature<HealthDecorator>().healthSystem.isDead || isLocked) return;
             
             currentStep.Value--;
 
@@ -48,7 +48,7 @@ namespace Game.Cards
         }
 
         /// <summary>
-        /// Метод позволяющий отключать счётчик ходов.
+        /// Метод отключающий счётчик ходов.
         /// </summary>
         /// <param name="isActive">Если задать true, то тогда будет false</param>
         public void Stop(bool isActive) => IsActive = !isActive;
