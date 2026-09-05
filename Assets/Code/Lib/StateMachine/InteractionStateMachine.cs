@@ -8,7 +8,7 @@ namespace Game.Lib
 	public abstract class InteractionStateMachine<State, TEnum> : IDisposable, GenericStateMachine<State, TEnum> where State : GenericState where TEnum : Enum
 	{
 		public State currentState { get; protected set; }
-
+		public TEnum currentType { get; protected set; }
 		private Dictionary<TEnum, State> states { get; set; } = new Dictionary<TEnum, State>();
 		protected IReadOnlyDictionary<TEnum, State> States => states;
 
@@ -31,13 +31,14 @@ namespace Game.Lib
 			states.Add(@enum, state);
 		}
 
-		protected void ChangeState( State newState )
+		protected void ChangeState( State newState, TEnum type )
 		{
 			if ( !states.ContainsValue(newState) ) return;
 
 			if( currentState == null )
             {
 				currentState = newState;
+				currentType = type;
 				currentState?.OnEnter();
 				return;
             }
@@ -48,6 +49,7 @@ namespace Game.Lib
 
 			oldState?.OnExit();
 			currentState = newState;
+			currentType = type;
 			currentState?.OnEnter();
 
 			OnChangeState?.Invoke(oldState, currentState);

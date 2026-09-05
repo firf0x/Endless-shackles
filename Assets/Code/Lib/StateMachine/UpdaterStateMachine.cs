@@ -6,6 +6,7 @@ namespace Game.Lib
 	public abstract class UpdaterStateMachine<State, TEnum> : IDisposable, GenericStateMachine<State, TEnum> where State : GenericState where TEnum : Enum
 	{
 		public State currentState { get; protected set; }
+		public TEnum currentType { get; protected set; }
 
 		private Dictionary<TEnum, State> states { get; set; } = new Dictionary<TEnum, State>();
 		protected IReadOnlyDictionary<TEnum, State> States => states;

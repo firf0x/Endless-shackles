@@ -7,9 +7,10 @@ using UnityEngine.InputSystem;
 
 namespace Game.Lib
 {
-	public interface GenericStateMachine<out State, in TEnum> where TEnum : Enum
+	public interface GenericStateMachine<out State, TEnum> where TEnum : Enum
 	{
 		State currentState { get; }
+		TEnum currentType { get; }
 		event Action<State, State> OnChangeState;
 
 		void ProcessEvent( TEnum stateType );

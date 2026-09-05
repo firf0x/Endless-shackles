@@ -22,14 +22,14 @@ namespace Game.Cards.UI
             AddState(CardAnimationStateEnum.Return, new MonsterCardReturn(components, config));
             AddState(CardAnimationStateEnum.Dead, new MonsterCardDead(components, config));
             
-            // ChangeState(States[MonsterCardStateEnum.Return]);
+            ChangeState(States[CardAnimationStateEnum.Return], CardAnimationStateEnum.Return);
         }
 
         public override void ProcessEvent(CardAnimationStateEnum stateType)
         {
             if( States.TryGetValue(stateType, out var state) )
             {
-                ChangeState(state);
+                ChangeState(state, stateType);
             }
         }
 

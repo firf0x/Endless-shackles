@@ -7,6 +7,8 @@ namespace Game.Cards.UI
         Hover,
         Drag,
         Return,
-        Dead
+        Dead,
+
+        Unknown
     }
 }

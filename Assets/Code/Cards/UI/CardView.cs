@@ -5,13 +5,16 @@ using Game.GameSystem;
 using Game.Cards.Modifier;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEditor;
 
 namespace Game.Cards.UI
 {
     public class CardView : MonoBehaviour
     {
-        private CardViewModel viewModel;
+        public CardAnimationStateEnum currentState => viewModel.animationStateMachine.currentType;
         
+        private CardViewModel viewModel;
+
         // Текстовые поля для отображения информации
         [Header("Ссылки на текстовые поля")]
         [SerializeField] private TMP_Text healthText;
@@ -28,7 +31,7 @@ namespace Game.Cards.UI
         [SerializeField] private CardAnimationConfig animationConfig;
         [SerializeField] private InputActionAsset inputAction;
         private Dictionary<ModifierData, ModifierView> modifierViews = new Dictionary<ModifierData, ModifierView>();
-        
+
         private void Start()
         {
             viewModel = new CardViewModel(GetComponent<CardData>(), this, animationConfig, inputAction);
@@ -50,6 +53,19 @@ namespace Game.Cards.UI
         private void Update()
         {
             if(viewModel != null) viewModel.StateMachineUpdate();
+        }
+
+        private void OnDrawGizmos()
+        {
+#if UNITY_EDITOR
+            string reac = currentState.ToString();
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.white;
+            style.fontSize = 14;
+
+            Vector3 vector = new Vector3(1f, 1.5f, 0);
+            Handles.Label(transform.position + vector, reac, style);
+#endif
         }
 
         public void OnInteractPerformed(InputAction.CallbackContext context)

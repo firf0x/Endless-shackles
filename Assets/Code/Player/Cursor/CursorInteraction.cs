@@ -66,14 +66,15 @@ namespace Game.Utils
             {
                 if (hoveredCard != null)
                 {
-                    CardView prevStateMachine = GetStateViewFromCard(hoveredCard);
+                    CardView prevStateMachine = GetViewFromCard(hoveredCard);
+
                     prevStateMachine?.OnHoverExit();
                 }
 
                 hoveredCard = newHoveredCard;
                 if (hoveredCard != null)
                 {
-                    CardView newStateMachine = GetStateViewFromCard(hoveredCard);
+                    CardView newStateMachine = GetViewFromCard(hoveredCard);
                     newStateMachine?.OnHoverEnter();
                 }
             }
@@ -95,8 +96,9 @@ namespace Game.Utils
             CardData card = hitObject != null ? hitObject.GetComponent<CardData>() : null;
             if (card != null)
             {
+                if(GetStateTypeFromCard(card) == CardAnimationStateEnum.Return) return;
                 currentCard = card;
-                CardView view = GetStateViewFromCard(currentCard);
+                CardView view = GetViewFromCard(currentCard);
                 
                 view?.OnInteractPerformed(context);
                 return;
@@ -143,7 +145,7 @@ namespace Game.Utils
                     }
                 }
 
-                CardView view = GetStateViewFromCard(currentCard);
+                CardView view = GetViewFromCard(currentCard);
                 view?.OnInteractCanceled(context);
 
                 currentCard = null;
@@ -157,11 +159,19 @@ namespace Game.Utils
             }
         }
 
-        private CardView GetStateViewFromCard(CardData card)
+
+        private CardView GetViewFromCard(CardData card)
         {
             if (card == null) return null;
             CardView viewModel = card.GetComponent<CardView>();
             return viewModel != null ? viewModel : null;
+        }
+
+        private CardAnimationStateEnum GetStateTypeFromCard(CardData card)
+        {
+            if (card == null) return CardAnimationStateEnum.Unknown;
+            CardView viewModel = card.GetComponent<CardView>();
+            return viewModel.currentState;
         }
     }
 }

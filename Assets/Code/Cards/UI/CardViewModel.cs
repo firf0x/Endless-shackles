@@ -9,14 +9,17 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI
 {
-    public class CardViewModel : IDisposable
+    public sealed class CardViewModel : IDisposable
     {
         private CardData model;
 
         private bool isHovered;
         public bool IsHovered => isHovered;
 
+        public InteractionStateMachine<AnimationCardState, CardAnimationStateEnum> animationStateMachine { get; private set; }
+
         // Text info
+        public string Name => model.decorateCard.CardName;
         public string Health { get; private set; }
         public string Damage { get; private set; }
         public string Step { get; private set; }
@@ -44,6 +47,7 @@ namespace Game.Cards.UI
             else AnimationComponents.StateMachine = new HandCardStateMachine(AnimationComponents, animationConfig);
 
             AnimationComponents.StateMachine.ProcessEvent( CardAnimationStateEnum.Return );
+            animationStateMachine = AnimationComponents.StateMachine;
 
             AnimationComponents.StateMachine.OnChangeState += OnStateChanged;   
 
@@ -76,9 +80,6 @@ namespace Game.Cards.UI
             }
         }
 
-
-
-        public string Name => model.decorateCard.CardName;
         private void OnModelHPChanged(int value)
         {
             Health = value.ToString();

@@ -26,11 +26,7 @@ namespace Game.Cards
             }
         }
 
-        public void OnDead()
-        {
-            Destroy();
-            Debug.Log("Уничножен окончательно");
-        }
+        public void OnDead() => Destroy();
 
         public void Heal(int amount)
         {

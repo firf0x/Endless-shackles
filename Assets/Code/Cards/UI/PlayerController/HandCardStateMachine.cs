@@ -20,19 +20,17 @@ namespace Game.Cards.UI
             AddState(CardAnimationStateEnum.Idle, new HandCardIdle(components, config));
             AddState(CardAnimationStateEnum.Hover, new HandCardHover(components, config));
             AddState(CardAnimationStateEnum.Drag, new HandCardDrag(components, config));
-            // State Hit
-            // State Damage
             AddState(CardAnimationStateEnum.Return, new HandCardReturn(components, config));
             AddState(CardAnimationStateEnum.Dead, new HandCardDead(components, config));
             
-            ChangeState(States[CardAnimationStateEnum.Return]);
+            ChangeState(States[CardAnimationStateEnum.Return], CardAnimationStateEnum.Return);
         }
 
         public override void ProcessEvent(CardAnimationStateEnum stateType)
         {
             if( States.TryGetValue(stateType, out var state) )
             {
-                ChangeState(state);
+                ChangeState(state, stateType);
             }
         }
 

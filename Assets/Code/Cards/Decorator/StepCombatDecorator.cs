@@ -27,12 +27,6 @@ namespace Game.Cards
 
         public void OnUpdate()
         {
-            // if(isSpawn)
-            // {
-            //     isSpawn = false;
-            //     return;
-            // }
-            
             if(!IsActive || decoratedCard == null || CardData.GetCardFeature<HealthDecorator>().healthSystem.isDead || isLocked) return;
             
             currentStep.Value--;
