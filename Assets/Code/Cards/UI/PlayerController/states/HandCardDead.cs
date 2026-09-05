@@ -19,9 +19,6 @@ namespace Game.Cards.UI.State
             BoardRender = components.RenderObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
             imageRender = components.RenderObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
 
-            Debug.Log(BoardRender);
-            Debug.Log(imageRender);
-
             propertyBlock = new MaterialPropertyBlock();
             OtherRender.GetPropertyBlock(propertyBlock);
 
