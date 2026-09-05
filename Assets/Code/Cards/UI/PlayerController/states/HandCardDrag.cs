@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI.State
 {
-    public class HandCardDrag : HandCardState
+    public class HandCardDrag : AnimationCardState
     {
         private InputAction positionAction;
         private Vector3 velocityRef;
         private Vector2 lastMousePos;
         
-        public HandCardDrag(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public HandCardDrag(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnEnter()
         {
@@ -35,7 +35,7 @@ namespace Game.Cards.UI.State
 
         public override void OnRealise(InputAction.CallbackContext context)
         {
-            components.StateMachine?.ProcessEvent(HandCardStateEnum.Return);
+            components.StateMachine?.ProcessEvent(CardAnimationStateEnum.Return);
         }
 
         public override void OnExit()

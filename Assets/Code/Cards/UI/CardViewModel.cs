@@ -28,37 +28,25 @@ namespace Game.Cards.UI
 
         public event Action UpdateUI;
 
-        private CardAnimationComponents<MonsterCardState, MonsterCardStateEnum> MonsterCardComponents = new CardAnimationComponents<MonsterCardState, MonsterCardStateEnum>();
-        private CardAnimationComponents<HandCardState, HandCardStateEnum> HandCardComponents = new CardAnimationComponents<HandCardState, HandCardStateEnum>();
+        private CardAnimationComponents AnimationComponents = new CardAnimationComponents();
 
         public CardViewModel(CardData model, CardView cardView, CardAnimationConfig animationConfig, InputActionAsset inputAction)
         {
             this.model = model;
 
-            if(model.decorateCard.Type.HasFlag(CardTypeEnum.Monster))
-            {
-                MonsterCardComponents.Parent = model.gameObject;
-                MonsterCardComponents.RenderObject = model.gameObject.transform.GetChild(0).gameObject;
-                MonsterCardComponents.CardInfo = model;
-                MonsterCardComponents.View = cardView;
-                MonsterCardComponents.InputAction = inputAction;
-                MonsterCardComponents.StateMachine = new MonsterCardStateMachine(MonsterCardComponents, animationConfig);
-                MonsterCardComponents.StateMachine.ProcessEvent( MonsterCardStateEnum.Return );
+            AnimationComponents.Parent = model.gameObject;
+            AnimationComponents.RenderObject = model.gameObject.transform.GetChild(0).gameObject;
+            AnimationComponents.CardInfo = model;
+            AnimationComponents.View = cardView;
+            AnimationComponents.InputAction = inputAction;
+            
+            if(model.decorateCard.Type == CardTypeEnum.Monster) AnimationComponents.StateMachine = new MonsterCardStateMachine(AnimationComponents, animationConfig);
+            else AnimationComponents.StateMachine = new HandCardStateMachine(AnimationComponents, animationConfig);
 
-                MonsterCardComponents.StateMachine.OnChangeState += OnStateChanged;   
-            }
-            else
-            {
-                HandCardComponents.Parent = model.gameObject;
-                HandCardComponents.RenderObject = model.gameObject.transform.GetChild(0).gameObject;
-                HandCardComponents.CardInfo = model;
-                HandCardComponents.View = cardView;
-                HandCardComponents.InputAction = inputAction;
-                HandCardComponents.StateMachine = new HandCardStateMachine(HandCardComponents, animationConfig);
-                HandCardComponents.StateMachine.ProcessEvent( HandCardStateEnum.Return );
+            AnimationComponents.StateMachine.ProcessEvent( CardAnimationStateEnum.Return );
 
-                HandCardComponents.StateMachine.OnChangeState += OnStateChanged;                
-            }
+            AnimationComponents.StateMachine.OnChangeState += OnStateChanged;   
+
 
             if(isAttackDecorator)
             {
@@ -87,6 +75,8 @@ namespace Game.Cards.UI
                 m.currentStep.Value = m.currentStep.Value;
             }
         }
+
+
 
         public string Name => model.decorateCard.CardName;
         private void OnModelHPChanged(int value)
@@ -140,36 +130,22 @@ namespace Game.Cards.UI
 
         #region StateMachine
 
-        public void StateMachineUpdate()
-        {
-            if(model.decorateCard != null && model.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) MonsterCardComponents.StateMachine?.Update();
-            else HandCardComponents.StateMachine?.Update();
-        }
+        public void StateMachineUpdate() => AnimationComponents.StateMachine?.Update();
 
         public void OnHoverEnter()
         {
             isHovered = true;
-            if(model.decorateCard != null && model.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) MonsterCardComponents.StateMachine?.OnHoverEnter();
-            else HandCardComponents.StateMachine?.OnHoverEnter();
+            AnimationComponents.StateMachine?.OnHoverEnter();
         }
 
         public void OnHoverExit()
         {
             isHovered = false;
-            if(model.decorateCard != null && model.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) MonsterCardComponents.StateMachine?.OnHoverExit();
-            else HandCardComponents.StateMachine?.OnHoverExit();
+            AnimationComponents.StateMachine?.OnHoverExit();
         }
 
-        public void OnInteractPerformed(InputAction.CallbackContext context)
-        {
-            if(model.decorateCard != null && model.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) MonsterCardComponents.StateMachine?.OnInteractPerformed(context);
-            else HandCardComponents.StateMachine?.OnInteractPerformed(context);
-        }
-        public void OnInteractCanceled(InputAction.CallbackContext context)
-        {
-            if(model.decorateCard != null && model.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) MonsterCardComponents.StateMachine?.OnInteractCanceled(context);
-            else HandCardComponents.StateMachine?.OnInteractCanceled(context);
-        }
+        public void OnInteractPerformed(InputAction.CallbackContext context) => AnimationComponents.StateMachine?.OnInteractPerformed(context);
+        public void OnInteractCanceled(InputAction.CallbackContext context) => AnimationComponents.StateMachine?.OnInteractCanceled(context);
 
         private void OnStateChanged<State>(State oldState, State newState) where State : GenericHoverState
         {
@@ -197,18 +173,9 @@ namespace Game.Cards.UI
 
             if(isStepDecorator) model.GetCardFeature<StepCombatDecorator>().currentStep.OnChanged -= OnModelStepChanged;
 
-            if(MonsterCardComponents.StateMachine != null)
-            {
-                MonsterCardComponents.StateMachine.OnChangeState -= OnStateChanged;
-                MonsterCardComponents.StateMachine.OnDestroy();
-                MonsterCardComponents.StateMachine = null;
-            }
-            else
-            {
-                HandCardComponents.StateMachine.OnChangeState -= OnStateChanged;
-                HandCardComponents.StateMachine.OnDestroy();
-                HandCardComponents.StateMachine = null;
-            }
+            AnimationComponents.StateMachine.OnChangeState -= OnStateChanged;
+            AnimationComponents.StateMachine.OnDestroy();
+            AnimationComponents.StateMachine = null;
         }
     }
 }

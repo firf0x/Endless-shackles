@@ -5,30 +5,30 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI
 {
-    public class HandCardStateMachine : InteractionStateMachine<HandCardState, HandCardStateEnum>
+    public class HandCardStateMachine : InteractionStateMachine<AnimationCardState, CardAnimationStateEnum>
     {
-        private CardAnimationComponents<HandCardState, HandCardStateEnum> components;
+        private CardAnimationComponents components;
         private CardAnimationConfig config;
 
-        public HandCardStateMachine(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config)
+        public HandCardStateMachine(CardAnimationComponents components, CardAnimationConfig config)
         {
             this.components = components;
             this.config = config;
 
             components.CardInfo.decorateCard.OnDestroy += OnDead;
 
-            AddState(HandCardStateEnum.Idle, new HandCardIdle(components, config));
-            AddState(HandCardStateEnum.Hover, new HandCardHover(components, config));
-            AddState(HandCardStateEnum.Drag, new HandCardDrag(components, config));
+            AddState(CardAnimationStateEnum.Idle, new HandCardIdle(components, config));
+            AddState(CardAnimationStateEnum.Hover, new HandCardHover(components, config));
+            AddState(CardAnimationStateEnum.Drag, new HandCardDrag(components, config));
             // State Hit
             // State Damage
-            AddState(HandCardStateEnum.Return, new HandCardReturn(components, config));
-            AddState(HandCardStateEnum.Dead, new HandCardDead(components, config));
+            AddState(CardAnimationStateEnum.Return, new HandCardReturn(components, config));
+            AddState(CardAnimationStateEnum.Dead, new HandCardDead(components, config));
             
-            ChangeState(States[HandCardStateEnum.Return]);
+            ChangeState(States[CardAnimationStateEnum.Return]);
         }
 
-        public override void ProcessEvent(HandCardStateEnum stateType)
+        public override void ProcessEvent(CardAnimationStateEnum stateType)
         {
             if( States.TryGetValue(stateType, out var state) )
             {
@@ -68,7 +68,7 @@ namespace Game.Cards.UI
 
         private void OnDead()
         {
-            ProcessEvent(HandCardStateEnum.Dead);
+            ProcessEvent(CardAnimationStateEnum.Dead);
             components.CardInfo.decorateCard.OnDestroy -= OnDead;
         }
     }

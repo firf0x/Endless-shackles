@@ -20,7 +20,6 @@ namespace Game.GameSystem
 
         public void StepUpdate()
         {
-            // Debug.Log("Update step");
             EventUpdate?.Invoke();
         }
 

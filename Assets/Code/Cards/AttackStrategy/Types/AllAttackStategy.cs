@@ -17,14 +17,15 @@ namespace Game.Cards.Strategy
 
         public override void Execute(CombatArgs args)
         {
-            var targetData = args.Target;
-            if (targetData.TryGetCardFeature<HealthDecorator>(out var feature))
+            if (args.Target.TryGetCardFeature<HealthDecorator>(out var feature))
             {
-                if (targetData.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.decorateCard.Destroy(); // TODO: замена
+                if (args.Target.decorateCard.Type.HasFlag(CardTypeEnum.Monster)) args.Parent.decorateCard.Destroy(); // TODO: замена
                 
                 // Удаление карты атаки при нанесении урона монстру
+                Debug.Log("Атака начало");
                 feature.TakeDamage(args.Damage);
                 StepCombatSystem.Instance.StepUpdate();
+                Debug.Log("Атака конец");
             }
         }
     }

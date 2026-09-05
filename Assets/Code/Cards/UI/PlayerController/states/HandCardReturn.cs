@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Game.Cards.UI.State
 {
-    public class HandCardReturn : HandCardState
+    public class HandCardReturn : AnimationCardState
     {
         private Tween _moveTween;
         private Tween _rotateTween;
 
-        public HandCardReturn(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public HandCardReturn(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnEnter()
         {
@@ -17,7 +17,7 @@ namespace Game.Cards.UI.State
                 .SetEase(config.ReturnEase)
                 .OnComplete(() =>
                 {
-                    components.StateMachine.ProcessEvent(HandCardStateEnum.Idle);
+                    components.StateMachine.ProcessEvent(CardAnimationStateEnum.Idle);
                 });
 
             _rotateTween = components.RenderObject.transform

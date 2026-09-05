@@ -4,20 +4,20 @@ using UnityEngine.InputSystem;
 
 namespace Game.Cards.UI.State
 {
-    public class HandCardHover : HandCardState
+    public class HandCardHover : AnimationCardState
     {
         // private InputAction positionAction;
 
-        public HandCardHover(CardAnimationComponents<HandCardState, HandCardStateEnum> components, CardAnimationConfig config) : base(components, config) { }
+        public HandCardHover(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
         public override void OnClick(InputAction.CallbackContext context)
         {
-            if(components.CardInfo.decorateCard.isDrag) components.StateMachine.ProcessEvent(HandCardStateEnum.Drag);
+            if(components.CardInfo.decorateCard.isDrag) components.StateMachine.ProcessEvent(CardAnimationStateEnum.Drag);
         }
 
         public override void OnHoverExit()
         {
-            components.StateMachine.ProcessEvent(HandCardStateEnum.Idle);
+            components.StateMachine.ProcessEvent(CardAnimationStateEnum.Idle);
         }
     }
 }

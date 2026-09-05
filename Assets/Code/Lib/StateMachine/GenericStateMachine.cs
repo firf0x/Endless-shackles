@@ -15,6 +15,8 @@ namespace Game.Lib
 		void ProcessEvent( TEnum stateType );
 	}
 
+	public interface ICardState : GenericState, GenericInteractionState, GenericHoverState {}
+
 	public interface GenericState
 	{
 		void OnEnter();
