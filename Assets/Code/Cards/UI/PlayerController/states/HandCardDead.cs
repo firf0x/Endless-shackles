@@ -43,7 +43,6 @@ namespace Game.Cards.UI.State
                 
                 propertyBlock.SetFloat("_BurnProgress", burnProgress);
                 renderer.SetPropertyBlock(propertyBlock);
-                Debug.Log(elapsed);
                 
                 yield return null;
             }

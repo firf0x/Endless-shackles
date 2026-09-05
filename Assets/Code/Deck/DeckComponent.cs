@@ -46,6 +46,7 @@ namespace Game.Deck
             card.Start();            
         }
 
+        // Тест "Убрать"
         public void NextStep()
         {
             StepCombatSystem.Instance.StepUpdate();
