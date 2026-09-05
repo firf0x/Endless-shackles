@@ -58,6 +58,8 @@ namespace Game.Cards
         {
             base.Use(target);
 
+            if(target.GetComponent<CardData>().decorateCard.Type.HasFlag(CardTypeEnum.Defence)) return;
+
             if(Type.HasFlag(CardTypeEnum.Attack) && target.GetComponent<CardData>().GetCardFeature<HealthDecorator>().isTarget)
             {
                 strategyHandle.ExecuteStrategy(new CombatArgs(CardData, target.GetComponent<CardData>(), currentDamage.Value));

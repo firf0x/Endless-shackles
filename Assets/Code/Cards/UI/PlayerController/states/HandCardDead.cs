@@ -6,20 +6,31 @@ namespace Game.Cards.UI.State
 {
     public class HandCardDead : AnimationCardState
     {
-        private SpriteRenderer renderer;
+        private SpriteRenderer BoardRender;
+        private SpriteRenderer imageRender;
+        private SpriteRenderer OtherRender;
         private MaterialPropertyBlock propertyBlock;
         private float burnProgress = 0f;
         private float animationDuration = 1.0f;
         public HandCardDead(CardAnimationComponents components, CardAnimationConfig config) : base(components, config)
         {
-            renderer = components.CardInfo.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            OtherRender = components.RenderObject.transform.GetComponent<SpriteRenderer>();
+        
+            BoardRender = components.RenderObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
+            imageRender = components.RenderObject.transform.GetChild(1).GetComponent<SpriteRenderer>();
+
+            Debug.Log(BoardRender);
+            Debug.Log(imageRender);
 
             propertyBlock = new MaterialPropertyBlock();
-            renderer.GetPropertyBlock(propertyBlock);
+            OtherRender.GetPropertyBlock(propertyBlock);
 
             burnProgress = 0f;
             propertyBlock.SetFloat("_BurnProgress", burnProgress);
-            renderer.SetPropertyBlock(propertyBlock);
+
+            OtherRender.SetPropertyBlock(propertyBlock);
+            imageRender.SetPropertyBlock(propertyBlock);
+            BoardRender.SetPropertyBlock(propertyBlock);
         }
 
         public override void OnEnter()
@@ -29,6 +40,10 @@ namespace Game.Cards.UI.State
 
         public override void OnExit()
         {
+            OtherRender.SetPropertyBlock(null);
+            imageRender.SetPropertyBlock(null);
+            BoardRender.SetPropertyBlock(null);
+
             propertyBlock.Clear();
             propertyBlock = null;
         }
@@ -42,8 +57,11 @@ namespace Game.Cards.UI.State
                 burnProgress = Mathf.Clamp01(elapsed / animationDuration);
                 
                 propertyBlock.SetFloat("_BurnProgress", burnProgress);
-                renderer.SetPropertyBlock(propertyBlock);
                 
+                OtherRender.SetPropertyBlock(propertyBlock);
+                imageRender.SetPropertyBlock(propertyBlock);
+                BoardRender.SetPropertyBlock(propertyBlock);
+
                 yield return null;
             }
 

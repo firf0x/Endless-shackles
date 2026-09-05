@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card Attack
       objectReference: {fileID: 0}
+    - target: {fileID: 5422409931332617255, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7175746683227308877, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: PlayerCardConfig
       value: 
