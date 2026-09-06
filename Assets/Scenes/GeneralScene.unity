@@ -1003,6 +1003,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -1100,6 +1101,21 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 448
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ce4ec7e3621d5e4fabe05fbe169baf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Game.Player::Game.Utils.CameraShaderComponent
+  vignette: {fileID: 2100000, guid: 9a95683a611a44e4b9bdc82944698cb0, type: 2}
+  dithering: {fileID: 2100000, guid: 7f749bc1d87b9f0449b3b7ef99878b38, type: 2}
+  blur: {fileID: 2100000, guid: be4bfa1e55e475641b3a24b8a973b2ec, type: 2}
 --- !u!1 &677489110
 GameObject:
   m_ObjectHideFlags: 0

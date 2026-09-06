@@ -139,6 +139,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3991140729120771031, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_Size.x
+      value: 2.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991140729120771031, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_Size.y
+      value: 2.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991140729120771031, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6083470807930198168, guid: c80dfd28afd035345971e8bdecd7892f, type: 3}
+    - target: {fileID: 3991140729120771031, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5159407358427220356, guid: 05c32471ddb399e4a88dad803a852380, type: 3}
       propertyPath: m_Name
       value: Card Attack

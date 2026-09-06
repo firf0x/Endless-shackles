@@ -122,8 +122,6 @@ namespace Game.Utils
 
                 foreach (RaycastHit2D hit in hits)
                 {
-                    Debug.Log(hit.collider.name);
-
                     if (hit.collider != null && hit.collider.gameObject.layer == 8)
                     {
                         string zoneTypeName = hit.collider.gameObject.name;
