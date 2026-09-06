@@ -48,40 +48,33 @@ namespace Game.Deck
 
         public bool AddCard(CardData newCard)
         {
-            if(newCard == null) return false;
+            if (newCard == null) return false;
 
             var key = newCard.GetCardFeature<CustomTypeDecorator<DefenceType>>().CustomType;
-            
-            if (cards.ContainsKey(key))
-            {
-                // Перезаписываем
-                if (cards[key] == null)
-                {
-                    cards[key] = newCard;
-                    newCard.currentDeck = this;
-                    HandDeck.Instance.UpdateAllCardsPosition();
 
-                    Debug.Log($"Ключ {key} существовал с null, перезаписан");
-                    return true;
-                }
-                else 
-                {
-                    //TODO: добавить логику замены
-                    Debug.Log($"Ошибка добавления {newCard} - ключ {key} уже существует");
-                    return false;
-                }
+            // Если ключ уже существует – выполняем замену
+            if (cards.TryGetValue(key, out var oldCard))
+            {
+                if (oldCard == newCard) return true;
+
+                oldCard?.CardDestroy(true);
+
+                cards[key] = newCard;
             }
             else
             {
+                // Добавляем новую карту
                 cards.Add(key, newCard);
-                newCard.currentDeck = this;
-                newCard.decorateCard.SetDragActive(false);
-                HandDeck.Instance.UpdateAllCardsPosition();
-
-                Debug.Log($"Добавлена новая карта");
-                OnChanged?.Invoke();
-                return true;
             }
+
+            // Общая инициализация новой карты
+            newCard.currentDeck = this;
+            newCard.decorateCard.SetDragActive(false);
+            HandDeck.Instance.UpdateAllCardsPosition();
+            OnChanged?.Invoke();
+
+            Debug.Log($"Карта {(oldCard == null ? "добавлена" : "заменена")} по ключу {key}");
+            return true;
         }
 
         public void RemoveCard(CardData deletedCard, bool updateAllPosition)

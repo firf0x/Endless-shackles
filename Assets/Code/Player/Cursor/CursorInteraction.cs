@@ -117,16 +117,12 @@ namespace Game.Utils
             if (currentCard != null)
             {
                 Vector2 mouseScreenPos = positionAction.ReadValue<Vector2>();
-                Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, mainCamera.nearClipPlane));
-                RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector2.zero, 25f, interactableLayer);
+                Vector3 mouseWorldPos = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, mainCamera.transform.position.z));
+                RaycastHit2D[] hits = Physics2D.RaycastAll(mouseWorldPos, Vector3.forward, 25f, interactableLayer);
 
                 foreach (RaycastHit2D hit in hits)
                 {
-                    if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
-                    {
-                        currentCard.Execute(hit.collider.gameObject);
-                        break;
-                    }
+                    Debug.Log(hit.collider.name);
 
                     if (hit.collider != null && hit.collider.gameObject.layer == 8)
                     {
@@ -137,11 +133,18 @@ namespace Game.Utils
                             if (zoneTypeName == decorator.CustomType.ToString())
                             {
                                 DefendDeck.Instance.AddCard(currentCard);
+                                currentCard.GetComponent<BoxCollider2D>().enabled = false;
                                 currentCard.DeckPosition.Value = hit.collider.gameObject.transform.position;
                                 HandDeck.Instance.RemoveCard(currentCard, false);
                                 break;
                             }
                         }
+                    }
+
+                    if (hit.collider != null && hit.collider.GetComponent<CardData>() != null && hit.collider.GetComponent<CardData>() != currentCard)
+                    {
+                        currentCard.Execute(hit.collider.gameObject);
+                        break;
                     }
                 }
 

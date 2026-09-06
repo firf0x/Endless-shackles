@@ -11,9 +11,9 @@ namespace Game.Cards.UI.State
 
         public HandCardSpawn(CardAnimationComponents components, CardAnimationConfig config) : base(components, config) { }
 
-        public override void OnEnter()
-        {
-            components.Parent.transform.GetChild(1);
-        }
+        // public override void OnEnter()
+        // {
+        //     // components.Parent.transform.GetChild(1);
+        // }
     }
 }

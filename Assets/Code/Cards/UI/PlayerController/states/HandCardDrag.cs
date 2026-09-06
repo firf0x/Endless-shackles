@@ -18,7 +18,6 @@ namespace Game.Cards.UI.State
             positionAction = playerActionMap?.FindAction("Mouse_position");
 
             components.RenderObject.transform.DOScale(config.DragScale, config.DragScaleAnimationDuration);
-            // positionAction?.Enable();
         }
 
         public override void OnUpdate()
@@ -40,7 +39,7 @@ namespace Game.Cards.UI.State
 
         public override void OnExit()
         {
-            // positionAction?.Disable();
+            // components.Parent.GetComponent<BoxCollider2D>().enabled = true;
             components.RenderObject.transform.DOScale(1, config.DragScaleAnimationDuration);
             positionAction = null;
         }

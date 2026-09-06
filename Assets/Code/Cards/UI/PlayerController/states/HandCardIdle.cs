@@ -29,9 +29,6 @@ namespace Game.Cards.UI.State
         {
             KillCurrentTweens();
 
-            // renderTransform.DOLocalMove(startLocalPosition, 0.2f).SetEase(Ease.OutQuad);
-            // renderTransform.DOLocalRotateQuaternion(startLocalRotation, 0.2f).SetEase(Ease.OutQuad);
-
             components.StateMachine.ProcessEvent(CardAnimationStateEnum.Hover);
         }
 
